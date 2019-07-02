@@ -1,26 +1,21 @@
-##### MM/DD/YYYY
-# ``
+##### 6/27/2019
+# `getThumbPrint(certificateID, algorithm)`
 
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-|  |  |  |
+| certificateID | String | `sys_id` of the certificate record in the `X.509 Certificate [sys_certificate]` table |
+| algorithm | String | `SHA-1`, `SHA-256`, etc. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-|  |  |
+| String | Thumbprint in `base64` format |
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Generates a hash (`SHA-1`, `SHA-256`, etc.) for the certificate from **Trust Store Cert**.
 
 ---
 
