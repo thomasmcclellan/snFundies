@@ -18,11 +18,6 @@ When you use `GlideAggregate` on currency or price fields, you are working with 
 |---|---|---|
 | tableName | String | Name of the table |
 
-## Return value:
-| Type | Description |
-|---|---|
-|  |  |
-
 ---
 
 ```js
