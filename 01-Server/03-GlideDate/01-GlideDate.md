@@ -1,26 +1,14 @@
-##### MM/DD/YYYY
-# ``
+##### 7/19/2019
+# `GlideDate()`
+## Overview:
+The scoped `GlideDate` class provides methods for performing operations on `GlideDate` objects, such as instantiating `GlideDate` objects or working with `GlideDate` fields.
 
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  |  |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-|  |  |
+  > **NOTE**: The APIs in this section are intended for scoped applications and may behave differently in the global scope.
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Creates a `GlideDate` object with the current date time.
 
 ---
 
