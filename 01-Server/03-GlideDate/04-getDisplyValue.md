@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The date in the user's format and time zone. * |
+| `string` | The date in the user's format and time zone. * |
 
   > *Keep in mind when designing business rules or script includes that this method may return values in different formats for different users.
 

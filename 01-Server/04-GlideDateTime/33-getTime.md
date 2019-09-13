@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| GlideTime | The `Unix` duration stamp in system format based on GMT time. |
+| `GlideTime` | The `Unix` duration stamp in system format based on GMT time. |
 
 ---
 

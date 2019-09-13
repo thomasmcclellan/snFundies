@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| bool | Boolean | When `true`, the results are grouped; otherwise, `false` |
+| bool | `boolean` | When `true`, the results are grouped; otherwise, `false` |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

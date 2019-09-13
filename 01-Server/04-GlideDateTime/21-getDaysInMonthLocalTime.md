@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The number of days in the current month in the user's time zone. |
+| `number` | The number of days in the current month in the user's time zone. |
 
 ---
 

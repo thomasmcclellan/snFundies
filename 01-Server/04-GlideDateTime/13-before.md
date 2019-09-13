@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| gdt | GlideDateTime | The time to check against. |
+| gdt | `GlideDateTime` | The time to check against. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| Boolean | Returns `true` if the `GlideDateTime` object's time is before the time specified by the parameter; otherwise, `false`. |
+| `boolean` | Returns `true` if the `GlideDateTime` object's time is before the time specified by the parameter; otherwise, `false`. |
 
 ---
 

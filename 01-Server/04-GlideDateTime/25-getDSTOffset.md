@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | Amount of time, in milliseconds, that daylight saving is offset.  Returns 0 if there is no offset or if the time is not during daylight savings time. |
+| `number` | Amount of time, in milliseconds, that daylight saving is offset.  Returns 0 if there is no offset or if the time is not during daylight savings time. |
 
 ---
 

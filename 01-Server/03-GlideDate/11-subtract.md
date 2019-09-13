@@ -4,13 +4,13 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| start | GlideDate | The start value. |
-| end | GlideDate | The end value. |
+| start | `GlideDate` | The start value. |
+| end | `GlideDate` | The end value. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| GlideDuration | The duration between the two values. |
+| `GlideDuration` | The duration between the two values. |
 
 ---
 

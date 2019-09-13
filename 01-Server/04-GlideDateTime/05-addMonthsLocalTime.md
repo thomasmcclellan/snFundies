@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| months | Number | The number of months to add.  Use a negative value to subtract. |
+| months | `number` | The number of months to add.  Use a negative value to subtract. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

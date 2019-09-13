@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The number of days in the month stored by the `GlideDateTime` object, expressed in the UTC time zone. |
+| `number` | The number of days in the month stored by the `GlideDateTime` object, expressed in the UTC time zone. |
 
 ---
 

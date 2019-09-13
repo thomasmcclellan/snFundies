@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| weeks | Number | The number of weeks to add.  Use negative value to subtract. |
+| weeks | `number` | The number of weeks to add.  Use negative value to subtract. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

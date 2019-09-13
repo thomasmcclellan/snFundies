@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| fieldName | String | The name of the field |
+| fieldName | `string` | The name of the field |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| GlideQueryCondition | The scoped query condition |
+| `GlideQueryCondition` | The scoped query condition |
 
 ---
 

@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The object's time in the local time zone and the internal format. |
+| `string` | The object's time in the local time zone and the internal format. |
 
 ---
 

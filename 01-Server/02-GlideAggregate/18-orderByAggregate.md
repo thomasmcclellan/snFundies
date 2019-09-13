@@ -4,13 +4,13 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| agg | String | Type of aggregation |
-| fieldName | String | Name of the field to aggregate |
+| agg | `string` | Type of aggregation |
+| fieldName | `string` | Name of the field to aggregate |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

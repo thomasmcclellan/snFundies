@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The error message. |
+| `string` | The error message. |
 
 ---
 

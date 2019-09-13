@@ -16,7 +16,7 @@ When you use `GlideAggregate` on currency or price fields, you are working with 
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| tableName | String | Name of the table |
+| tableName | `string` | Name of the table |
 
 ---
 

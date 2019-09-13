@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The table name. |
+| `string` | The table name. |
 
 ---
 

@@ -17,7 +17,7 @@ Instantiates a new `GlideDateTime` object with the current date and time in GMT.
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| time | GlideDateTime | The `GlideDateTime` object to use for setting the time of the new object. |
+| time | `GlideDateTime` | The `GlideDateTime` object to use for setting the time of the new object. |
 
 ---
 

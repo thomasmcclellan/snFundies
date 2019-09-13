@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| name | String | Name of the field |
+| name | `string` | Name of the field |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

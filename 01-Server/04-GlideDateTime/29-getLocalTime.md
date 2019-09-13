@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| GlideTime | The time in the user's time zone. |
+| `GlideTime` | The time in the user's time zone. |
 
 ---
 

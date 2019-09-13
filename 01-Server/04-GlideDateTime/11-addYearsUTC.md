@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| years | Number | The number of years to add. Use a negative number to subtract. |
+| years | `number` | The number of years to add. Use a negative number to subtract. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

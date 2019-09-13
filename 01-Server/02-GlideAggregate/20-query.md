@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| newValue | String | The date and time to use. |
+| newValue | `string` | The date and time to use. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The day of the month in the user's time zone, from 1 to 31. |
+| `number` | The day of the month in the user's time zone, from 1 to 31. |
 
 ---
 

@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The encoded query |
+| `string` | The encoded query |
 
 ---
 

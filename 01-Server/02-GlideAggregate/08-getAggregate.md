@@ -4,13 +4,13 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| agg | String | The type of the aggregate, i.e. `SUM` or `COUNT` |
-| name | String |  |
+| agg | `string` | The type of the aggregate, i.e. `SUM` or `COUNT` |
+| name | `string` |  |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The value of the aggregate |
+| `string` | The value of the aggregate |
 
 ---
 

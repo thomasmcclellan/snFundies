@@ -4,14 +4,14 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| key | String | Key used to sign the message |
-| algorithm | String | Algorithm used to generate the **MAC**: `HmacSHA256`, `HmacSHA1`, `HmacMD5`, etc. |
-| data | String | Data to be processed |
+| key | `string` | Key used to sign the message |
+| algorithm | `string` | Algorithm used to generate the **MAC**: `HmacSHA256`, `HmacSHA1`, `HmacMD5`, etc. |
+| data | `string` | Data to be processed |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| String | **MAC** is `base64` format |
+| `string` | **MAC** is `base64` format |
 
 ---
 

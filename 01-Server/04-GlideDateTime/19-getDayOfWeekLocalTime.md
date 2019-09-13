@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The day of week value, in the user's time zone, from 1 to 7 **starting on Monday**.  Monday = 1; Sunday = 7, etc. |
+| `number` | The day of week value, in the user's time zone, from 1 to 7 **starting on Monday**.  Monday = 1; Sunday = 7, etc. |
 
 ---
 

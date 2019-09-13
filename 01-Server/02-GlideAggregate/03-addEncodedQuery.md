@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| query | String | An encoded query to add to the aggregate |
+| query | `string` | An encoded query to add to the aggregate |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

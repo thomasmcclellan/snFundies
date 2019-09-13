@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| name | String | Name of the field to order the aggregates by |
+| name | `string` | Name of the field to order the aggregates by |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

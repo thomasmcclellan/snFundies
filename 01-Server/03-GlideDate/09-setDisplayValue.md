@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| asDisplayed | String | The date int eh current user's display format and time zone.  The parameter must be formatted using the current user's preferred display format, such as yyyy-MM-dd. |
+| asDisplayed | `string` | The date int eh current user's display format and time zone.  The parameter must be formatted using the current user's preferred display format, such as yyyy-MM-dd. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The number of milliseconds of time zone offset. |
+| `number` | The number of milliseconds of time zone offset. |
 
 ---
 

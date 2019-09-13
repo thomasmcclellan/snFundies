@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The numerical value of the month from 1 to 12. |
+| `number` | The numerical value of the month from 1 to 12. |
 
 ---
 

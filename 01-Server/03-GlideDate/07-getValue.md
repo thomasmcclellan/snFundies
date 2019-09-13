@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The date value in the internal format and system time zone. |
+| `string` | The date value in the internal format and system time zone. |
 
 ---
 

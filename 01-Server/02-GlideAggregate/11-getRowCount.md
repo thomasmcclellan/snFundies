@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The number of rows in the `GlideAggregate` object. |
+| `number` | The number of rows in the `GlideAggregate` object. |
 
 ---
 

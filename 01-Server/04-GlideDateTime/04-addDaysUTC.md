@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| days | Number | The number of days to add.  Use a negative number to subtract. |
+| days | `number` | The number of days to add.  Use a negative number to subtract. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value. |
+| Void | Method does not return a value. |
 
 ---
 

@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The date values for the `GlideDate` object in the current user's time zone and the internal time format of yyyy-MM-dd. |
+| `string` | The date values for the `GlideDate` object in the current user's time zone and the internal time format of yyyy-MM-dd. |
 
 ---
 

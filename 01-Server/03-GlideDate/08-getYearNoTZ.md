@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | The numerical value of the year. |
+| `number` | The numerical value of the year. |
 
 ---
 

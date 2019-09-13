@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| format | String | The desired date format |
+| format | `string` | The desired date format |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The date in the specified format |
+| `string` | The date in the specified format |
 
 ---
 

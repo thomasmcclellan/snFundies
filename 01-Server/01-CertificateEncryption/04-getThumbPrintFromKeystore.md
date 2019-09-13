@@ -4,14 +4,14 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| certificateID | String | `sys_id` of the certifcate record in the `X.509 Certificate [sys_certificate]` table |
-| alias | String | Alias name for the certificate |
-| algorithm | String | `SHA-1`, `SHA-256`, etc. |
+| certificateID | `string` | `sys_id` of the certifcate record in the `X.509 Certificate [sys_certificate]` table |
+| alias | `string` | Alias name for the certificate |
+| algorithm | `string` | `SHA-1`, `SHA-256`, etc. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| String | Thumbprint in `base64` format |
+| `string` | Thumbprint in `base64` format |
 
 ---
 

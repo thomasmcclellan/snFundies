@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| dateTime | GlideDateTime object or String | The date time to compare. |
+| dateTime | `GlideDateTime` object or `string` | The date time to compare. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| Boolean | Returns `true` if they are equal; otherwise, `false`. |
+| `boolean` | Returns `true` if they are equal; otherwise, `false`. |
 
 ---
 

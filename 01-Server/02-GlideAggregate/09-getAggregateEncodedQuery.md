@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The encoded query to get the aggregate |
+| `string` | The encoded query to get the aggregate |
 
 ---
 

@@ -1,5 +1,5 @@
 ##### 9/12/2019
-# `setDayOfMonthLocalTime(day)`
+# `setDayOfMonthUTC(day)`
 
 ## Parameter(s):
 | Name | Type | Description |
@@ -14,18 +14,18 @@
 ---
 
 ## Description:
-Sets the day of the month to a specified value in the current user's time zone.
+Sets the day of the month to a specified value in the UTC time zone.
 
 ---
 
 ```js
 var gdt = new GlideDateTime();
 
-gdt.setDayOfMonthLocalTime(9);
+gdt.setDayOfMonthUTC(9);
 
-gs.info(gdt.getDayOfMonthLocalTime()); // 9
+gs.info(gdt.getDayOfMonthUTC()); // 9
 ```
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=madrid&id=r_ScopedGlideDateTimeSetDayOfMonthLocalTime_Number_day)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=madrid&id=r_ScopedGlideDateTimeSetDayOfMonthUTC_Number_day)

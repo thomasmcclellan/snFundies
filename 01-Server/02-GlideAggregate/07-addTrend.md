@@ -4,13 +4,13 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| fieldName | String | The name of the field for which trending should occur |
-| timeInterval | String | The time interval for the trend.  The following choices are available: `Year`, `Quarter`, `Date`, `Week`, `DayOfWeek`, `Hour`, `Value` |
+| fieldName | `string` | The name of the field for which trending should occur |
+| timeInterval | `string` | The time interval for the trend.  The following choices are available: `Year`, `Quarter`, `Date`, `Week`, `DayOfWeek`, `Hour`, `Value` |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

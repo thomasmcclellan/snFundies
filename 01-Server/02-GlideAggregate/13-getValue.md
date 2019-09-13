@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| name | String | The name of the field |
+| name | `string` | The name of the field |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| String | The value of the field |
+| `string` | The value of the field |
 
 ---
 

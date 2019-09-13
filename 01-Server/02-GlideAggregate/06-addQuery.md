@@ -4,14 +4,14 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| name | String | The query to add |
-| operator | String | The operator for the query |
-| value | String | The list of values to include in the query |
+| name | `string` | The query to add |
+| operator | `string` | The operator for the query |
+| value | `string` | The list of values to include in the query |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| GlideQueryCondition | The query condition |
+| `GlideQueryCondition` | The query condition |
 
 ---
 

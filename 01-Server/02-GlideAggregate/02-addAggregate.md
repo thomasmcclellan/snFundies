@@ -4,13 +4,13 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| agg | String | Name of teh aggregate to add, for example, **COUNT**, **MIN**, or **MAX** |
-| name | String | (Optional) Name of the column to aggregate. The default is `null` |
+| agg | `string` | Name of teh aggregate to add, for example, **COUNT**, **MIN**, or **MAX** |
+| name | `string` | (Optional) Name of the column to aggregate. The default is `null` |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| void | Method does not return a value |
+| Void | Method does not return a value |
 
 ---
 

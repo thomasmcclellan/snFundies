@@ -4,7 +4,7 @@
 ## Return value:
 | Type | Description |
 |---|---|
-| Boolean | `true` if there are more records in the query set; otherwise, `false`. |
+| `boolean` | `true` if there are more records in the query set; otherwise, `false`. |
 
 ---
 

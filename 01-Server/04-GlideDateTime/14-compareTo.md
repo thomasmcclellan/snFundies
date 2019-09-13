@@ -4,12 +4,12 @@
 ## Parameter(s):
 | Name | Type | Description |
 |---|---|---|
-| obj | Object | Date and time object in `GlideDateTime` format. |
+| obj | `object` | Date and time object in `GlideDateTime` format. |
 
 ## Return value:
 | Type | Description |
 |---|---|
-| Number | 0 = Dates are equal |
+| `number` | 0 = Dates are equal |
 || 1 = Object's date is after the date specified in the parameter |
 || -1 = Object's date is before the date specified in the parameter |
 
