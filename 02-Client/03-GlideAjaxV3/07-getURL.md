@@ -1,27 +1,16 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
+##### 9/23/2019
+# `getURL()`
 
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |   |
+| `string` | The URL where the `Ajax` request will be sent. |
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Returns the target URL.
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=c_GlideAjaxV3API)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GLAXV3-getURL)
