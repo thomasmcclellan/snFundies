@@ -1,26 +1,9 @@
-##### MM/DD/YYYY
-# ``
+##### 9/30/2019
+# GlideDocumentV3
+## Overview: 
+The `GlideDocument` class provides the ability to search a `DOM` element, a document, or a `JQuery` element.
 
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-| `` |   |
-
----
-
-## Description:
-
-
----
-
-```js
-
-```
+The `GlideDocumentV3` API can be used in client-side scripts using the `ListV2` and `ListV3` APIs.  The `GlideDocument` APIs are accessed using the `g_document` global action.
 
 ---
 
