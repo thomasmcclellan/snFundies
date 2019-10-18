@@ -1,5 +1,5 @@
-##### 10/15/2019
-# `getMD5Base64(source)`
+##### 10/17/2019
+# `getMD5Hex(source)`
 
 ## Parameter(s):
 | Name | Type | Description |
@@ -14,7 +14,7 @@
 ---
 
 ## Description:
-Create a message digest from a `string` using the `MD5` algorithm.  The output string is in `Base64`.
+Create a message digest from a `string` using the `MD5` algorithm.  The output `string` is in hexadecimal.
 
 ---
 
@@ -22,9 +22,9 @@ Create a message digest from a `string` using the `MD5` algorithm.  The output s
 var inputString = 'Her molasses flowed slowly down the hill.';
 var digest = new GlideDigest();
 
-gs.info(digest.getMD5Base64(inputString));
+gs.info(digest.getMD5Hex(inputString));
 ```
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_SGDigest-getMD5Base64_S)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_SGDigest-getMD5Hex_S)
