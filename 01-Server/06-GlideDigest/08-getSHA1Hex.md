@@ -1,5 +1,5 @@
-##### 10/18/2019
-# `getSHA1Base64(source)`
+##### 10/22/2019
+# `getSHA1Hex(source)`
 
 ## Parameter(s):
 | Name | Type | Description |
@@ -14,7 +14,7 @@
 ---
 
 ## Description:
-Create a message digest from a `string` using the `SHA1` algorithm.  The output `string` is in `Base64`.
+Create a message digest from a `string` using the `SHA1` algorithm.  The output `string` is in hexadecimal.
 
 ---
 
@@ -22,9 +22,9 @@ Create a message digest from a `string` using the `SHA1` algorithm.  The output 
 var inputString = 'Her molasses flowed slowly down the hill.';
 var digest = new GlideDigest();
 
-gs.info(digest.getSHA1Base64(inputString));
+gs.info(digest.getSHA1Hex(inputString));
 ```
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_SGDigest-getSHA1Base64_S)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_SGDigest-getSHA1Hex_S)

@@ -27,4 +27,4 @@
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=c_GlideDialogWindowAPI)
+[ServiceNow Docs]()

@@ -26,4 +26,4 @@ g_form.addOption('priority', '6', '6 - Really Low');
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GDOC-getElement_S_E)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GlideformAddOption_String_String_String)
