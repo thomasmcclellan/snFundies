@@ -1,27 +1,18 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
+##### 11/08/2019
+# `getFormElement()`
 
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| `HTMLElement` | The `HTML` element for the form. |
 
 ---
 
 ## Description:
+Returns the `HTML` element for the form.
 
-
----
-
-```js
-
-```
+  > This method is not available in mobile scripts or Service Portal scripts.
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GDOC-getElement_S_E)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GlideFormGetFormElement)
