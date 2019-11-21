@@ -1,27 +1,16 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
+##### 11/19/2019
+# `getSectionNames()`
 
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| `array` of `strings` | The section names. |
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Returns all section names, whether visible or not.
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GDOC-getElement_S_E)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GlideFormGetSectionNames)
