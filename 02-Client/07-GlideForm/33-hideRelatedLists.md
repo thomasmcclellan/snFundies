@@ -1,27 +1,18 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
+##### 12/06/2019
+# `hideRelatedLists()`
 
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| Void | Method does not return a value. |
 
 ---
 
 ## Description:
+Hides all related lists on the form.
 
-
----
-
-```js
-
-```
+  > This method is not available on the mobile platform.  If this method is run on a mobile platform, no action occurs.
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GDOC-getElement_S_E)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GlideFormHideRelatedLists)
