@@ -1,27 +1,16 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
+##### 12/18/2019
+# `save()`
 
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| Void | Method does not return a value. |
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Saves the record without navigating away (update and stay).
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GDOC-getElement_S_E)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GlideFormSave)

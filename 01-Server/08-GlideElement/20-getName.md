@@ -1,27 +1,16 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
+##### 12/19/2019
+# `getName()`
 
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| `string` | Field name. |
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Returns the name of the field.
 
 ---
 
-[ServiceNow Docs]()
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=SGE-getName)
