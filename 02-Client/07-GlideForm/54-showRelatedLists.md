@@ -1,27 +1,17 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
+##### 12/31/2019
+# `showRelatedLists()`
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| Void | Method does not return a value. |
 
 ---
 
 ## Description:
+Displays all the forms' related lists.
 
-
----
-
-```js
-
-```
+This method is not available on the mobile platform. If this method is run on a mobile platform, no action occurs.
 
 ---
 
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GDOC-getElement_S_E)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GlideFormShowRelatedLists)

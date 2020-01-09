@@ -1,30 +1,10 @@
-##### MM/DD/YYYY
-# ``
+##### 1/02/2020
+# `GlideGuidV3`
 ## Overview: 
+You can create a globally unique identifier.
 
-
----
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-| `` |  |
+You access the `GlideGuidV3` methods using the `g_guid` global object.
 
 ---
 
-## Description:
-
----
-
-```js
-
-```
-
----
-
-[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=c_GlideDialogWindowAPI)
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=c_GlideGuidV3API)
