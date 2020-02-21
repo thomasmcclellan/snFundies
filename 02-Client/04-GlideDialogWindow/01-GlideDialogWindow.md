@@ -1,5 +1,5 @@
 ##### 9/26/2019
-# `GlideDialogWindow(id, readOnly, width, height)`
+# `GlideDialogWindow(id, readOnly?, width?, height?)`
 
 ## Overview: 
 The `GlideDialogWindow` API provides methods for displaying a dialog in the current window and frame.

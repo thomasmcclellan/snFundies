@@ -1,5 +1,5 @@
 ##### 12/31/2019
-# `showFieldMsg(field, message, type, ?scrollForm)`
+# `showFieldMsg(field, message, type, scrollForm?)`
 
 ## Parameter(s):
 | Name | Type | Description |

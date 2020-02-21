@@ -1,5 +1,5 @@
 ##### 12/04/2019
-# `hideFieldMsg(fieldName, ?clearAll)`
+# `hideFieldMsg(fieldName, clearAll?)`
 
 ## Parameter(s):
 | Name | Type | Description |

@@ -1,5 +1,5 @@
 ##### 12/31/2019
-# `showErrorBox(name, message, ?scrollForm)`
+# `showErrorBox(name, message, scrollForm?)`
 
 ## Parameter(s):
 | Name | Type | Description |

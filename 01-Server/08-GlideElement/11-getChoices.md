@@ -1,5 +1,5 @@
 ##### 12/09/2019
-# `getChoices(?dependent)`
+# `getChoices(dependent?)`
 
 ## Parameter(s):
 | Name | Type | Description |

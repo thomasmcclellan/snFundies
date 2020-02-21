@@ -1,5 +1,5 @@
 ##### 10/01/2019
-# `getElements(selector, context)`
+# `getElements(selector, context?)`
 
 ## Parameter(s):
 | Name | Type | Description |

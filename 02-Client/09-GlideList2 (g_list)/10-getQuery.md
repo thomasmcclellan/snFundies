@@ -1,5 +1,5 @@
 ##### 1/09/2020
-# `getQuery(?orderBy, ?groupBy, ?fixed, ?all)`
+# `getQuery(orderBy?, groupBy?, fixed?, all?)`
 
 ## Parameter(s):
 | Name | Type | Description |

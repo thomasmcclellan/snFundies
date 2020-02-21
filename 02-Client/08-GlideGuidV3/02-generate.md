@@ -1,5 +1,5 @@
 ##### 1/02/2020
-# `generate(?stringLength)`
+# `generate(stringLength?)`
 
 ## Parameter(s):
 | Name | Type | Description |

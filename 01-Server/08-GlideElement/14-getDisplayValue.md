@@ -1,5 +1,5 @@
 ##### 12/11/2019
-# `getDisplayValue(?maxCharacters)`
+# `getDisplayValue(maxCharacters?)`
 
 ## Parameter(s):
 | Name | Type | Description |

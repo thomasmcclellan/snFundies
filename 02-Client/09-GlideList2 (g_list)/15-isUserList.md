@@ -1,27 +1,15 @@
-##### MM/DD/YYYY
-# ``
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
+##### 1/09/2020
+# `isUserList()`
 ## Return value:
 | Type | Description |
 |---|---|
-| `` |  |
+| `boolean` | Returns `true` if the list layout has been changed. |
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Returns `true` if the list has been personalized by the user by choosing the list mechanic and changing the list layout.
 
 ---
 
-[ServiceNow Docs]()
+[ServiceNow Docs](https://developer.servicenow.com/app.do#!/api_doc?v=newyork&id=r_GL2-isUserList)

@@ -1,5 +1,5 @@
 ##### 12/05/2019
-# `hideRelatedList(?listTableName)`
+# `hideRelatedList(listTableName?)`
 
 ## Parameter(s):
 | Name | Type | Description |

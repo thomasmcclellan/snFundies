@@ -19,7 +19,7 @@ The `GlideAjaxV3` API can be used in client-side scripting using `ListV2` and `L
 
 ---
 
-# `GlideAjax(processor, targetURL)`
+# `GlideAjax(processor, targetURL?)`
 
 ## Parameter(s):
 | Name | Type | Description |

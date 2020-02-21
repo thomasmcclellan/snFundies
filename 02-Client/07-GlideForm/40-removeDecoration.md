@@ -1,5 +1,5 @@
 ##### 12/16/2019
-# `removeDecoration(fieldName, icon, title, ?color)`
+# `removeDecoration(fieldName, icon, title, color?)`
 
 ## Parameter(s):
 | Name | Type | Description |

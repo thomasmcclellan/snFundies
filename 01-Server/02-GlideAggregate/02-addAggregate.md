@@ -1,5 +1,5 @@
 ##### 7/08/2019
-# `addAggregate(agg, name)`
+# `addAggregate(agg, name?)`
 
 ## Parameter(s):
 | Name | Type | Description |

@@ -1,5 +1,5 @@
 ##### 12/31/2019
-# `setValue(fieldName, value, ?displayValue)`
+# `setValue(fieldName, value, displayValue?)`
 
 ## Parameter(s):
 | Name | Type | Description |

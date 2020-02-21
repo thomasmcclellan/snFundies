@@ -1,5 +1,5 @@
 ##### 12/16/2019
-# `getHTMLValue(?maxChars)`
+# `getHTMLValue(maxChars?)`
 
 ## Parameter(s):
 | Name | Type | Description |
