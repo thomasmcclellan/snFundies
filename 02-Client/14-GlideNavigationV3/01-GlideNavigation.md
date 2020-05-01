@@ -1,29 +1,8 @@
-##### MM/DD/YYYY
-# ``
+##### 5/01/2020
+# `GlideNavigationV3`
 ## Overview:
-
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-| `` |  |
+Provides methods to control and refresh the navigator and main frame.  The `GlideNavigation` methods are accessed using the `g_navigation` global `object`.
 
 ---
 
-## Description:
-
-
----
-
-```js
-
-```
-
----
-
-[ServiceNow Docs]()
+[ServiceNow Docs](https://developer.servicenow.com/dev.do#!/reference/api/newyork/client/c_GlideNavigationV3API)
