@@ -1,29 +1,13 @@
-##### MM/DD/YYYY
-# ``
+##### 5/14/2020
+# `GlideScopedEvaluator()`
 ## Overview:
-
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-| `` |  |
+The `GlideScopedEvaluator API allows you to evaluate scripts in a `GlideRecord` field from both scoped and global server scripts.  The `GlideScopedEvaluator` API evaluates records with script fields defined.  The scope of the script is defined by the scope of the record.
 
 ---
 
 ## Description:
-
-
----
-
-```js
-
-```
+Instantiates a `GlideScopedEvaluator` object.
 
 ---
 
-[ServiceNow Docs]()
+[ServiceNow Docs](https://developer.servicenow.com/dev.do#!/reference/api/newyork/server/no-namespace/c_GlideEvaluatorScopedAPI)
