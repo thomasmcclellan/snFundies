@@ -1,29 +1,10 @@
-##### MM/DD/YYYY
-# ``
+##### 6-04/2020
+# `GlideSecurityUtils`
 ## Overview:
+Provides methods to work with URLs.
 
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-| `` |  |
+Access these methods using the static `object` `GlideSecurityUtils`.  This `class` is available in scoped and global scripts.
 
 ---
 
-## Description:
-
-
----
-
-```js
-
-```
-
----
-
-[ServiceNow Docs]()
+[ServiceNow Docs](https://developer.servicenow.com/dev.do#!/reference/api/newyork/server/no-namespace/GlideSecurityUtilsScopedAPI)
