@@ -35,6 +35,26 @@ declare class GlideAjax {
      * Sends the server a request to execute the method and parameters associated with this GlideAjax object.The server processes the request asynchronously and -- when ready -- returns the results via the function specified as the callback_function.
      * 
      * @callback The name of the callback function to process the results returned by the server.
+     * @example
+     * var comments = gel("dialog_comments").value;
+     * var ga = new GlideAjax('validateComments'); //Call script include to escape text
+     * ga.addParam('sysparm_name', 'validateComments');
+     * ga.addParam('sysparm_comments', comments);
+     * ga.getXML(callback);
+     *  
+     * return false;
+     *  
+     * function callback(response) {
+     *   var comments = response.responseXML.documentElement.getAttribute("answer");
+     *   comments = trim(comments);
+     *   if (comments == "") {
+     *      //If comments are empty, alert the user and stop submission
+     *      alert("Please enter your comments before submitting.");
+     *   } else {
+     *     //If there are comments, close the dialog window and submit them
+     *     GlideDialogWindow.get().destroy(); //Close the dialog window
+     *     g_form.setValue("comments", comments); //Set the "Comments" field with comments in the dialog
+     *   }
      */
     getXML(callback: Function);
 
@@ -42,12 +62,38 @@ declare class GlideAjax {
      * Call the processor asynchronously and get the answer element of the response in XML format.
      * 
      * @callback The callback function. The function receives the answer element of the response in XML format as an argument.
+     * @example
+     * function updateAttachmentCount(sysid) {
+     *     var ga = new GlideAjax('AttachmentAjax');
+     *     ga.addParam('sysparm_type', 'attachmentCount');
+     *     ga.addParam('sysparm_value', sysid);
+     *     ga.getXMLAnswer(numberOfAttachments, null, sysid); // callback: numberOfAttachments
+     * }
+     * 
+     * function numberOfAttachments(answer, sysid) {
+     * 	// we want to know there are 5 attachments, not 5.0 attachments
+     * 	var number = parseInt(answer);
+     * 	var buttons = $$('.attachmentNumber_' + sysid);
+     * 	if (buttons[0] == undefined)
+     * 		$('header_attachment_list_label').down().innerHTML = number;
+     * 	else {
+     * 		for (var i = 0; i &lt; buttons.length; i++) {
+     * 			buttons[i].innerHTML = number;
+     * 		}
+     * 	}
+     * }
      */
     getXMLAnswer(callback: Function);
 
     /**
      * Sends the server a request to execute the method and parameters associated with this GlideAjax object.The server processes the request synchronously and will not process further requests from the client until finished. To retrieve the results, the client must call getAnswer(). Using getXMLWait() ensures the order of execution, but can cause the application to seem unresponsive, significantly degrading the user experience of any application that uses it. We recommend using getXML() instead. Note: getXMLWait() is not available to scoped applications.
      * 
+     * @example
+     * var ga = new GlideAjax('HelloWorld');
+     *       ga.addParam('sysparm_name','helloWorld');
+     *       ga.addParam('sysparm_user_name',"Bob");
+     *       ga.getXMLWait();
+     *       alert(ga.getAnswer());
      */
     getXMLWait();
 
@@ -132,6 +178,15 @@ declare class GlideAjaxV3 {
      * Call the processor asynchronously and get the answer element of the response in XML format.
      * 
      * @callback The callback function. The function receives the answer element of the response in XML format as an argument.
+     * @example
+     * function autofillPhoneNumber(sysid) {
+     *     var ga = new GlideAjax('x_abc_myscope.AjaxUtils');
+     *     ga.addParam('sysparm_type', 'getPhoneNumberForUser');
+     *     ga.addParam('sysparm_user', sysid);
+     *     ga.getXMLAnswer(function(answer) {
+     *         g_form.setValue('phone_number', answer);
+     *     });
+     * }
      */
     getXMLAnswer(callback: Function);
 
@@ -167,24 +222,52 @@ declare class GlideDialogWindow {
      * @readOnly Optional. Flag that indicates whether the dialog window is read only (true) or read/write (false). Default: false
      * @width Optional. Size (in pixels) to set the width of the dialog window.
      * @height Optional. Size (in pixels) to set the height of the dialog window.
+     * @example
+     * // Creates a dialog window
+     * var gdw = new GlideDialogWindow('show_list');
+     * 
+     * // Creates a read-only dialog window
+     * var gdw = new GlideDialogWindow('show_list', true);
+     * 
+     * // Creates a dialog window that is 400 pixels wide
+     * var gdw = new GlideDialogWindow('show_list', false, 400); 
+     * 
+     * // Creates a dialog window that is 400 pixels wide and 200 pixels tall
+     * var gdw = new GlideDialogWindow('show_list', false, 400, 200); 
      */
     constructor(id: String, readOnly: Boolean, width: Number, height: Number);
 
     /**
      * Adjusts the body height of a dialog window to be the window height minus the header height.You typically call this method after calling GlideDialogWindow - setSize().
      * 
+     * @example
+     * var gdw = new GlideDialogWindow('show_list');
+     *       gdw.setTitle('Test');
+     *       gdw.setSize(750,300);
+     *       gdw.adjustBodySize();
+     *       gdw.render();
      */
     adjustBodySize();
 
     /**
      * Closes the dialog window.
      * 
+     * @example
+     * //Destroy the current dialog window.
+     *       GlideDialogWindow.get().destroy();
      */
     destroy();
 
     /**
      * Renders the dialog window.
      * 
+     * @example
+     * var gdw = new GlideDialogWindow('show_list');
+     *       gdw.setTitle('Test');
+     *       gdw.setSize(750,300);
+     *       gdw.setPreference('table', 'u_test_list');
+     *       gdw.setPreference('title', 'A New Title');
+     *       gdw.render();
      */
     render();
 
@@ -193,6 +276,12 @@ declare class GlideDialogWindow {
      * 
      * @name The window property to set.
      * @value The value for the window property.
+     * @example
+     * var gdw = new GlideDialogWindow('show_list');
+     *       gdw.setTitle('Test');
+     *       gdw.setSize(750,300);
+     *       gdw.setPreference('table', 'u_test_list');
+     *       gdw.setPreference('title', 'A New Title');
      */
     setPreference(name: String, value: String);
 
@@ -201,6 +290,9 @@ declare class GlideDialogWindow {
      * 
      * @width The width of the dialog window.
      * @height The height of the dialog window.
+     * @example
+     * var gdw = new GlideDialogWindow('show_list');
+     *       gdw.setSize(750,300);
      */
     setSize(width: Number, height: Number);
 
@@ -208,6 +300,9 @@ declare class GlideDialogWindow {
      * Sets the title of the dialog window.
      * 
      * @title The title for the current window.
+     * @example
+     * //var gdw = new GlideDialogWindow('show_list');
+     *       gdw.setTitle('test');
      */
     setTitle(title: String);
 
@@ -255,6 +350,29 @@ declare class GlideFlow {
      * Get an existing execution instance by ID.
      * 
      * @executionId The ID of the execution to be retrieved.
+     * @example
+     * 
+     * // Get an existing action and await completion
+     * (function() {
+     * 	GlideFlow.getExecution('79cd437e0b202300a150a95e93673ae3')
+     * 		.then(function(execution) {
+     * 			return execution.awaitCompletion();
+     * 		}, errorResolver)
+     * 		.then(function(completion) {
+     * 
+     * 			var status = completion.status;
+     * 			console.log(status);
+     * 
+     * 			// Available Outputs:
+     * 			var outputs = completion.outputs;
+     * 			console.log(outputs);
+     * 		}, errorResolver());
+     * 
+     * 	function errorResolver(error) {
+     * 		// Handle errors in error resolver
+     * 		console.error(error);
+     * 	}
+     * })();
      * @returns A promise of an execution object.
      */
     getExecution(executionId: String): Object;
@@ -264,6 +382,32 @@ declare class GlideFlow {
      * 
      * @scopedName The scoped name of the flow to be executed.
      * @inputs An object containing inputs defined for the action.
+     * @example
+     * 
+     * // Start an action and await completion.
+     * (function() {
+     * 	var inputs = {};
+     * 
+     * 	inputs['input1'] = 'string input'; // String
+     * 
+     * 	GlideFlow.startAction('global.action_name', inputs)
+     * 		.then(function(execution) {
+     * 			return execution.awaitCompletion();
+     * 		}, errorResolver)
+     * 		.then(function(completion) {
+     * 			var status = completion.status;
+     * 			console.log(status);
+     * 
+     * 			// Available Outputs:
+     * 			var outputs = completion.outputs;
+     * 			console.log(outputs);
+     * 		}, errorResolver());
+     * 
+     * 	function errorResolver(error) {
+     * 		// Handle errors in error resolver
+     * 		console.error(error);
+     * 	}
+     * })();
      * @returns An object containing details on the action execution.
      */
     startAction(scopedName: String, inputs: Object): Object;
@@ -273,6 +417,26 @@ declare class GlideFlow {
      * 
      * @scopedName The scoped name of the flow to be executed.
      * @inputs An object containing inputs defined for the flow.
+     * @example
+     * 
+     * // Start a Flow
+     * (function() {
+     *       var inputs = {};
+     *       inputs['current'] = { // GlideRecord 
+     *         table : 'incident', 
+     *         sys_id : '79cd437e0b202300a150a95e93673ae3'  
+     *     };
+     *         inputs['table_name'] = 'incident';
+     *          GlideFlow.startFlow('global.flow_name', inputs)
+     * 		.then(
+     * 			function(execution) {
+     * 				console.log('Started flow_name with execution id :' + execution.getExecutionId());
+     * 			},
+     * 			function(error) {
+     * 				console.log('Unable to start flow: ' + error);
+     * 			}
+     * 		);
+     * })();
      * @returns An object containing details on the flow execution.
      */
     startFlow(scopedName: String, inputs: Object): Object;
@@ -282,6 +446,32 @@ declare class GlideFlow {
      * 
      * @scopedName The scoped name of the flow to be executed.
      * @inputs An object containing inputs used for the subflow.
+     * @example
+     * 
+     * // Start an action and await completion.
+     * (function() {
+     * 	var inputs = {};
+     * 
+     * 	inputs['input1'] = 'string input'; // String
+     * 
+     * 	GlideFlow.startSubflow('global.subflow_name', inputs)
+     * 		.then(function(execution) {
+     * 			return execution.awaitCompletion();
+     * 		}, errorResolver)
+     * 		.then(function(completion) {
+     * 			var status = completion.status;
+     * 			console.log(status);
+     * 
+     * 			// Available Outputs:
+     * 			var outputs = completion.outputs;
+     * 			console.log(outputs);
+     * 		}, errorResolver());
+     * 
+     * 	function errorResolver(error) {
+     * 		// Handle errors in error resolver
+     * 		console.error(error);
+     * 	}
+     * })();
      * @returns An object containing details on the subflow execution.
      */
     startSubflow(scopedName: String, inputs: Object): Object;
@@ -303,6 +493,8 @@ declare class GlideForm {
      * @fieldName The field name.
      * @icon The font icon to show next to the field. Supported icons - icon-user, icon-user-group, icon-lightbulb, icon-home, icon-mobile, icon-comment, icon-mail, icon-locked, icon-database, icon-book, icon-drawer, icon-folder, icon-catalog, icon-tab, icon-cards, icon-tree-right, icon-tree, icon-book-open, icon-paperclip, icon-edit, icon-trash, icon-image, icon-search, icon-power, icon-cog, icon-star, icon-star-empty, icon-new-ticket, icon-dashboard, icon-cart-full, icon-view, icon-label, icon-filter, icon-calendar, icon-script, icon-add, icon-delete, icon-help, icon-info, icon-check-circle, icon-alert, icon-sort-ascending, icon-console, icon-list, icon-form, and icon-livefeed.
      * @title The text title for the icon.
+     * @example
+     * g_form.addDecoration('caller_id', 'icon-star', 'preferred member');
      */
     addDecoration(fieldName: String, icon: String, title: String);
 
@@ -313,6 +505,8 @@ declare class GlideForm {
      * @icon The font icon to show next to the field. Supported icons - icon-user, icon-user-group, icon-lightbulb, icon-home, icon-mobile, icon-comment, icon-mail, icon-locked, icon-database, icon-book, icon-drawer, icon-folder, icon-catalog, icon-tab, icon-cards, icon-tree-right, icon-tree, icon-book-open, icon-paperclip, icon-edit, icon-trash, icon-image, icon-search, icon-power, icon-cog, icon-star, icon-star-empty, icon-new-ticket, icon-dashboard, icon-cart-full, icon-view, icon-label, icon-filter, icon-calendar, icon-script, icon-add, icon-delete, icon-help, icon-info, icon-check-circle, icon-alert, icon-sort-ascending, icon-console, icon-list, icon-form, and icon-livefeed.
      * @title The text title for the icon.
      * @color A CSS color.
+     * @example
+     * g_form.addDecoration('caller_id', 'icon-star', 'Mark as Favorite', 'color-green');
      */
     addDecoration(fieldName: String, icon: String, title: String, color: String);
 
@@ -320,6 +514,8 @@ declare class GlideForm {
      * Displays the error message at the top of the form.
      * 
      * @message The message to display.
+     * @example
+     * g_form.addErrorMessage('This is an error');
      */
     addErrorMessage(message: String);
 
@@ -327,6 +523,8 @@ declare class GlideForm {
      * Adds an informational message to the top of the form.
      * 
      * @message The message to display.
+     * @example
+     * g_form.addInfoMessage('The top five fields in this form are mandatory');
      */
     addInfoMessage(message: String);
 
@@ -336,6 +534,8 @@ declare class GlideForm {
      * @fieldName The name of the field.
      * @choiceValue The value to be stored in the database.
      * @choiceLabel The value displayed.
+     * @example
+     * g_form.addOption('priority', '6', '6 - Really Low');
      */
     addOption(fieldName: String, choiceValue: String, choiceLabel: String);
 
@@ -346,12 +546,16 @@ declare class GlideForm {
      * @choiceValue The value stored in the database.
      * @choiceLabel The value displayed.
      * @choiceIndex Order of the choice in the list. The index is into a zero based array.
+     * @example
+     * g_form.addOption('priority', '2.5', '2.5 - Moderately High', 3);
      */
     addOption(fieldName: String, choiceValue: String, choiceLabel: String, choiceIndex: Number);
 
     /**
      * Removes all informational and error messages from the top of the form.Removes informational and error messages added with g_form.addInfoMessage() and g_form.addErrorMessage().
      * 
+     * @example
+     * g_form.clearMessages();
      */
     clearMessages();
 
@@ -387,12 +591,19 @@ declare class GlideForm {
      * @widgetName Specifies the field in the as .<fieldname.
      * @color RGB color or acceptable CSS color.
      * @count Specifies how long the label will flash. use 2 for a 1-second flash use 0 for a 2-second flash use -2 for a 3-second flash use -4 for a 4-second flash 
+     * @example
+     * g_form.flash("incident.number", "#FFFACD", 0);
      */
     flash(widgetName: String, color: String, count: Number);
 
     /**
      * Returns the most recent action name, or, for a client script, the sys_id of the UI action clicked.Note: Not available in Wizard client scripts.
      * 
+     * @example
+     * function onSubmit() {
+     *    var action = g_form.getActionName();
+     *    alert('You pressed ' + action);
+     * }
      * @returns The current action name.
      */
     getActionName(): String;
@@ -417,6 +628,10 @@ declare class GlideForm {
      * Returns the decimal value of the specified field.
      * 
      * @fieldName The name of the field.
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading) {
+     *    alert(g_form.getDecimalValue('percent_complete'));
+     * }
      * @returns The decimal value of the specified field.
      */
     getDecimalValue(fieldName: String): String;
@@ -456,6 +671,11 @@ declare class GlideForm {
      * Returns the plain text value of the field label.
      * 
      * @fieldName The field name
+     * @example
+     * if (g_user.hasRole('itil')) {
+     *     var oldLabel = g_form.getLabelOf('comments');
+     *     g_form.setLabelOf('comments', oldLabel + ' (Customer visible)');
+     * }
      * @returns The label text.
      */
     getLabelOf(fieldName: String): String;
@@ -474,6 +694,15 @@ declare class GlideForm {
      * 
      * @fieldName Name of the field.
      * @callBack Name of the call back function.
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading) {
+     *     g_form.getReference('caller_id', doAlert); // doAlert is our callback function
+     * }
+     *  
+     * function doAlert(caller) { // reference is passed into callback as first arguments
+     *    if (caller.vip === 'true')
+     *       alert('Caller is a VIP!');
+     * }
      * @returns GlideRecord object for the specified field. If the specified reference cannot be found, it returns an initialized GlideRecord object where currentRow = -1 and rows.length = 0.
      */
     getReference(fieldName: String, callBack: Function): GlideRecord;
@@ -488,6 +717,17 @@ declare class GlideForm {
     /**
      * Returns an array of the form's sections.This method is not available on the mobile platform. If this method is run on a mobile platform, no action occurs.
      * 
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading) {
+     *    //this example was run on a form divided into sections (Change form)
+     *    // and hid a section when the "state" field was changed
+     *    var sections = g_form.getSections();
+     *    if (newValue == '2') {
+     *       g_form.setSectionDisplay(sections[1], false);
+     *    } else {
+     *       g_form.setSectionDisplay(sections[1], true);
+     *    }
+     * }
      * @returns The form's sections.
      */
     getSections(): ArrayofHTMLelements;
@@ -495,6 +735,12 @@ declare class GlideForm {
     /**
      * Returns the name of the table to which this record belongs.On the server side, the table for the current record can be retrieved with current.sys_class_name or current.getTableName().
      * 
+     * @example
+     * function onLoad() {
+     *     if (g_form.isNewRecord()) {
+     *         var tableName = g_form.getTableName(); //Get the table name
+     *     }
+     * }
      * @returns Name of the table.
      */
     getTableName(): String;
@@ -502,6 +748,11 @@ declare class GlideForm {
     /**
      * Returns the sys_id of the record displayed in the form.
      * 
+     * @example
+     * function onLoad() {
+     *    var incSysid = g_form.getUniqueValue();
+     *    alert(incSysid);
+     * }
      * @returns The record's sys_id.
      */
     getUniqueValue(): String;
@@ -510,6 +761,10 @@ declare class GlideForm {
      * Returns the value of the specified field.
      * 
      * @fieldName The field name.
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading) {
+     *    alert(g_form.getValue('short_description'));
+     * }
      * @returns The value of the specified field.
      */
     getValue(fieldName: String): String;
@@ -546,6 +801,8 @@ declare class GlideForm {
      * 
      * @fieldName Name of the field.
      * @clearAll When true, all messages for the field are cleared. When false, only the last message is removed.
+     * @example
+     * g_form.hideFieldMsg('impact', true);
      */
     hideFieldMsg(fieldName: String, clearAll: Boolean);
 
@@ -580,6 +837,12 @@ declare class GlideForm {
     /**
      * Returns true if the record has never been saved.
      * 
+     * @example
+     * function onLoad() {
+     *    if(g_form.isNewRecord()){
+     *       alert('New Record!');
+     *    }
+     * }
      * @returns Returns true if the record has not been saved; otherwise false.
      */
     isNewRecord(): Boolean;
@@ -595,6 +858,8 @@ declare class GlideForm {
      * You can update a list collector variable.
      * 
      * @fieldName Name of the slush bucket.
+     * @example
+     * g_form.refreshSlushbucket('bucket');
      */
     refreshSlushbucket(fieldName: String);
 
@@ -604,6 +869,22 @@ declare class GlideForm {
      * @fieldName Field name.
      * @icon Name of the icon to remove.
      * @title The icon's text title (name).
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading) {
+     * 	// if the caller_id field is not present, then we can't add an icon anywhere
+     * 	if (!g_form.hasField('caller_id'))
+     * 		return;
+     *  
+     * 	if (!newValue)
+     * 		return;
+     *  
+     * 	g_form.getReference('caller_id', function(ref) {
+     * 		g_form.removeDecoration('caller_id', 'icon-star', 'VIP');
+     *  
+     * 		if (ref.getValue('vip') == 'true')
+     * 			g_form.addDecoration('caller_id', 'icon-star', 'VIP');			
+     * 	});
+     * }
      */
     removeDecoration(fieldName: String, icon: String, title: String);
 
@@ -614,6 +895,8 @@ declare class GlideForm {
      * @icon Name of the icon to remove.
      * @title The icon's text title (name).
      * @color A CSS color
+     * @example
+     * g_form.removeDecoration('caller_id', 'icon-star', 'VIP', 'blue');
      */
     removeDecoration(fieldName: String, icon: String, title: String, color: String);
 
@@ -622,6 +905,8 @@ declare class GlideForm {
      * 
      * @fieldName Name of the field.
      * @choiceValue The value stored in the database. This is not the label.
+     * @example
+     * g_form.removeOption('priority', '1');
      */
     removeOption(fieldName: String, choiceValue: String);
 
@@ -644,6 +929,18 @@ declare class GlideForm {
      * 
      * @fieldname Name of the field.
      * @display When true displays the field, when false hides the field.
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+     *    //If the page isn't loading
+     *    if (!isLoading) {
+     *       //If the new value isn't blank
+     *       if (newValue != '') {
+     *          g_form.setDisplay('priority', false);   
+     *       }
+     *       else 
+     *          g_form.setDisplay('priority', true);
+     *       }
+     *    }
      */
     setDisplay(fieldname: String, display: Boolean);
 
@@ -652,6 +949,11 @@ declare class GlideForm {
      * 
      * @fieldName The field name.
      * @label The field text label.
+     * @example
+     * if (g_user.hasRole('itil')) {
+     *     var oldLabel = g_form.getLabelOf('comments');
+     *     g_form.setLabelOf('comments', oldLabel + ' (Customer visible)');
+     * }
      */
     setLabelOf(fieldName: String, label: String);
 
@@ -685,6 +987,8 @@ declare class GlideForm {
      * 
      * @fieldName Name of the field.
      * @value Value in the database.
+     * @example
+     * g_form.setValue('short_description', 'replace this with appropriate text');
      */
     setValue(fieldName: String, value: String);
 
@@ -694,6 +998,10 @@ declare class GlideForm {
      * @fieldName Name of the field.
      * @value System ID for the reference value in the database. Can be an array of system IDs if the field is a glide-list.
      * @displayValue Display name for the referenced value in the database. Can be an array of display names if the field is a glide-list.
+     * @example
+     * g_form.setValue('assigned_to', userSysID, userName);
+     * @example
+     * g_form.setValue('glide-list_field_name', sysIDArray, displayNameArray);
      */
     setValue(fieldName: String, value: String, displayValue: String);
 
@@ -702,6 +1010,18 @@ declare class GlideForm {
      * 
      * @fieldName The field name.
      * @display When true displays the field. When false hides the field.
+     * @example
+     * function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+     *    //If the page isn't loading
+     *    if (!isLoading) {
+     *       //If the new value isn't blank
+     *       if(newValue != '') {
+     *          g_form.setVisible('priority', false); 
+     *       }
+     *       else
+     *          g_form.setVisible('priority', true); 
+     *       }
+     *    }
      */
     setVisible(fieldName: String, display: Boolean);
 
@@ -728,6 +1048,8 @@ declare class GlideForm {
      * @field Name of the field or control.
      * @message Message to display.
      * @type "error","info", or "warning".
+     * @example
+     * g_form.showFieldMsg('impact','Low impact response time can be one week','info');
      */
     showFieldMsg(field: String, message: String, type: String);
 
@@ -738,6 +1060,8 @@ declare class GlideForm {
      * @message Message to display.
      * @type "error","info", or "warning".
      * @scrollForm When true, the form scrolls to the field if it is off screen. When false, the form does not scroll.
+     * @example
+     * g_form.showFieldMsg('impact','Low impact not allowed with High priority','error',false);
      */
     showFieldMsg(field: String, message: String, type: String, scrollForm: Boolean);
 
@@ -1076,6 +1400,8 @@ declare class GlideMenu {
      * Clears the image for an item.
      * 
      * @item Specifies the item to have its image removed from display.
+     * @example
+     * g_menu.clearImage(g_item);
      */
     clearImage(item: GlideMenuItem);
 
@@ -1097,6 +1423,8 @@ declare class GlideMenu {
      * Disables a menu item so that it cannot be selected. The disabled menu item is displayed in a lighter color (grayed out) to indicate it is disabled.
      * 
      * @item The item to be disabled.
+     * @example
+     * g_menu.setDisabled(g_item);
      */
     setDisabled(item: GlideMenuItem);
 
@@ -1104,6 +1432,8 @@ declare class GlideMenu {
      * Enables the specified menu item.
      * 
      * @item The item to be enabled.
+     * @example
+     * g_menu.setEnabled(g_item);
      */
     setEnabled(item: GlideMenuItem);
 
@@ -1111,6 +1441,8 @@ declare class GlideMenu {
      * Hides the specified menu item.When hiding menu items, the separator bars are not adjusted, so it is possible to end up with the menu showing two separators in a row.
      * 
      * @item The item to be hidden.
+     * @example
+     * g_menu.setHidden(g_item);
      */
     setHidden(item: GlideMenuItem);
 
@@ -1119,6 +1451,8 @@ declare class GlideMenu {
      * 
      * @item the item to have the image displayed.
      * @imgSrc the image to attach to the menu item.
+     * @example
+     * g_menu.setImage(g_item, 'images/checked.gifx');
      */
     setImage(item: GlideMenuItem, imgSrc: String);
 
@@ -1127,6 +1461,8 @@ declare class GlideMenu {
      * 
      * @item the item to be labeled.
      * @label the label to be displayed. The string may contain HTML.
+     * @example
+     * g_menu.setLabel(g_item, "This is a new label");
      */
     setLabel(item: GlideMenuItem, label: String);
 
@@ -1134,6 +1470,8 @@ declare class GlideMenu {
      * Displays the specified item.
      * 
      * @item The item to be displayed.
+     * @example
+     * g_menu.setVisible(g_item);
      */
     setVisible(item: GlideMenuItem);
 
@@ -1154,6 +1492,10 @@ declare class GlideModalFormV3 {
      * @title The form title.
      * @tableName The table being shown.
      * @onCompletionCallback The function to call after the form has been submitted and processed on the server. The callback function has the form callbackFunction(String action_verb, String sys_id, String table, String displayValue) where action_verb is the name of the UI action executed. Examples are sysverb_insert (Submit button), sysverb_cancel, sysverb_save (Save button). sys_id is the sys_id of the affected record. table is the name of the table containing the record. displayValue 
+     * @example
+     * var d = new GlideModalForm('dialog title', 'table_name_or_form_name', [callback on completion of submit])
+     *          d.setPreference('name', 'value');
+     *          d.render();
      */
     constructor(title: String, tableName: String, onCompletionCallback: Function);
 
@@ -1224,6 +1566,16 @@ declare class GlideModalV3 {
      * Returns the value of the specified property.
      * 
      * @name The property name
+     * @example
+     * var gm = new GlideModal('UI_dialog_name');
+     *         //Sets the dialog title
+     *         gm.setTitle('Show title');  			      	
+     *         //returns the value of the title
+     *         var title = gm.getPreference('title');
+     *         gm.setWidth(550);
+     *         //Opens the dialog
+     *         gm.render(); 
+     *       
      * @returns The specified property's value
      */
     getPreference(name: String): String;
@@ -1231,6 +1583,14 @@ declare class GlideModalV3 {
     /**
      * Renders the UI page in the modal.
      * 
+     * @example
+     * var gm = new GlideModal("UI_dialog_name");
+     *         //Sets the dialog title
+     *         gm.setTitle('Show title');  			      	
+     *         gm.setWidth(550);
+     *         //Opens the dialog
+     *         gm.render(); 
+     *       
      */
     render();
 
@@ -1253,6 +1613,15 @@ declare class GlideModalV3 {
      * 
      * @name The property name
      * @value The property value
+     * @example
+     * var gm = new GlideModal('UI_dialog_name');
+     *         //Sets the dialog title
+     *         gm.setTitle('Show title'); 
+     *         gm.setPreference('table', 'task'); 			
+     *         gm.setPreference('name', 'value');        	
+     *         //Opens the dialog
+     *         gm.render(); 
+     *       
      */
     setPreference(name: String, value: String);
 
@@ -1267,6 +1636,14 @@ declare class GlideModalV3 {
      * Sets the title of the modal.
      * 
      * @title The title to be displayed
+     * @example
+     * var gm = new GlideModal('UI_dialog_name');
+     *         //Sets the dialog title
+     *         gm.setTitle('Show title'); 
+     *         gm.setPreference('name', 'value'); 			      	        
+     *         //Opens the dialog
+     *         gm.render(); 
+     *       
      */
     setTitle(title: String);
 
@@ -1274,6 +1651,15 @@ declare class GlideModalV3 {
      * Set the width in pixels.The modal is boxed into predefined system sizes.
      * 
      * @width The number of pixels.
+     * @example
+     * var gm = new GlideModal('UI_dialog_name');
+     *         //Sets the dialog title
+     *         gm.setTitle('Show title'); 
+     *         gm.setPreference('name', 'value'); 			      	
+     *         gm.setWidth(550);
+     *         //Opens the dialog
+     *         gm.render(); 
+     *       
      */
     setWidth(width: Number);
 
@@ -1349,6 +1735,12 @@ declare class GlideNotificationV3 {
      * Displays the specified string over the page content as the specified type of message.
      * 
      * @type The type of message - error, warning, or info.
+     * @example
+     * // Displays an info message at the top of the screen
+     * nowapi.g_notification.show("info", "The record has been updated");
+     * 	 
+     * // Displays an error message at the top of the screen
+     * nowapi.g_notification.show("error", "You need to provide notes!");
      */
     show(type: String);
 
@@ -1367,6 +1759,8 @@ declare class GlideRecordV3 {
      * Creates an instance of the GlideRecord class for the specified table.
      * 
      * @tableName The table to be used.
+     * @example
+     * var gr = new GlideRecord('incident');
      */
     constructor(tableName: String);
 
@@ -1459,6 +1853,18 @@ declare class GlideRecordV3 {
      * @responseFunction The function called when the query results are available. (optional)
      * @name A field name. (optional)
      * @value The field value to check for. (optional)
+     * @example
+     * // synchronous, no response function, DO NOT USE
+     * query(); 
+     * // 
+     * // asynchronous, calls the responseFunction when done 
+     * query(responseFunction) 
+     * //
+     * // synchronous, adds "category=hardware" to current query conditions, and does a query, DO NOT USE
+     * query('category', 'hardware') 
+     * //
+     * //asynchronous, adds "category=hardware" to current query conditions, does a query, and calls responseFunction 
+     * query('category', 'hardware', responseFunction) 
      */
     query(responseFunction: Function, name: String, value: String);
 
@@ -1477,6 +1883,18 @@ declare class GlideUIScripts {
      * Calls a UI script with the UI Type set to All or Desktop from a client script or other client-side code. Returns a promise.Use the then() function to perform an asynchronous action after the call resolves.
      * 
      * @scriptName API name of the UI script to run.
+     * @example
+     * function onLoad() {
+     *     //Call the UI script directly If the UI Type is Mobile / Service Portal, for example:
+     *     //g_ui_scripts['myUIScript'];
+     * 
+     *     //Use the method if the UI Type is All or Desktop
+     *     g_ui_scripts.getUIScript('myUIScript').then(function(script) {
+     *         script.myUIScriptMethod();
+     *     }, function() {
+     *         console.log('The script did not load');
+     *     });
+     * }
      * @returns The result of the asynchronous call.
      */
     getUIScript(scriptName: String): Promise;
@@ -1504,6 +1922,10 @@ declare class GlideURLV3 {
      * 
      * @name Name of the query string parameter.
      * @value Query string value.
+     * @example
+     * var gu = new GlideURL('incident.do');
+     * var url = gu.addParam('sys_id', '-1');
+     * 
      * @returns The GlideURL
      */
     addParam(name: String, value: String): String;
@@ -1546,6 +1968,8 @@ declare class GlideUser {
      * Returns a session client value previously set with putClientData().Session client data is a set of named strings that may be setup on the server (using putClientData()) that then may be used by client scripts (using getClientData()). Can be used during form load time to get information that the client script needs to make decisions about the form, for example, which fields should be visible.
      * 
      * @Key Name of the client data to retrieve.
+     * @example
+     * var loginLanguage = g_user.getClientData("loginlanguage");
      * @returns Value of the client data.
      */
     getClientData(Key: String): String;
@@ -1553,6 +1977,8 @@ declare class GlideUser {
     /**
      * Returns the first and last name of the current user.
      * 
+     * @example
+     * var formalName = g_user.getFullName();
      * @returns The current user's full name.
      */
     getFullName(): String;
@@ -1563,6 +1989,10 @@ declare class GlideUser {
      * @role Role to check
      * @includeDefaults (Optional) Flag that indicates whether to include default roles, such as snc_internal and snc_external, in the request. For additional information on roles, see Explicit roles.
      * Default: false
+     * @example
+     * var isInternal = g_user.hasRole('snc_internal', true);
+     * @example
+     * var isItil = g_user.hasRole('itil');
      * @returns Returns true if the current user has the specified role or the admin role; otherwise returns false.
      */
     hasRole(role: String, includeDefaults: Boolean): Boolean;
@@ -1573,6 +2003,10 @@ declare class GlideUser {
      * @role Role to check
      * @includeDefaults (Optional) Flag that indicates whether to include default roles, such as snc_internal and snc_external, in the request. For additional information on roles, see Explicit roles.
      * Default: false
+     * @example
+     * var isInternal = g_user.hasRoleExactly('snc_internal', true);
+     * @example
+     * var isItil = g_user.hasRoleExactly('itil');
      * @returns Returns true if the current user has the specified role.
      */
     hasRoleExactly(role: String, includeDefaults: Boolean): Boolean;
@@ -1583,6 +2017,10 @@ declare class GlideUser {
      * @roles Comma-separated list of roles to check
      * @includeDefaults (Optional) Flag that indicates whether to include default roles, such as snc_internal and snc_external, in the request. For additional information on roles, see Explicit roles.
      * Default: false
+     * @example
+     * var isOK = g_user.hasRoleFromList("itil, maint");
+     * @example
+     * var isOK = g_user.hasRoleFromList("itil, maint, snc_internal", true);
      * @returns Returns true if the current user has a role in the list or the admin role.
      */
     hasRoleFromList(roles: String, includeDefaults: Boolean): Boolean;
@@ -1592,6 +2030,10 @@ declare class GlideUser {
      * 
      * @includeDefaults (Optional) Flag that indicates whether to include default roles, such as snc_internal and snc_external, in the request. For additional information on roles, see Explicit roles.
      * Default: false
+     * @example
+     * var yesRole = g_user.hasRoles();
+     * @example
+     * var yesRole = g_user.hasRoles(true);
      * @returns Returns true if the current user has at least one role.
      */
     hasRoles(includeDefaults: Boolean): Boolean;
@@ -1612,6 +2054,9 @@ declare class i18NV3 {
      * 
      * @message The message to have the tokens added.
      * @map The map of name/value pairs to replace in the message.
+     * @example
+     * // Returns: "The rich young ruler was very very rich"
+     * nowapi.i18n.format("The {p1} {p2} {p3} was very very {p1}",{p1: "rich", p2: "young", p3: "ruler"});
      * @returns The formatted string
      */
     format(message: String, map: Object): String;
@@ -1653,6 +2098,33 @@ declare class NotifyClient {
      * @notifyConfigforceRefreshToken Flag that indicates whether to auto-renew expired client tokens. false: Do not automatically renew client tokens when they expire. true: Default. Automatically renew client tokens when they expire. 
      * @notifyConfigskipParentId Flag that indicates whether to immediately invoke the onIncoming caller for incoming calls. false: Default. Do not immediately invoke the onIncoming event handler. true: Immediately invoke the onIncoming event handler. By setting this flag, if there is another call, where the &lt;Dial&gt;&lt;Client&gt; Twiml caused the incoming call, then setting this flag causes the system to auto poll the backend. This auto poll obtains the parent notify_call reference. 
      * @notifyConfigvendor Vendor to which the caller belongs. SNC.Notify.Vendor.TWILIO_DIRECT SNC.Notify.Vendor.TWILIO (older, deprecated Twilio driver) 
+     * @example
+     * jQuery(function () {
+     * 
+     *   var notifyConfig = {
+     *     autoLoadScriptResources: true // This will take care of auto loading the JS resources needed by the client (if any)
+     *   };
+     *   var client = new SNC.Notify.Client(notifyConfig, true); // The second argument ensures that the proper vendor for the given number is auto determined
+     *   client.setCallerId('valid_notify_long_number', function () {
+     *     // This is called after the vendor has been determined.
+     * 
+     *     if (!notifyConfig.vendor) // Means this number has no compatible vendor
+     *       return;
+     * 
+     *     client.addEventListener(SNC.Notify.STD_EVENTS.ONLINE, function () {
+     *       // Ability to call is available
+     *     });
+     *     client.addEventListener(SNC.Notify.STD_EVENTS.OFFLINE, function () {
+     *       // Ability to call is _not_ available right now
+     *     });
+     *     client.addEventListener(SNC.Notify.STD_EVENTS.ERROR, function (msg, code) {
+     *       // Some error happened
+     *     });
+     *       //... register other event handlers here
+     *       //Show UI elements which can be used to invoke client.call() and other APIs
+     *     client.init(); // This is important to call this.
+     *     });
+     * });
      */
     constructor(initializeVendorClientLazily: Boolean, notifyConfig: Object, notifyConfigautoLoadScriptResources: Boolean, notifyConfigcallerId: Number, notifyConfigforceRefreshToken: Boolean, notifyConfigskipParentId: Boolean, notifyConfigvendor: Constant);
 
@@ -1660,6 +2132,39 @@ declare class NotifyClient {
      * Registers an event handler to listen for changes in a Notify client.Using this method you can register multiple listeners. Each listener must be a separate method call.
      * 
      * @event Name of the event to listen for. Instead of passing strings, use the constants defined in SNC.Notify.STD_EVENTS. CALL_START: call has started and is in progress. CALL_CANCEL: caller canceled the call. CALL_INIT: WebRTC connected to a call (incoming or outgoing). CALL_DISCONNECT: current call has been disconnected. ERROR: Error occurred. Parameters: message(string), errCode(string) message: error message to display. errCode: Optional. Associated error code. INCOMING_CALL: Call is coming in. Parameters: from(string), to(string), callId(string), parentId(string), sysId(string), isFromClient(boolean) from: caller's phone number. to: called phone number. callId: SID of the call. parentId: parent notify_call reference. If skipParentId is set to true, this parameter should not be passed. sysId: WebRTC-to-WebRTC calls only. Unique identifier (sys_id) of the caller. isFromClient: WebRTC-to-WebRTC calls only. Flag that indicates whether the call is from another WebRTC client. CALL_MUTE: client is muted. CALL_UNMUTE: client is unmuted. OFFLINE: WebRTC session is not active. ONLINE: WebRTC session is ready. Must be set after calling the init() method. 
+     * @example
+     * jQuery(function () {
+     * 
+     *   var notifyConfig = {
+     *     autoLoadScriptResources: true // This will take care of auto loading the JS resources needed by the client (if any)
+     *   };
+     *   var client = new SNC.Notify.Client(notifyConfig, true); // The second argument ensures that the proper client for the given number is auto determined
+     *   client.setCallerId('valid_notify_long_number', function () {
+     *     // This is called after the client has been determined.
+     * 
+     *     if (!notifyConfig.vendor) // Means this number has no compatible client
+     *       return;
+     * 
+     *     client.addEventListener(SNC.Notify.STD_EVENTS.ONLINE, function () {
+     *       // Ability to call is available
+     *     });
+     *     client.addEventListener(SNC.Notify.STD_EVENTS.OFFLINE, function () {
+     *       // Ability to call is _not_ available right now
+     *     });
+     *     client.addEventListener(SNC.Notify.STD_EVENTS.ERROR, function (msg, code) {
+     *       // Some error happened
+     *     });
+     *       //... register other event handlers here
+     *      
+     *     client.init(); // This is important to call this.
+     *     });
+     * });
+     * @example
+     * var dereg = notifyClient.addEventListener(SNC.Notify.STD_EVENTS.ONLINE, function () {
+     *  ... 
+     *  }); 
+     *  dereg(); 
+     *   // The event listener function is no longer triggered.
      * @returns Function to use to de-register a listener.
      */
     addEventListener(event: String): Function;
@@ -1669,6 +2174,26 @@ declare class NotifyClient {
      * 
      * @identifier JSON object that contains either a phone number to call or the sys_id of a WebRTC user. Passing a user sys_id causes the call to be made through browser-to-browser communication.You can obtain the user sys_id from the Notify WebRTC Session table.
      * Note: If you provide both a phone number and user sys_id, the method only uses the phone number.
+     * @example
+     * notifyClient.call({
+     *     phoneNumber: "+18001112223"
+     * });
+     * @example
+     * notifyClient.call({
+     *     userId: "6816f79cc0a8016401c5a33be04be441"
+     * });
+     * @example
+     * $j("#pickupCallBtn").on("click", function() {
+     * 	notifyClient.hangupCall();
+     * });
+     * @example
+     * onConnect: function(status) {  
+     *   // webRTC receives a call connection event (incoming or outgoing).
+     *   if (status == SNC.Notify.Status.OPEN) {
+     *     setStatus(getTimeStamp() + " -- Successfully established call");
+     *     showHangupButton();
+     *   }
+     * },
      */
     call(identifier: Object);
 
@@ -1682,6 +2207,19 @@ declare class NotifyClient {
      * Forwards an ongoing incoming or outgoing phone call to either a different phone number or a different WebRTC client.
      * 
      * @argument JSON object that contains the necessary information for forwarding the call to either a phone number or a WebRTC client (user sys_id). You can obtain this sys_id from the Notify WebRTC Session table.
+     * @example
+     * var arg = {
+     *     type: "number",
+     *     id: "+17012345678",
+     *     dtmf: "1234"
+     * }
+     * client.forwardCall(arg);
+     * @example
+     * var arg = {
+     *     type: "userId",
+     *     id: "6816f79cc0a8016401c5a33be04be441"
+     * }
+     * client.forwardCall(arg);
      */
     forwardCall(argument: Object);
 
@@ -1698,6 +2236,13 @@ declare class NotifyClient {
      * 
      * @callId Unique identifier of the call for which to return the parent call identifier.
      * @callback Function that obtains the JSON object that contains either the parent call identifier or an error message if the identifier could not be obtained after several tries.
+     * @example
+     * notifyClient.getParentId( callId, function(jsonObj) {} );
+     * @example
+     * {
+     * 	parentId: "xyz",
+     * 	error: "msg"
+     * }
      * @returns Parent call identifier.
      */
     getParentId(callId: String, callback: Function): String;
@@ -1705,6 +2250,8 @@ declare class NotifyClient {
     /**
      * Returns the normalized status of the current call.
      * 
+     * @example
+     * clientStatus = notifyClient.getStatus();
      * @returns Current status of the call. The values returned by the telephony provider API are normalized by replacing the returned driver value with its equivalent value as defined in SNC.Notify.Status.
      */
     getStatus(): String;
@@ -1712,12 +2259,22 @@ declare class NotifyClient {
     /**
      * End the current call.
      * 
+     * @example
+     * $j("#pickupCallBtn").on("click", function() {
+     *     notifyClient.hangupCall();
+     * });
      */
     hangupCall();
 
     /**
      * Initializes the client driver.
      * 
+     * @example
+     * $j(function() {
+     *   notifyClient = new SNC.Notify.Client( notifyConfig );
+     *   notifyClient.setCallerId( '+31858889170' );
+     *   notifyClient.init();
+     * });
      */
     init();
 
@@ -1725,12 +2282,18 @@ declare class NotifyClient {
      * Mute or unmute the current client.
      * 
      * @muted Mutes or unmutes the current call. false: (or any non-true value) unmutes the current call. true: mutes the current call. 
+     * @example
+     * notifyClient.mute( "true" );
      */
     mute(muted: Boolean);
 
     /**
      * Answers and connects to an incoming call from a WebRTC client.Call this method when there is a notification of an incoming call.
      * 
+     * @example
+     * $j("#pickupCallBtn").on("click", function() {
+     *     notifyClient.pickupCall();
+     * });
      */
     pickupCall();
 
@@ -1738,6 +2301,8 @@ declare class NotifyClient {
      * Send one or more DTMF-valid digits over the current call.
      * 
      * @digits One or more DTMF-valid digits.
+     * @example
+     * notifyClient.SendDtmf( "1246AF" ) {} );
      */
     sendDtmf(digits: String);
 
@@ -1746,6 +2311,12 @@ declare class NotifyClient {
      * 
      * @value Phone number to use to make and receive calls.
      * @autoSelectVendorCallback Optional.initializeVendorClientLazily must be set to "true" in the constructor to use this function, otherwise an error is thrown. Name of the callback function to call once the vendor is automatically set for the specified phone number. With this option, the vendor does not need to be specified in the constructor (notifyConfig.vendor). Auto vendor selection is an asynchronous operation. Therefore, this callback is required to indicate when it is safe to call notifyConfig.init(), as this method requires that the vendor be set before it is called. In addition, you must also check if notifyConfig.vendor has been set in the callback to ensure that a vendor has been specified.
+     * @example
+     * $j(function() {
+     *   notifyClient = new SNC.Notify.Client( notifyConfig );
+     *   notifyClient.setCallerId( '+31858889170' );
+     *   notifyClient.init();
+     * });
      */
     setCallerId(value: String, autoSelectVendorCallback: Function);
 
@@ -1798,6 +2369,12 @@ declare class spAriaUtil {
      * Announce a message to a screen reader.The sendLiveMessage() method injects text into an aria-live region on the page. The default setting for an aria-live region is assertive, which means that messages are announced immediately. This can annoy and confuse users if used too frequently.
      * 
      * @message The message to be shown.
+     * @example
+     * function(spAriaUtil) {
+     *   // widget controller 
+     * 
+     *   spAriaUtil.sendLiveMessage('Hello world!');
+     * }
      */
     sendLiveMessage(message: String);
 
@@ -1816,6 +2393,21 @@ declare class spModal {
      * Displays an alert.
      * 
      * @message The message to display.
+     * @example
+     * // HTML template 
+     * &lt;button ng-click="c.onAlert()" class="btn btn-default"&gt;
+     *     Alert
+     *   &lt;/button&gt;
+     * 
+     * // Client script
+     * function(spModal) {
+     *     var c = this;
+     *   c.onAlert = function () {
+     *         spModal.alert('How do you feel today?').then(function (answer) {
+     *             c.simple = answer;
+     *         });
+     *     }
+     *  }
      * @returns The promise contains a single argument that contains true or false.
      */
     alert(message: String): Boolean;
@@ -1824,6 +2416,43 @@ declare class spModal {
      * Displays a confirmation message.
      * 
      * @message The message to display.
+     * @example
+     * // HTML template 
+     *  &lt;button ng-click="c.onConfirm()" class="btn btn-default"&gt; Confirm &lt;/button&gt; 
+     * &lt;span&gt;{{c.confirmed}}&lt;/span&gt;   
+     * 
+     * // Client script
+     * function(spModal) {
+     *   var c = this;
+     *   c.onConfirm = function() {
+     *         c.confirmed = "asking";
+     *         spModal.confirm("Can you confirm or deny this?").then(function(confirmed) {
+     *             c.confirmed = confirmed; // true or false
+     *         })
+     *     }
+     *  } 
+     * @example
+     * //HTML template 
+     * &lt;button ng-click="c.onConfirmEx()" class="btn btn-default"&gt;
+     *     Confirm - HTML message
+     *   &lt;/button&gt;
+     *   &lt;span&gt;{{c.confirmed}}&lt;/span&gt;
+     * 
+     * // Client script
+     * function(spModal) {
+     *   var c = this;
+     *   // more control, passing options
+     *     c.onConfirmEx = function() {
+     *         c.confirmed = "asking";
+     *         var warn = '&lt;i class="fa fa-warning" aria-hidden="true"&gt;&lt;/i&gt;';
+     *         spModal.open({
+     *             title: 'Delete this Thing?',
+     *             message: warn + ' Are you &lt;b&gt;sure&lt;/b&gt; you want to do that?'
+     *         }).then(function(confirmed) {
+     *             c.confirmed = confirmed;
+     *         })
+     *     }
+     * }
      * @returns The promise contains a single argument that contains true or false.
      */
     confirm(message: String): Boolean;
@@ -1832,6 +2461,84 @@ declare class spModal {
      * Opens a modal window using the specified options.
      * 
      * @options An object that may have these properties. title - a string that can be HTML that goes in the header. The default is empty. message - a string that can be HTML that goes in the header. The default is empty. buttons - an array that contains the buttons to show on the dialog. The default is Cancel and OK. input - a Boolean. When true shows an input field on the dialog. The default is false. value - a string containing the value of the input field. The default is empty. widget - a string that identifies the widget ID or sys_id to embed in the dialog. The default is empty. widgetInput - an object to send the embedded widget as input. The default is null. shared - a client-side object to share data with the embedded widget client script. size - a string indicating the size of the window. Can be 'sm' or 'lg'. The default is empty. 
+     * @example
+     * //HTML template
+     * &lt;button ng-click="c.onOpen()" class="btn btn-default"&gt;
+     *     Prompt with label
+     *   &lt;/button&gt;
+     *   &lt;div ng-show="c.name"&gt;
+     *     You answered &lt;span&gt;{{c.name}}&lt;/span&gt;
+     *   &lt;/div&gt;
+     * 
+     * //Client code
+     * function(spModal) {
+     *   var c = this;
+     *   c.onOpen = function() {
+     *         //ask the user for a string
+     *         spModal.open({
+     *             title: 'Give me a name',
+     *             message: 'What would you like to name it?',
+     *             input: true,
+     *             value: c.name
+     *         }).then(function(name) {
+     *             c.name = name;
+     *         })
+     *     }
+     * }
+     * @example
+     * //HTML template
+     * &lt;button ng-click="c.onAgree()" class="btn btn-default"&gt;
+     *     Agree
+     *   &lt;/button&gt;
+     *   &lt;div ng-show="c.agree"&gt;
+     *     You answered {{c.agree}}
+     *   &lt;/div&gt;
+     * 
+     * //Client script
+     * function(spModal) {
+     *   var c = this;
+     *   c.onAgree = function() {
+     *         // ask the user for a string
+     *         // note embedded html in message
+     *         var h = '&lt;h4&gt;Apple likes people to agree to lots of stuff&lt;/h4&gt;'
+     *         // Line feeds added to the following lines for presentation formatting.
+     *         var m = 'Your use of Apple software or hardware products is based 
+     * on the software license and other terms and conditions in effect for the 
+     * product at the time of purchase. Your agreement to these terms is required 
+     * to install or use the product. '
+     *         spModal.open({
+     *             title: 'Do you agree?',
+     *             message: h + m,
+     *             buttons: [
+     *                 {label:'✘ ${No}', cancel: true},
+     *                 {label:'✔ ${Yes}', primary: true}
+     *             ]
+     *         }).then(function() {
+     *             c.agree = 'yes';
+     *         }, function() {
+     *             c.agree = 'no';
+     *         })
+     *     }
+     * }
+     * @example
+     * //HTML template
+     * &lt;button ng-click="c.onWidget('widget-cool-clock')" class="btn btn-default"&gt;
+     *     Cool Clock
+     *   &lt;/button&gt;
+     * 
+     * //Client script
+     * function(spModal) {
+     *   var c = this;
+     *   c.onWidget = function(widgetId, widgetInput) {
+     *         spModal.open({
+     *             title: 'Displaying widget ' + widgetId,
+     *             widget: widgetId, 
+     *             widgetInput: widgetInput || {}
+     *         }).then(function(){
+     *             console.log('widget dismissed');
+     *         })      
+     *     }
+     * }
      */
     open(options: Object);
 
@@ -1840,6 +2547,24 @@ declare class spModal {
      * 
      * @message The message to display.
      * @defaultoptional A default value to use if the user does not provide a response.
+     * @example
+     * //HTML template
+     *  &lt;button ng-click="c.onPrompt()" class="btn btn-default"&gt;
+     *     Prompt
+     *   &lt;/button&gt;
+     *   &lt;div ng-show="c.name"&gt;
+     *     You answered &lt;span&gt;{{c.name}}&lt;/span&gt;
+     *   &lt;/div&gt;
+     * 
+     * // Client script
+     * function(spModal) {
+     *   var c = this;
+     *   c.onPrompt = function() {
+     *         spModal.prompt("Your name please", c.name).then(function(name) {
+     *             c.name = name;
+     *         })
+     *     }
+     * }
      * @returns The promise contains the user's response, or the default value if the user does not enter a response.
      */
     prompt(message: String, defaultoptional: String): String;
@@ -1859,6 +2584,8 @@ declare class spUtil {
      * Displays a notification error message.
      * 
      * @message Error message to display.
+     * @example
+     * spUtil.addErrorMessage("There has been an error processing your request")
      */
     addErrorMessage(message: String);
 
@@ -1866,6 +2593,8 @@ declare class spUtil {
      * Displays a notification info message.
      * 
      * @message Message to display.
+     * @example
+     * spUtil.addInfoMessage("Your order has been placed")
      */
     addInfoMessage(message: String);
 
@@ -1873,6 +2602,8 @@ declare class spUtil {
      * Displays a trivial notification message.Trivial messages disappear after a short period of time.
      * 
      * @message Message to display.
+     * @example
+     * spUtil.addTrivialMessage("Thanks for your order")
      */
     addTrivialMessage(message: String);
 
@@ -1881,6 +2612,8 @@ declare class spUtil {
      * 
      * @template String template with values for substitution. 
      * @data Object containing variables for substitution.
+     * @example
+     * spUtil.format('An error ocurred: {error} when loading {widget}', {error: '404', widget: 'sp-widget'})
      * @returns A formatted string.
      */
     format(template: String, data: Object): String;
@@ -1890,6 +2623,19 @@ declare class spUtil {
      * 
      * @widgetId Widget ID or sys_id of the widget to embed.
      * @data (Optional) Name/value pairs of parameters to pass to the widget model.
+     * @example
+     * spUtil.get("widget-cool-clock").then(function(response) {
+     *   c.coolClock = response;
+     * });
+     * @example
+     * spUtil.get('pps-list-modal', {title: c.data.editAllocations, 
+     *   table: 'resource_allocation', 
+     *   queryString: 'GROUPBYuser^resource_plan=' + c.data.sysId, 
+     *   view: 'resource_portal_allocations' }).then(function(response) {
+     *     var formModal = response;
+     *     c.allocationListModal = response;
+     *   });  	
+     * 
      * @returns Model of the embedded widget.
      */
     get(widgetId: String, data: Object): Object;
@@ -1901,6 +2647,28 @@ declare class spUtil {
      * @table Watched table.
      * @filter Filter for fields to watch.
      * @callback Optional. Parameter to define the callback function.
+     * @example
+     * //A simple recordWatch function.
+     * spUtil.recordWatch($scope, "live_profile", "sys_id=" + liveProfileId);
+     * 
+     * //In a widget client script
+     * function(spUtil, $scope) {
+     *   // widget controller 
+     *   var c =this;
+     * 
+     *   // Registers a listener on the incident table with the filter active=true, 
+     *   // meaning that whenever something changes on that table with that filter, 
+     *   // the callback function is executed.    
+     *   // The callback function takes a single parameter 'response', which contains 
+     *   // the property 'data'. The 'data' property contains information about the changed record. 
+     *   spUtil.recordWatch($scope, "incident", "active=true", function(response) {
+     *         
+     *     // Returns the data inserted or updated on the table 
+     *     console.log(response.data);   
+     *     
+     *     });
+     * }
+     * 
      * @returns Return value of the callback function.
      */
     recordWatch($scope: Object, table: String, filter: String, callback: Function): Promise;

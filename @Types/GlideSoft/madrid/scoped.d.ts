@@ -17,12 +17,16 @@ declare namespace sn_sc {
          * Creates an instance of the CartJS class with the name of a defined cart for the user who is currently logged in.
          * 
          * @cartName Name of a defined cart for the user who is currently logged in.
+         * @example
+         * var cart = new sn_sc.CartJS(cart1);
          */
         constructor(cartName: String);
 
         /**
          * Creates an instance of the CartJS class for the default cart of the user who is currently logged in.
          * 
+         * @example
+         * var cart = new sn_sc.CartJS();
          */
         constructor();
 
@@ -38,6 +42,22 @@ declare namespace sn_sc {
          * ...
          * }
          * } item_id: sys_id of the item to be added to the cart item_quantity: Number of items to be added. Default value is 1. var_name: Name of the question. var_value: Value of the answer (Not the display value). 
+         * @example
+         * 
+         * var cart = new sn_sc.CartJS();
+         * var item =
+         * {
+         * 'sysparm_id': '0d08837237153000158bbfc8bcbe5d02',
+         * 'sysparm_quantity': '1',
+         * 'variables':{
+         * 'carrier': 'at_and_t_mobility',
+         * 'data_plan': '500MB',
+         * 'duration': 'eighteen_months',
+         * 'color': 'slate',
+         * 'storage': 'sixtyfour' 
+         * }};
+         * var cartDetails = cart.addToCart(item);
+         * gs.info(cartDetails);
          * @returns Structure of the current cart.{
          * 'subtotal': value,
          * 'items':[
@@ -52,12 +72,20 @@ declare namespace sn_sc {
         /**
          * Specifies if the current user has the required role to edit the Request for field.
          * 
+         * @example
+         * var cart=new sn_sc.CartJS();
+         * console.log(cart.canViewRF());
          * @returns Returns true if the user has the required role to edit the requested for field.
          */
         canViewRF(): Boolean;
 
         /**
          * Performs the cart checkout. If the two-step checkout is enabled, returns the order summary. If the two-step checkout is disabled, the cart is submitted and details of the generated request are returned.
+         * 
+         * @example
+         * var cart = new sn_sc.CartJS();
+         * var checkoutInfo = cart.checkoutCart();
+         * gs.info(checkoutInfo);
          * 
          * @returns If the two-step checkout is enabled, the summary of the items in the cart is returned.{ "subtotal_price":"", "subtotal_recurring_frequency":"", "delivery_address":"", "special_instructions":"", "total_title":"", "requested_for_user":"System Administrator", "requested_for":"6816f79cc0a8016401c5a33be04be441", “daily”: ["frequency_subtotal":"", "items":[{}, {}, ...], …], “monthly”:["frequency_subtotal":"", "items":[{}, {}, ...], …], “annually”:["frequency_subtotal":"", "items":[{}, {}, ...], …], "none":["frequency_subtotal":"", "items":[{}, {}, ...], …],
          * }
@@ -70,18 +98,30 @@ declare namespace sn_sc {
         /**
          * Deletes the current cart.
          * 
+         * @example
+         * var cart = new sn_sc.CartJS();
+         *       cart.empty();
          */
         empty();
 
         /**
          * Returns the cart details.
          * 
+         * @example
+         * var cart=new sn_sc.CartJS();
+         * 	console.log (cart.getCartDetails());
          * @returns Object pointing to the current cart details.
          */
         getCartDetails(): Object;
 
         /**
          * Returns the cart id of the current cart.
+         * 
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.getCartID(); 
+         *       gs.info(cartId);
          * 
          * @returns sys_id for the current cart.
          */
@@ -90,12 +130,25 @@ declare namespace sn_sc {
         /**
          * Returns the GlideRecord for the cart item (sc_cart_item) in the current cart.
          * 
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.getCartItems(); 
+         *       gs.info(CartItems)
+         * 
          * @returns GlideRecord pointing to cart items in the current cart.
          */
         getCartItems(): GlideRecord;
 
         /**
          * Gets the delivery address for the current cart.
+         * 
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.setDeliveryAddress("Brasilia, Brasil");
+         *       cart.getDeliveryAddress(); 
+         *       gs.info(DeliveryAddress);
          * 
          * @returns Delivery address for the current cart.
          */
@@ -104,6 +157,13 @@ declare namespace sn_sc {
         /**
          * Gets the sys_id from the sys_user record of the user for whom the cart is requested.
          * 
+         * @example
+         * 
+         * var cart = new sn_sc.CartJS();
+         * cart.setRequestedFor("039c516237b1300054b6a3549dbe5dfc")
+         * cart.getRequestedFor(); 
+         * gs.info(cartId);
+         * 
          * @returns sys_id from the sys_user record of the user for whom the cart is requested.
          */
         getRequestedFor(): String;
@@ -111,12 +171,25 @@ declare namespace sn_sc {
         /**
          * Gets the name from the user record of the user for whom the current cart is requested.
          * 
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.getRequestedForDisplayName(); 
+         *       gs.info(DisplayName);
+         * 
          * @returns Name from the user record of the user for whom the current cart is requested.
          */
         getRequestedForDisplayName(): String;
 
         /**
          * Gets the special instructions for the current cart.
+         * 
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.setSpecialInstructions("Delivery before 8 AM.");
+         *       cart.getSpecialInstructions(); 
+         *       gs.info(SpecialInstructions);
          * 
          * @returns Special instructions for the current cart.
          */
@@ -128,6 +201,23 @@ declare namespace sn_sc {
          * @request A JSON object that contains details of the catalog item to be ordered.The structure of the request object is:
          * { 'sys_id' : item_id, 'sysparm_quantity' : item_quantity, 'sysparm_requested_for' : requested_for, 'variables' : { 'var_name' : 'var_value', ... }
          * } item_id: sys_id of the item to be added to the cart. Required. item_quantity: Number of items to be added. Default value is 1. var_name: Name of the question. var_value: Value of the answer (Not the display value). 
+         * @example
+         * 
+         * var cart = new sn_sc.CartJS();
+         * var request =
+         * {
+         * 'sysparm_id': '0d08837237153000158bbfc8bcbe5d02',
+         * 'sysparm_quantity': '1',
+         * 'variables':{
+         * 'carrier': 'at_and_t_mobility',
+         * 'data_plan': '500MB',
+         * 'duration': 'eighteen_months',
+         * 'color': 'slate',
+         * 'storage': 'sixtyfour'
+         * }
+         * }
+         * var cartDetails = cart.orderNow(request);
+         * gs.info(cartDetails);
          * @returns If the two-step checkout is enabled:{ 'cart_id' : 'sys_id of cart that item has been added to'
          * }
          * If the two-step checkout is disabled:
@@ -140,6 +230,11 @@ declare namespace sn_sc {
          * Sets the delivery address for the current cart.
          * 
          * @address Delivery address for the current cart.
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.setDeliveryAddress("Brasilia, Brasil"); 
+         *       
          */
         setDeliveryAddress(address: String);
 
@@ -147,6 +242,11 @@ declare namespace sn_sc {
          * Sets the sys_id in the sys_user record of the user for whom the cart is requested.
          * 
          * @user sys_id to be set in the sys_user record of the user for whom the cart is requested.
+         * @example
+         * 
+         * var cart = new sn_sc.CartJS();
+         * cart.setRequestedFor("039c516237b1300054b6a3549dbe5dfc")
+         * 
          */
         setRequestedFor(user: String);
 
@@ -154,6 +254,11 @@ declare namespace sn_sc {
          * Sets the special instructions for the current cart.
          * 
          * @specialInstructions Special instructions for the current cart.
+         * @example
+         * 
+         *       var cart = new sn_sc.CartJS();
+         *       cart.setSpecialInstructions("Delivery before 8 AM."); 
+         *    
          */
         setSpecialInstructions(specialInstructions: String);
 
@@ -163,6 +268,16 @@ declare namespace sn_sc {
          * @request A JSON object that contains details of the cart to be submitted.The structure of the request object is:
          * { 'special_instructions' : 'instructions', 'sysparm_requested_for' : requested_for, 'delivery_address' : 'address'
          * } instructions: Special instructions for the request. requested_for : sys_id of the requested_for user. address: Delivery address for the request. 
+         * @example
+         * var cart = new sn_sc.CartJS();
+         * var request =
+         * {
+         *   'special_instructions' : 'Delivery only in working hours',
+         *   'requested_for' : '62826bf03710200044e0bfc8bcbe5df1',
+         *   'delivery_address' : "Brasilia, Brasil",
+         * };
+         * var requestDetails = cart.submitOrder(request);
+         * gs.info(requestDetails);
          * @returns Structure of the cart.{ 'request_id' : 'sys_id of the generated Request', 'request_number' : 'Number of the generated Request'
          * }
          */
@@ -175,6 +290,23 @@ declare namespace sn_sc {
          * { 'sysparm_quantity' : item_quantity, 'sysparm_requested_for' : requested_for, 'variables' : { 'var_name' : 'var_value', ... }
          * } item_quantity: Number of items to be added. Default value is 1. var_name: Name of the question. var_value: Value of the answer (Not the display value). 
          * @cart_item_id sys_id of the cart item to be modified.
+         * @example
+         * var cart = new sn_sc.CartJS();
+         * var request =
+         * {
+         *   'sysparm_quantity': '1',
+         *   'variables':{
+         *     'carrier': 'at_and_t_mobility',
+         *     'data_plan': '500MB',
+         *     'duration': 'eighteen_months',
+         *     'color': 'slate',
+         *     'storage': 'sixtyfour'
+         *   }
+         * };
+         * var cart_item_id = "4d69b672c322320076173b0ac3d3ae79";
+         * var cartDetails = cart.updateItem(request, cart_item_id);
+         * gs.info(cartDetails);
+         * 
          * @returns Details of the cart.{ 'subtotal': value, 'items':[ { itemName:'', quantity:'', price:'', recurring_price:'' } ...], ...
          * }
          */
@@ -197,6 +329,8 @@ declare namespace sn_sc {
         /**
          * Creates an instance of the CatalogClientScript class.
          * 
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
          */
         constructor();
 
@@ -204,6 +338,9 @@ declare namespace sn_sc {
          * Adds a script to the catalog client script.
          * 
          * @script Script to be added to the catalog client script.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.addScript("function onLoad(){Enter the script}");
          */
         addScript(script: String);
 
@@ -211,6 +348,9 @@ declare namespace sn_sc {
          * Specifies if the catalog client script runs on a catalog item.
          * 
          * @flag If true, the catalog client script runs on the catalog item. If false, the catalog client script does not run on the catalog item.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.appliesToCatalogItem(true);
          */
         appliesToCatalogItem(flag: Boolean);
 
@@ -218,6 +358,9 @@ declare namespace sn_sc {
          * Specifies if the catalog client script runs on a catalog task.
          * 
          * @flag If true, the catalog client script runs on the catalog task. If false, the catalog client script does not run on the catalog task.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.appliesToCatalogTask(true);
          */
         appliesToCatalogTask(flag: Boolean);
 
@@ -225,6 +368,9 @@ declare namespace sn_sc {
          * Specifies if the catalog client script runs on a requested item.
          * 
          * @flag If true, the catalog client script runs on the requested item. If false, the catalog client script does not run on the requested item.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.appliesToRequestedItem(true);
          */
         appliesToRequestedItem(flag: Boolean);
 
@@ -232,6 +378,9 @@ declare namespace sn_sc {
          * Specifies if the catalog client script runs on a requested item.
          * 
          * @flag If true, the catalog client script runs on the target record. If false, the catalog client script does not run on the target record.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.appliesToTargetRecord(true);
          */
         appliesToTargetRecord(flag: Boolean);
 
@@ -239,6 +388,20 @@ declare namespace sn_sc {
          * Inserts the defined catalog client script in the catalog_script_client table.
          * 
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * 
+         *         var catalogClientScript = new sn_sc.CatalogClientScript();
+         *         catalogClientScript.setAttributes({"name": "My Catalog Item", "applies_to": "item", "ui_type": "desktop", "type": "onLoad"});
+         *         catalogClientScript.appliesToCatalogItem(true);
+         *         catalogClientScript.appliesToRequestedItem(true);
+         *         catalogClientScript.appliesToCatalogTask(true);
+         *         catalogClientScript.appliesToTargetRecord(true);
+         *         var catalogClientScriptId = catalogClientScript.create();
+         *         gs.info(catalogClientScriptId);
+         *       
+         *       
+         *       
+         *       
          * @returns sys_id of the catalog client script.
          */
         create(standardUpdate: Boolean): String;
@@ -248,6 +411,11 @@ declare namespace sn_sc {
          * 
          * @sys_id sys_id of the catalog client script.
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * 
+         *         var sys_id = "039c516237b1300054b6a3549dbe5dfc"; 
+         *         var catalogClientScript = new sn_sc.CatalogClientScript();
+         *         catalogClientScript.deleteRecord("039c516237b1300054b6a3549dbe5dfc");
          */
         deleteRecord(sys_id: String, standardUpdate: Boolean);
 
@@ -255,6 +423,9 @@ declare namespace sn_sc {
          * Defines attribute values for the catalog client script.
          * 
          * @attributes A JSON object that has mapping for the field and value pairs.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.setAttributes({"name": "My Catalog Item", "applies_to": "catalog_item", "ui_type": "desktop", "type": "onLoad"});
          */
         setAttributes(attributes: Object);
 
@@ -262,6 +433,9 @@ declare namespace sn_sc {
          * Associates a catalog item with the catalog client script.
          * 
          * @sys_id sys_id of the catalog item.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.setCatalogItem("039c516237b1300054b6a3549dbe5dfc");
          */
         setCatalogItem(sys_id: String);
 
@@ -269,6 +443,9 @@ declare namespace sn_sc {
          * Runs the catalog client script when a variable value is updated.
          * 
          * @sys_id sys_id of the variable.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.setOnChangeVariable("039c516237b1300054b6a3549dbe5dfc");
          */
         setOnChangeVariable(sys_id: String);
 
@@ -276,6 +453,9 @@ declare namespace sn_sc {
          * Associates a variable set with the catalog client script.
          * 
          * @sys_id sys_id of the variable set.
+         * @example
+         * var catalogClientScript = new sn_sc.CatalogClientScript();
+         * catalogClientScript.setVariableSet("039c516237b1300054b6a3549dbe5dfc");
          */
         setVariableSet(sys_id: String);
 
@@ -453,6 +633,11 @@ declare namespace sn_sc {
          * Creates an instance of the Catalog class with the specified sys_id.
          * 
          * @sys_id sys_id of the Catalog.
+         * @example
+         * new sn_sc.Catalog(catalog_sys_id);
+         * var Catalog = new sn_sc.Catalog("31bea3d53790200044e0bfc8bcbe5dec");
+         * 
+         * 
          */
         constructor(sys_id: String);
 
@@ -460,6 +645,11 @@ declare namespace sn_sc {
          * Creates an instance of the catalog class for the specified glide record object.
          * 
          * @gr Glide Record pointing to the sc_catalog table.
+         * @example
+         * var gr = new GlideRecord('sc_catalog');
+         *  gr.addQuery('sys_id','e0d08b13c3330100c8b837659bba8fb4');
+         * gr.query();
+         * var Catalog = new sn_sc.Catalog(gr);
          */
         constructor(gr: Object);
 
@@ -467,6 +657,9 @@ declare namespace sn_sc {
          * Specifies if the catalog is viewable for the user.
          * 
          * @mobile True if the view is mobile view. Else, false.
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");;	
+         * 	         console.log (catalog.canView(true));
          * @returns Returns true if the catalog is viewable for the user.
          */
         canView(mobile: Boolean): Boolean;
@@ -474,6 +667,8 @@ declare namespace sn_sc {
         /**
          * If only one active catalog exists, that catalog is returned. Else, the earliest catalog created is returned, from the list of the catalogs that the user can view. If no catalog is available, null is returned.
          * 
+         * @example
+         * var catalog = sn_sc.Catalog. getAvailableCatalog()
          * @returns Object pointing to the earliest catalog that the user can view.
          */
         getAvailableCatalog(): Object;
@@ -481,6 +676,9 @@ declare namespace sn_sc {
         /**
          * Returns the catalog background color.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * console.log(catalog.getBackgroundColor());
          * @returns Background color of the catalog.
          */
         getBackgroundColor(): String;
@@ -488,6 +686,8 @@ declare namespace sn_sc {
         /**
          * Specifies the number of catalogs active in the catalog table.
          * 
+         * @example
+         * console.log (sn_sc.Catalog.getCatalogCount());
          * @returns Number of catalogs available in the catalog table.
          */
         getCatalogCount(): Integer;
@@ -495,6 +695,9 @@ declare namespace sn_sc {
         /**
          * Returns the categories for the specified catalog.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");	
+         * 	         console.log(catalog.getCategories());
          * @returns Returns the categories for the specified catalog.
          */
         getCategories(): ArrayList;
@@ -502,6 +705,9 @@ declare namespace sn_sc {
         /**
          * Specifies the sys_ids of the categories in the specified catalog.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.getCategoryIds());
          * @returns Returns the sys_ids of the categories in the specified catalog.
          */
         getCategoryIds(): ArrayList;
@@ -509,6 +715,9 @@ declare namespace sn_sc {
         /**
          * Specifies the catalog description.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.getDescription());
          * @returns Catalog description.
          */
         getDescription(): String;
@@ -516,6 +725,9 @@ declare namespace sn_sc {
         /**
          * Returns the catalog desktop image value.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.getDesktopImageSRC());
          * @returns Catalog desktop image value.
          */
         getDesktopImageSRC(): String;
@@ -523,6 +735,9 @@ declare namespace sn_sc {
         /**
          * Returns the catalog gliderecord.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");	
+         * 	data.history=catalog.getGr();
          * @returns GlideRecord of the catalog.
          */
         getGr(): GlideRecord;
@@ -530,6 +745,9 @@ declare namespace sn_sc {
         /**
          * Returns the catalog header icon.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * console.log(catalog.getHeaderIconSRC());
          * @returns Catalog header icon.
          */
         getHeaderIconSRC(): String;
@@ -537,6 +755,9 @@ declare namespace sn_sc {
         /**
          * Specifies the sys_id of the catalog.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.getId());
          * @returns sys_id of the catalog.
          */
         getID(): String;
@@ -544,6 +765,9 @@ declare namespace sn_sc {
         /**
          * Returns the title of the catalog.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.getTitle());
          * @returns Title of the catalog
          */
         getTitle(): String;
@@ -551,6 +775,9 @@ declare namespace sn_sc {
         /**
          * Specifies if the catalog has categories.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.hasCategories());
          * @returns Returns true if the catalog has categories. Else returns false.
          */
         hasCategories(): Boolean;
@@ -558,12 +785,20 @@ declare namespace sn_sc {
         /**
          * Specifies if the catalog has catalog items.
          * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");
+         * 	console.log(catalog.hasItems());
+         * 
          * @returns Returns true if the catalog has catalog items. Else returns false.
          */
         hasItems(): Boolean;
 
         /**
          * Specifies if the wish list is enabled for a catalog.
+         * 
+         * @example
+         * var catalog=new sn_sc.Catalog("e0d08b13c3330100c8b837659bba8fb4");	
+         * 	console.log(catalog.isWishlistEnabled());
          * 
          * @returns Returns true if wish list is enabled for a catalog. Else returns false.
          */
@@ -586,6 +821,8 @@ declare namespace sn_sc {
         /**
          * Creates an instance of the CatalogSearch class.
          * 
+         * @example
+         * var gr = new sn_sc.CatalogSearch();
          */
         constructor();
 
@@ -597,6 +834,15 @@ declare namespace sn_sc {
          * @term Search term.
          * @mobile If true, only catalog items exposed for mobile are searched.
          * @depthSearch If true, subcategories are also searched.
+         * @example
+         * 
+         * var gr = new sn_sc.CatalogSearch().search('', '', 'Apple', false, true);
+         * gr.query()
+         * while(var gr = new sn_sc.CatalogSearch().search('', '', 'Apple', false, true);
+         * gr.query()
+         * while(gr.next()) {
+         * gs.log(gr.name)
+         * })
          * @returns Returns the GlideRecord on sc_cat_item matching the search result.
          */
         search (catalogID: String, categoryID: String, term: String, mobile: Boolean, depthSearch: Boolean): GlideRecord;
@@ -620,6 +866,11 @@ declare namespace sn_sc {
          * 
          * @action Specify add to add the user criteria to the Available For list. Specify delete to delete the user criteria from the Available For list.
          * @criteriaIDs Array of the user criteria sys_ids.
+         * @example
+         * 
+         * var item = new sn_sc.CatCategory("31bea3d53790200044e0bfc8bcbe5dec");
+         * item. availableForUserCriteria("add", ["0c441abbc6112275000025157c651c89"]);
+         * 
          */
         availableForUserCriteria(action: String, criteriaIDs: Array<any>);
 
@@ -627,6 +878,12 @@ declare namespace sn_sc {
          * Insert the defined category.
          * 
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * var categoryCreate = new sn_sc.CatCategory();
+         * categoryCreate.setAttributes({"title" : "test a scoped category", "sc_catalog" : "e0d08b13c3330100c8b837659bba8fb4"});
+         * var categorySysId = categoryCreate.create();
+         * var isValidSysId = categorySysId.match(/^[0-9a-fA-F]{32}$/) == null ? false : true;
+         * global.Assert.assertEquals(true, isValidSysId,"CategorySysId: ["+ categorySysId +"] is not valid", true, isValidSysId);
          * @returns Return the sys_id of the inserted variable record.
          */
         create(standardUpdate: Boolean): String;
@@ -635,12 +892,22 @@ declare namespace sn_sc {
          * Deletes the category record on which the CatCategory class was initially instantiated.
          * 
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * var categoryDelete = new sn_sc.CatCategory(categorySysId);
+         * categoryDelete.deleteRecord();
+         * var category = new sn_sc.CatCategory(categorySysId);
+         * values = category.read({"title" : "", "sc_catalog":""}, false);
+         * global.Assert.assertEquals("", values.title,"Category should title");
          */
         deleteRecord(standardUpdate: Boolean);
 
         /**
          * Returns the sys_id of the category.
          * 
+         * @example
+         * var cart = new sn_sc.CatCategory("2809952237b1300054b6a3549dbe5dd4");
+         * var categoryID = cart.getID();
+         * gs.info(categoryID);
          * @returns sys_id of the category.
          */
         getID(): String;
@@ -649,6 +916,11 @@ declare namespace sn_sc {
          * Adds the Not Available For user criteria to a catalog category.
          * 
          * @action Specify add to add the user criteria to the Not Available For list. Specify delete to delete the user criteria from the Not Available For list.
+         * @example
+         * 
+         * var item = new sn_sc.CatCategory("31bea3d53790200044e0bfc8bcbe5dec");
+         * item. notAvailableForUserCriteria("add", ["0c441abbc6112275000025157c651c89"]);
+         * 
          */
         notAvailableForUserCriteria(action: String);
 
@@ -657,6 +929,10 @@ declare namespace sn_sc {
          * 
          * @columns Specify the set of columns that you would like the values for.
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * var category = new sn_sc.CatCategory("a96277509f300200b407b89a442e704e");
+         * var values = category.read({"title" : ""}, true);
+         * gs.log(values.title);
          * @returns An object mapping column names to values.
          */
         read(columns: Object, standardUpdate: Boolean): Object;
@@ -665,6 +941,12 @@ declare namespace sn_sc {
          * Define attribute values for this category.
          * 
          * @attributes Set the attributes for new field and value pairs.
+         * @example
+         * var categoryCreate = new sn_sc.CatCategory();
+         * categoryCreate.setAttributes({"title" : "test a scoped category", "sc_catalog" : "e0d08b13c3330100c8b837659bba8fb4"});
+         * var categorySysId = categoryCreate.create();
+         * var isValidSysId = categorySysId.match(/^[0-9a-fA-F]{32}$/) == null ? false : true;
+         * global.Assert.assertEquals(true, isValidSysId,"CategorySysId: ["+ categorySysId +"] is not valid", true, isValidSysId);
          */
         setAttributes(attributes: Object);
 
@@ -672,6 +954,14 @@ declare namespace sn_sc {
          * Define the table name for this category.
          * 
          * @tableName Specify the name of the table that extends sc_category.
+         * @example
+         * var categoryRead = new sn_sc.CatCategory(categorySysId);
+         * categoryRead.setTableName("test_category");
+         * var values = categoryRead.read({"title" : "", "sc_catalog":"", "test": ""}, false);
+         * gs.info(categorySysId);
+         * gs.info(values.title);
+         * gs.info(values.test);
+         * global.Assert.assertEquals("testValue", values.test,"Category extends sc_category and stores its extended value");
          */
         setTableName(tableName: String);
 
@@ -680,6 +970,11 @@ declare namespace sn_sc {
          * 
          * @columnValues Object mapping column names to values.
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * var categoryUpdate = new sn_sc.CatCategory(categorySysId);
+         * categoryUpdate.update({"title" : "test changed scoped category"}, true);
+         * values = categoryUpdate.read({"title" : "", "sc_catalog":""}, false);
+         * global.Assert.assertEquals("test changed scoped category", values.title,"Category should title");
          */
         update(columnValues: Object, standardUpdate: Boolean);
 
@@ -702,6 +997,11 @@ declare namespace sn_sc {
          * 
          * @action Specify add to add the user criteria to the Available For list. Specify delete to delete the user criteria from the Available For list.
          * @criteriaIDs Array of the user criteria sys_ids.
+         * @example
+         * 
+         * var item = new sn_sc.CatItem("31bea3d53790200044e0bfc8bcbe5dec");
+         * item. availableForUserCriteria("add", ["0c441abbc6112275000025157c651c89"]);
+         * 
          */
         availableForUserCriteria(action: string, criteriaIDs: Array<any>);
 
@@ -709,6 +1009,9 @@ declare namespace sn_sc {
          * Specifies if the user has access to view the catalog item on global search.
          * 
          * @isMobile True if the search is in mobile view. Else, false.
+         * @example
+         * var cart=new sn_sc.CatItem("04b7e94b4f7b4200086eeed18110c7fd");	
+         * 	data.history=cart.canViewOnSearch('false');
          * @returns Returns true if the user has access to view the catalog item on global search. Else, returns false.
          */
         canViewOnSearch(isMobile: Boolean): Boolean;
@@ -731,6 +1034,9 @@ declare namespace sn_sc {
          * Specifies the first category that the user can view in a catalog.
          * 
          * @catalogId sys_id of the catalog.
+         * @example
+         * var CatItem=new sn_sc.CatItem("04b7e94b4f7b4200086eeed18110c7fd");	
+         * 	console.log(CatItem.getFirstAccessibleCategoryForSearch("e0d08b13c3330100c8b837659bba8fb4”));
          * @returns sys_id of the first category that the user can view in a catalog.
          */
         getFirstAccessibleCategoryForSearch(catalogId: String): String;
@@ -738,6 +1044,9 @@ declare namespace sn_sc {
         /**
          * Returns the class name for the current catalog item record.
          * 
+         * @example
+         * var CatItem=new sn_sc.CatItem("04b7e94b4f7b4200086eeed18110c7fd");	
+         * 	console.log(CatItem.getRecordClass());
          * @returns Class name for the current catalog item record.
          */
         getRecordClass(): String;
@@ -745,6 +1054,9 @@ declare namespace sn_sc {
         /**
          * Specifies if the catalog item is available in service portal.
          * 
+         * @example
+         * var CatItem=new sn_sc.CatItem("04b7e94b4f7b4200086eeed18110c7fd");	
+         * 	data.history=CatItem.isVisibleServicePortal();
          * @returns Returns true if the catalog item is available in service portal. Else, returns false.
          */
         isVisibleServicePortal(): Boolean;
@@ -753,6 +1065,11 @@ declare namespace sn_sc {
          * Adds the Not Available For user criteria to a catalog item.
          * 
          * @action Specify add to add the user criteria to the Not Available For list. Specify delete to delete the user criteria from the Not Available For list.
+         * @example
+         * 
+         * var item = new sn_sc.CatItem("31bea3d53790200044e0bfc8bcbe5dec");
+         * item. notAvailableForUserCriteria("add", ["0c441abbc6112275000025157c651c89"]);
+         * 
          */
         notAvailableForUserCriteria(action: String);
 
@@ -832,6 +1149,9 @@ declare class CertificateEncryption {
      * @key Key used to sign the message.
      * @algorithm Algorithm used to generate the MAC: HmacSHA256, HmacSHA1, HmacMD5, and so on.
      * @data Data to be processed.
+     * @example
+     * var mac = new CertificateEncryption;
+     * mac.generateMac("sample_key", "HmacSHA256", "sample_data");
      * @returns MAC in base64 format.
      */
     generateMac(key: String, algorithm: String, data: String): String;
@@ -863,6 +1183,9 @@ declare class CertificateEncryption {
      * @aliaspassword Password for the private key.
      * @datatosign Data to sign.
      * @algorithm SHA-1, SHA-256, and so on.
+     * @example
+     * var ce = new CertificateEncryption;
+     * ce.sign("recordID", "alias", "password", "SHA-1", "sign this data");
      * @returns Signed data in base64 format.
      */
     sign(certificateID: String, alias: String, aliaspassword: String, datatosign: String, algorithm: String): String;
@@ -884,6 +1207,8 @@ declare namespace sn_clotho {
         /**
          * Create an instance of the client class to access the MetricBase database.
          * 
+         * @example
+         * var client = new sn_clotho.Client();
          */
         constructor();
 
@@ -892,6 +1217,14 @@ declare namespace sn_clotho {
          * 
          * @gr The records whose time series data for the specified metric is to be deleted.
          * @metric The name of the metric.
+         * @example
+         * var client = new sn_clotho.Client();
+         * //query drones of a specific model
+         * var drones = new GlideRecord("mb_demo_drone");
+         * drones.addQuery("model", "Kingfisher Phantom");
+         * drones.query();
+         * 
+         * client.deleteSeries(drones, 'mb_demo_mt_speed');
          */
         deleteSeries(gr: GlideRecord, metric: String);
 
@@ -921,6 +1254,22 @@ declare namespace sn_cmdbgroup {
          * 
          * @groupId The sysId of the CMDB group.
          * @requireCompleteSet When true, returns an empty string if any CIs are filtered out by ACL restrictions.
+         * @example
+         * // Script example:
+         * var getAllCIFunc = function(groupSysId) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.getAllCI(groupSysId, false);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to retrieve ci list: " + parsed.idList);
+         *     } else {
+         *         gs.print("fail to retrieve list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * var groupExists = "d0d2d25113152200eef2dd828144b0e4";
+         * var groupContainsInvalidSavedQuery = "e685a2c3d7012200de92a5f75e610387";
+         * getAllCIFunc(groupExists);
+         * getAllCIFunc(groupContainsInvalidSavedQuery);
          * @returns A JSON formated string in the format { 'result':false, 'errors':[ {'message':'Group does not exist', 'error':'GROUP_SYS_ID_IS_NOT_FOUND'}, { } // another error if it exists ], 'partialCIListDueToACLFlag':false,
          * 'idList':['sys_id_1', 'sys_id2'] }
          * Where result - a boolean flag. When true the method was successful. errors - a list of errors with a message and error code. partialCIListDueToACLFlag - a Boolean flag. When true, the idList is incomplete due to an ACL restriction. When false, the idList is complete. idList - an array of cmdb_ci sys_ids When not successful, returns one of the errors GROUP_SYS_ID_IS_NOT_FOUND, GROUP_SYS_ID_IS_EMPTY, FAIL_TO_INSERT_GROUP_CI_PAIR, FAIL_TO_INSERT_GROUP_QUERY_ID_PAIR, CI_CAN_NOT_FOUND, SAVED_QUERY_ID_NOT_FOUND, ERROR_DURING_QUERY_BUILDER_PROCESS_QUERY, TIMEOUT_DURING_QUERY_BUILDER_PROCESS_QUERY, NOT_COMPLETE_DURING_QUERY_BUILDER_PROCESS_QUERY, MAX_LIMIT_DURING_QUERY_BUILDER_PROCESS_QUERY, GROUP_API_TIMEOUT, EXCEPTION_FROM_EXECUTE_QUERY, SOME_CI_NOT_VISIBLE_DUE_TO_SECURITY_CONSTRAINT
@@ -932,6 +1281,22 @@ declare namespace sn_cmdbgroup {
          * 
          * @groupId The sysId of the CMDB group.
          * @requireCompleteSet When true, returns an empty string if any CIs are filtered out by ACL restrictions.
+         * @example
+         * // Script example:
+         * var getAllCIFromQueryBuilderFunc = function(groupSysId) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.getAllCIFromQueryBuilder(groupSysId, false);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to retrieve ci list: " + parsed.idList);
+         *     } else {
+         *         gs.print("fail to retrieve list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * var groupExists = "d0d2d25113152200eef2dd828144b0e4";
+         * var groupContainsInvalidSavedQuery = "e685a2c3d7012200de92a5f75e610387";
+         * getAllCIFromQueryBuilderFunc(groupExists);
+         * getAllCIFromQueryBuilderFunc(groupContainsInvalidSavedQuery);
          * @returns A JSON formated string in the format { 'result':false, 'errors':[ {'message':'Group does not exist', 'error':'GROUP_SYS_ID_IS_NOT_FOUND'}, { } // another error if it exists ], 'partialCIListDueToACLFlag':false,
          * 'idList':['sys_id_1', 'sys_id2'] }
          * Where result - a boolean flag. When true the method was successful. errors - a list of errors with a message and error code. partialCIListDueToACLFlag - a Boolean flag. When true, the idList is incomplete due to an ACL restriction. When false, the idList is complete. idList - an array of cmdb_ci sys_ids When not successful, returns one of the errors GROUP_SYS_ID_IS_NOT_FOUND, GROUP_SYS_ID_IS_EMPTY, FAIL_TO_INSERT_GROUP_CI_PAIR, FAIL_TO_INSERT_GROUP_QUERY_ID_PAIR, CI_CAN_NOT_FOUND, SAVED_QUERY_ID_NOT_FOUND, ERROR_DURING_QUERY_BUILDER_PROCESS_QUERY, TIMEOUT_DURING_QUERY_BUILDER_PROCESS_QUERY, NOT_COMPLETE_DURING_QUERY_BUILDER_PROCESS_QUERY, MAX_LIMIT_DURING_QUERY_BUILDER_PROCESS_QUERY, GROUP_API_TIMEOUT, EXCEPTION_FROM_EXECUTE_QUERY, SOME_CI_NOT_VISIBLE_DUE_TO_SECURITY_CONSTRAINT
@@ -943,6 +1308,40 @@ declare namespace sn_cmdbgroup {
          * 
          * @groupId The sysId of the CMDB group.
          * @requireCompleteSet When true, returns an error string if any CIs are filtered out by ACL restrictions.
+         * @example
+         * // Script example for requireCompleteSet being false:
+         *     var getManualCIList = function(groupSysId) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.getManualCIList(groupSysId, false);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to retrieve ci list: " + parsed.idList);
+         *     } else {
+         *         gs.print("fail to retrieve list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * // create a group in cmdb_group, and add CIs to this group in Edit Manual CI form
+         * var groupExists = "d0d2d25113152200eef2dd828144b0e4";
+         * // use a non-exist group
+         * var groupDoesNotExists = "d0d2d25113152200eef2dd828144b0e4111";
+         * getManualCIList(groupExists);
+         * getManualCIList(groupDoesNotExists);
+         *  
+         * @example
+         * // Script example for requireCompleteSet being true
+         *     var getManualCIList = function(groupSysId) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.getManualCIList(groupSysId, true);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to retrieve ci list: " + parsed.idList);
+         *     } else {
+         *         gs.print("fail to retrieve list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * // create a group in cmdb_group, and add CIs to this group in Edit Manual CI form
+         * var groupExists = "d0d2d25113152200eef2dd828144b0e4";
+         * getManualCIList(groupExists);
          * @returns A JSON formated string in the format { 'result':false, 'errors':[ {'message':'Group does not exist', 'error':'GROUP_SYS_ID_IS_NOT_FOUND'}, { } // another error if it exists ], 'partialCIListDueToACLFlag':false,
          * 'idList':['sys_id_1', 'sys_id2'] }
          * Where result - a boolean flag. When true the method was successful. errors - a list of errors with a message and error code. partialCIListDueToACLFlag - a Boolean flag. When true, the idList is incomplete due to an ACL restriction. When false, the idList is complete. idList - an array of cmdb_ci sys_ids When not successful, returns one of the errors GROUP_SYS_ID_IS_NOT_FOUND, GROUP_SYS_ID_IS_EMPTY, FAIL_TO_INSERT_GROUP_CI_PAIR, FAIL_TO_INSERT_GROUP_QUERY_ID_PAIR, CI_CAN_NOT_FOUND, SAVED_QUERY_ID_NOT_FOUND, ERROR_DURING_QUERY_BUILDER_PROCESS_QUERY, TIMEOUT_DURING_QUERY_BUILDER_PROCESS_QUERY, NOT_COMPLETE_DURING_QUERY_BUILDER_PROCESS_QUERY, MAX_LIMIT_DURING_QUERY_BUILDER_PROCESS_QUERY, GROUP_API_TIMEOUT, EXCEPTION_FROM_EXECUTE_QUERY, SOME_CI_NOT_VISIBLE_DUE_TO_SECURITY_CONSTRAINT
@@ -954,6 +1353,22 @@ declare namespace sn_cmdbgroup {
          * 
          * @groupId The sysId of the CMDB group.
          * @requireCompleteSet When true, returns an empty string if any CIs are filtered out by ACL restrictions.
+         * @example
+         * // Script example:
+         * var getSavedQueryIdList = function(groupSysId) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.getSavedQueryIdList(groupSysId, false);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to retrieve saved query id list: " + parsed.idList);
+         *     } else {
+         *         gs.print("fail to retrieve list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * var groupExists = "d0d2d25113152200eef2dd828144b0e4";
+         * var groupDoesNotExists = "d0d2d25113152200eef2dd828144b0e4111";
+         * getSavedQueryIdList(groupExists);
+         * getSavedQueryIdList(groupDoesNotExists);
          * @returns A JSON formated string in the format { 'result':false, 'errors':[ {'message':'Group does not exist', 'error':'GROUP_SYS_ID_IS_NOT_FOUND'}, { } // another error if it exists ], 'partialCIListDueToACLFlag':false,
          * 'idList':['sys_id_1', 'sys_id2'] }
          * Where result - a boolean flag. When true the method was successful. errors - a list of errors with a message and error code. partialCIListDueToACLFlag - a Boolean flag. When true, the idList is incomplete due to an ACL restriction. When false, the idList is complete. idList - an array of cmdb_ci sys_ids When not successful, returns one of the errors GROUP_SYS_ID_IS_NOT_FOUND, GROUP_SYS_ID_IS_EMPTY, FAIL_TO_INSERT_GROUP_CI_PAIR, FAIL_TO_INSERT_GROUP_QUERY_ID_PAIR, CI_CAN_NOT_FOUND, SAVED_QUERY_ID_NOT_FOUND, ERROR_DURING_QUERY_BUILDER_PROCESS_QUERY, TIMEOUT_DURING_QUERY_BUILDER_PROCESS_QUERY, NOT_COMPLETE_DURING_QUERY_BUILDER_PROCESS_QUERY, MAX_LIMIT_DURING_QUERY_BUILDER_PROCESS_QUERY, GROUP_API_TIMEOUT, EXCEPTION_FROM_EXECUTE_QUERY, SOME_CI_NOT_VISIBLE_DUE_TO_SECURITY_CONSTRAINT
@@ -965,6 +1380,23 @@ declare namespace sn_cmdbgroup {
          * 
          * @groupId The sysId of the CMDB group.
          * @ciSysIds Comma separated list of CI sysIds.
+         * @example
+         * // Script example:
+         * var setManualCIListFunc = function(groupSysId, manualCIList) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.setManualCIList(groupSysId, manualCIList);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to set manual ci list");
+         *     } else {
+         *         gs.print("fail to set manual ci list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * var group = "d0d2d25113152200eef2dd828144b0e4";
+         * var groupDoesNotExist = "1234";
+         * var manualCIList = "b4fd7c8437201000deeabfc8bcbe5dc1, affd3c8437201000deeabfc8bcbe5dc3";
+         * setManualCIListFunc(group, manualCIList);
+         * setManualCIListFunc(groupDoesNotExist, manualCIList);
          * @returns A JSON formated string in the format { 'result':false, 'errors':[ {'message':'Group does not exist', 'error':'GROUP_SYS_ID_IS_NOT_FOUND'}, { } // another error if it exists ], 'partialCIListDueToACLFlag':false,
          * 'idList':['sys_id_1', 'sys_id2'] }
          * Where result - a boolean flag. When true the method was successful. errors - a list of errors with a message and error code. partialCIListDueToACLFlag - a Boolean flag. When true, the idList is incomplete due to an ACL restriction. When false, the idList is complete. idList - an array of cmdb_ci sys_ids When not successful, returns one of the errors GROUP_SYS_ID_IS_NOT_FOUND, GROUP_SYS_ID_IS_EMPTY, FAIL_TO_INSERT_GROUP_CI_PAIR, FAIL_TO_INSERT_GROUP_QUERY_ID_PAIR, CI_CAN_NOT_FOUND, SAVED_QUERY_ID_NOT_FOUND, ERROR_DURING_QUERY_BUILDER_PROCESS_QUERY, TIMEOUT_DURING_QUERY_BUILDER_PROCESS_QUERY, NOT_COMPLETE_DURING_QUERY_BUILDER_PROCESS_QUERY, MAX_LIMIT_DURING_QUERY_BUILDER_PROCESS_QUERY, GROUP_API_TIMEOUT, EXCEPTION_FROM_EXECUTE_QUERY, SOME_CI_NOT_VISIBLE_DUE_TO_SECURITY_CONSTRAINT
@@ -976,6 +1408,26 @@ declare namespace sn_cmdbgroup {
          * 
          * @groupId The sysId of the CMDB group.
          * @queryIds Comma separated list of saved query sysIds.
+         * @example
+         * // Script example:
+         * var setSavedQueryIdListFunc = function(groupSysId, queryIdList) {
+         *     var parser = new JSONParser();
+         *     var response = sn_cmdbgroup.CMDBGroupAPI.setSavedQueryIdList(groupSysId, queryIdList);
+         *     var parsed = parser.parse(response);
+         *     if (parsed.result) {
+         *         gs.print("succeed to set saved query id list");
+         *     } else {
+         *         gs.print("fail to set saved query id list, errors: " + JSON.stringify(parsed.errors));
+         *     }
+         * }
+         * var group = "d0d2d25113152200eef2dd828144b0e4";
+         * var savedQueryBuilderIdList = "394585fed7812200de92a5f75e6103e8";
+         * var savedQueryBuilderIdNotExistList = "b4fd7c8437201000deeabfc8bcbe5dc1,
+         *    affd3c8437201000deeabfc8bcbe5dc3";
+         *  
+         * setSavedQueryIdListFunc(group, savedQueryBuilderIdList);
+         * setSavedQueryIdListFunc(group, savedQueryBuilderIdNotExistList);
+         * 
          * @returns A JSON formated string in the format { 'result':false, 'errors':[ {'message':'Group does not exist', 'error':'GROUP_SYS_ID_IS_NOT_FOUND'}, { } // another error if it exists ], 'partialCIListDueToACLFlag':false,
          * 'idList':['sys_id_1', 'sys_id2'] }
          * Where result - a boolean flag. When true the method was successful. errors - a list of errors with a message and error code. partialCIListDueToACLFlag - a Boolean flag. When true, the idList is incomplete due to an ACL restriction. When false, the idList is complete. idList - an array of cmdb_ci sys_ids When not successful, returns one of the errors GROUP_SYS_ID_IS_NOT_FOUND, GROUP_SYS_ID_IS_EMPTY, FAIL_TO_INSERT_GROUP_CI_PAIR, FAIL_TO_INSERT_GROUP_QUERY_ID_PAIR, CI_CAN_NOT_FOUND, SAVED_QUERY_ID_NOT_FOUND, ERROR_DURING_QUERY_BUILDER_PROCESS_QUERY, TIMEOUT_DURING_QUERY_BUILDER_PROCESS_QUERY, NOT_COMPLETE_DURING_QUERY_BUILDER_PROCESS_QUERY, MAX_LIMIT_DURING_QUERY_BUILDER_PROCESS_QUERY, GROUP_API_TIMEOUT, EXCEPTION_FROM_EXECUTE_QUERY, SOME_CI_NOT_VISIBLE_DUE_TO_SECURITY_CONSTRAINT
@@ -999,11 +1451,21 @@ declare namespace sn_cc {
         /**
          * Returns the value of a connection info attribute with the specified name.
          * 
+         * @example
+         *   // get the same values using getAttribute
+         *   gs.info(connectionInfo.getAttribute("name"));
+         *   gs.info(connectionInfo.getAttribute("connection_url"));
+         * 
          */
         getAttribute();
 
         /**
          * Returns the value of credential attributes for a specified connection.
+         * 
+         * @example
+         *  // get credential attributes
+         *   gs.info(connectionInfo.getCredentialAttribute("user_name"));
+         *   gs.info(connectionInfo.getCredentialAttribute("password")); 
          * 
          */
         getCredentialAttribute();
@@ -1011,11 +1473,23 @@ declare namespace sn_cc {
         /**
          * Returns the connection attributes as a collection of key-value pairs.
          * 
+         * @example
+         *  // get data map
+         *   var datamap = connectionInfo.getDataMap();
+         *   gs.info(datamap["name"]);
+         *   gs.info(datamap["connection_url"]);
+         * 
          */
         getDataMap();
 
         /**
          * Returns the extended attributes as a collection of key-value pairs.
+         * 
+         * @example
+         * // get extended attributes
+         *   var extendedAttributes = connection.getExtendedAttributes();  
+         *   gs.info(extendedAttributes["name1"]);
+         *  }
          * 
          */
         getExtendedAttributes();
@@ -1044,6 +1518,12 @@ declare namespace sn_cc {
          * This function retrieves a ConnectionInfo object identified by the given aliasID in the current domain.
          * 
          * @aliasID The sys_id of a connection alias.
+         * @example
+         * var provider = new sn_cc.ConnectionInfoProvider();
+         * 
+         * // get a jdbc connection in the current domain with the alias ID
+         * //     "6219afbf9f03320021dd7501942e70fc"
+         * var connectionInfo = provider.getConnectionInfo("6219afbf9f03320021dd7501942e70fc");
          * @returns Information about the connection.
          */
         getConnectionInfo(aliasID: String): sn_cc.ConnectionInfo;
@@ -1053,6 +1533,13 @@ declare namespace sn_cc {
          * 
          * @aliasID The sys_id of a connection alias.
          * @domainID The sys_id of a domain or global.
+         * @example
+         * var provider = new sn_cc.ConnectionInfoProvider();
+         * 
+         * // get a jdbc connection in the ACME domain with the alias ID
+         *  //      "cd5923ff9f03320021dd7501942e70bb"
+         *  connectionInfo = provider.getConnectionInfoByDomain("cd5923ff9f03320021dd7501942e70bb",
+         *         "c90d4b084a362312013398f051272c0d");
          * @returns Connection information.
          */
         getConnectionInfoByDomain(aliasID: String, domainID: String): sn_cc.ConnectionInfo;
@@ -1075,6 +1562,9 @@ declare namespace sn_connect {
          * Add a user to a conversation.
          * 
          * @sysID The sys_ID of the user you want to add to a conversation.
+         * @example
+         * var conversation = sn_connect.Conversation.get("7caf49111309030034bb58a12244b06c");
+         * conversation.addSubscriber("a8f98bb0eb32010045e1a5115206fe3a");
          */
         addSubscriber(sysID: String);
 
@@ -1083,6 +1573,11 @@ declare namespace sn_connect {
          * 
          * @name Create a conversation with a specific name.
          * @type Include a specific conversation type. The type is determined by the type choice list. The base system includes the following type options: connect support group peer qanda team 
+         * @example
+         * var conversation = sn_connect.Conversation.create({
+         *     name: "Hello world",
+         *     type: "connect"
+         * });
          * @returns Scriptable Conversation
          */
         create(name: String, type: String): Object;
@@ -1091,6 +1586,8 @@ declare namespace sn_connect {
          * Get an existing Connect conversation by sys_id.
          * 
          * @sysID The sys_id of the conversation record.
+         * @example
+         * var conversation = sn_connect.Conversation.get("27b9844c1385030034bb58a12244b037");
          * @returns Conversation object
          */
         get(sysID: String): Object;
@@ -1099,6 +1596,9 @@ declare namespace sn_connect {
          * Remove a user from a conversation.
          * 
          * @SysID The sys_id of the user you want to remove from a conversation.
+         * @example
+         * var conversation = sn_connect.Conversation.get("7caf49111309030034bb58a12244b06c");
+         * conversation.removeSubscriber("a8f98bb0eb32010045e1a5115206fe3a");
          */
         removeSubscriber(SysID: String);
 
@@ -1107,6 +1607,9 @@ declare namespace sn_connect {
          * 
          * @Body The main text of the message.
          * @Field The field you want the message to appear as. Only use this option if adding a message to a record conversation. Choose from work_notes, comments, or system. Using the field system treats the message as a system message.
+         * @example
+         * var conversation = sn_connect.Conversation.get("2064fa3919010300964f5270e9840fbb");
+         * conversation.sendMessage(body: "Hello world", field: "work_notes");
          */
         sendMessage(Body: String, Field: String);
 
@@ -1207,6 +1710,9 @@ declare namespace sn_clotho {
          * @glideRecord GlideRecord from which to obtain the domain.
          * @subject The sys_id of the GlideRecord associated with this series.
          * @metric The field name of the metric.
+         * @example
+         * // Where cpu_percentage is the name of the metric
+         * var dataBuilder = new sn_clotho.DataBuilder(gr, 'cpu_percentage');
          */
         constructor(glideRecord: Object, subject: String, metric: String);
 
@@ -1215,6 +1721,13 @@ declare namespace sn_clotho {
          * 
          * @start The time stamp for the first data point. Subsequent time stamps are calculated using the retention policy collection period.
          * @value An array of numbers.
+         * @example
+         * 
+         * var points = [7,0.5,273];
+         * var dataBuilder = new sn_clotho.DataBuilder(gr, 'cpu_percentage');
+         * // this creates a GlideDateTime object set to the current date and time
+         * var time = new GlideDateTime();
+         * dataBuilder.add(time, points);
          * @returns The same DataBuilder object.
          */
         add(start: GlideDateTime, value: Array<any>): sn_clotho.DataBuilder;
@@ -1224,6 +1737,11 @@ declare namespace sn_clotho {
          * 
          * @start The time stamp for the data point.
          * @value The value of the data point.
+         * @example
+         * var dataBuilder = new sn_clotho.DataBuilder(gr, 'cpu_percentage');
+         * // this creates a GlideDateTime object set to the current date and time
+         * var time = new GlideDateTime();
+         * dataBuilder.add(time, 0.6);
          * @returns The DataBuilder object.
          */
         add(start: GlideDateTime, value: Number): sn_clotho.DataBuilder;
@@ -1248,6 +1766,9 @@ declare namespace sn_discovery {
          * @IPaddress IP address to discover.
          * @application Application configured for the MID Server.
          * @source (Optional) Source of the Discovery, displayed in the optional Source field in the Discovery Status record, which indicates how the Discovery was triggered. If no source is specified, the system uses Discovery_API as the source. To define a source, you must have an application value. If no application is defined, use a place holder of NULL in the expression.
+         * @example
+         * var sysid =
+         *                     sn_discovery.DiscoveryAPI.discoverIpAddress("11.23.125.39");
          * @returns Discovery status record sys_id.
          */
         discoverIpAddress(IPaddress: string, application: string, source: string): string;
@@ -1257,6 +1778,9 @@ declare namespace sn_discovery {
          * 
          * @ipAddress The IPv4 address that was scanned.
          * @discoveryStatusSysId The sys_id of the Discovery status record for the IP address that was scanned.
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * 
          * @returns JavaScript array of immutable ReportCiStatusOutputJS objects.
          */
         reportCiIpAddressStatus(ipAddress: string, discoveryStatusSysId: string): array;
@@ -1265,6 +1789,10 @@ declare namespace sn_discovery {
          * Used to return a summary of a CI Discovery status given a specific Discovery Status sys_id.The following exceptions can be thrown: DiscoveryStatusNotFoundException: Discovery Status with sys id '&lt;invalid value&gt;' does not exist DiscoveryDeviceHistoryNotFoundException: Device History with Discovery Status sys id '&lt;invalid value&gt;' and ipAddress '&lt;invalid value&gt;' does not exist IllegalArgumentException (invalid input arguments): This argument exception prevents input values from being null. Discovery Status sys id can not be null ipAddress can not be null IllegalArgumentException (values stored in database): This argument exception imposes post conditions on database access values. Discovery Status 'state' property can not be null Device history 'source' property can not be null Device history 'issues' property is not an integer: &lt;invalid value&gt; Device history 'issues' property can not be less than 0: &lt;invalid value&gt; 
          * 
          * @sys_id The sys_id of a Discovery status record.
+         * @example
+         * var ipResultObjArray = sn_discovery.DiscoveryAPI.reportCiStatus(discoveryStatus);
+         * for(var idx=0; idx &lt; ipResultObjArray.length; idx++) {    
+         * var ipResultObj = ipResultObjArray[idx]; 
          * @returns JavaScript array of immutable ReportCiStatusOutputJS objects.
          */
         reportCiStatus(sys_id: string): array;
@@ -1293,6 +1821,106 @@ declare namespace sn_fd {
          * To call a flow with a Service Catalog trigger, use the format:var flowInputs = {};
          * flowInputs['request_item'] = glideRecord;
          * flowInputs['table_name'] = glideRecord.getTableName(); The GlideRecord object must be named 'request_item'.
+         * @example
+         * //Example 1: Run a flow with a record-based trigger
+         * (function startFlowAsync() {
+         * 
+         * 	try {
+         * 		// You MUST fetch the GlideRecord that will be passed to the flow
+         * 		var glideRecordInput = new GlideRecord('sys_user');
+         * 		glideRecordInput.get('62826bf03710200044e0bfc8bcbe5df1');
+         * 
+         * 		var flowInputs = {};
+         * 		flowInputs['current'] = glideRecordInput;
+         * 		flowInputs['table_name'] = glideRecordInput.getTableName();
+         * 
+         * 		var result = sn_fd.Flow.startAsync('global.recordtriggeredflow', flowInputs);
+         * 
+         * 		//The Sys ID of a flow execution (contextId)
+         * 		var contextId = result.contextId;
+         * 
+         * 	} catch (ex) {
+         * 		var message = ex.getMessage();
+         * 		gs.error(message);
+         * 	}
+         * 
+         * })();
+         * 
+         * //Example 2: Run a flow with a schedule-based trigger
+         * (function startFlowAsync() {
+         * 
+         * 	try {
+         * 		var result = sn_fd.Flow.startAsync('global.scheduletriggeredflow');
+         * 
+         * 		//The Sys ID of a flow execution (contextId)
+         * 		var contextId = result.contextId;
+         * 
+         * 	} catch (ex) {
+         * 		var message = ex.getMessage();
+         * 		gs.error(message);
+         * 	}
+         * 
+         * })();
+         * 
+         * //Example 3: Run a flow with a Service Catalog trigger
+         * (function startFlowAsync() {
+         * 
+         * 	try {
+         * 		// You MUST fetch the GlideRecord that will be passed to the flow
+         * 		var glideRecordInput = new GlideRecord('sc_req_item');
+         * 		glideRecordInput.get(aeed229047801200e0ef563dbb9a71c2);
+         * 
+         * 		var flowInputs = {};
+         * 		flowInputs['request_item'] = glideRecordInput;
+         * 		flowInputs['table_name'] = glideRecordInput.getTableName();
+         * 
+         * 		var result = sn_fd.Flow.startAsync('global.catalogtriggeredflow', flowInputs);
+         * 
+         * 		//The Sys ID of a flow execution (contextId)
+         * 		var contextId = result.contextId;
+         * 
+         * 	} catch (ex) {
+         * 		var message = ex.getMessage();
+         * 		gs.error(message);
+         * 	}
+         * 
+         * })();
+         * 
+         * //Example 4: Run a flow with a MetricBase trigger
+         * (function startMetricBaseFlowAsync() {
+         * 
+         * 	try {
+         * 
+         * 		var oilLevelTriggerRecord = new GlideRecord('oil_levels');
+         * 		oilLevelTriggerRecord.get('a4b3622bc72113007b237f48cb97635f');
+         * 
+         * 		var metricTriggerDefinition = new GlideRecord('sys_metric_trigger_definition');
+         * 		metricTriggerDefinition.get('21f2eae7c72113007b237f48cb976352');
+         * 
+         * 		var event_time = oilLevelTriggerRecord.getValue('sys_created_on');
+         * 		var level = 4;
+         * 
+         * 		var metricBaseFlowInputs = {};
+         * 		//The record that triggered the metric event
+         * 		metricBaseFlowInputs['current'] = oilLevelTriggerRecord;
+         * 		//The MetricBase Trigger Definition record
+         * 		metricBaseFlowInputs['metric'] = metricTriggerDefinition;
+         * 		//The time that the 'record' reached a specific metric event level and triggered this flow
+         * 		metricBaseFlowInputs['event_time'] = event_time;
+         * 		//The target event level to reach in order for a metric flow to trigger
+         * 		metricBaseFlowInputs['level'] = level;
+         * 
+         * 		var result = sn_fd.Flow.startAsync('global.metricbasedtriggeredflow', metricBaseFlowInputs);
+         * 
+         * 		//The Sys ID of a flow execution (contextId)
+         * 		var contextId = result.contextId;
+         * 
+         * 	} catch (ex) {
+         * 		var message = ex.getMessage();
+         * 		gs.error(message);
+         * 	}
+         * 
+         * })();
          * @returns PlanResponse object containing the following properties: contextId: sys_id of the execution details record for the executed flow. Access the execution details by navigating to the Flow Executions tab in Flow Designer and filtering by sys_id. An exception occurs when the flow: Does not exist within the specified application scope, or the flow or scope name has been misspelled. Is not activated. Exceeds the recursion limit set by the com.glide.hub.flow_engine.indirect_recursion_limit system property. The default value is three. 
          */
         startAsync(scopeNameflowName: String, flowInputs: Object): Object;
@@ -1312,6 +1940,8 @@ declare class GlideAggregate {
      * Creates a GlideAggregate object on the specified table.
      * 
      * @tableName Name of the table.
+     * @example
+     * var count = new GlideAggregate('incident');
      */
     constructor(tableName: String);
 
@@ -1320,6 +1950,17 @@ declare class GlideAggregate {
      * 
      * @agg Name of the aggregate to add, for example, COUNT, MIN, or MAX
      * @name (Optional) Name of the column to aggregate. Null is the default.
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('COUNT');
+     * count.query();
+     * var incidents = 0;
+     * if (count.next()) {
+     *    incidents = count.getAggregate('COUNT');
+     * }
+     * //Number of incidents varies depending on the current state
+     * //of the incident table
+     * gs.info('Number of incidents: ' + incidents);
      */
     addAggregate(agg: String, name: String);
 
@@ -1327,6 +1968,17 @@ declare class GlideAggregate {
      * Adds an encoded query to the other queries that may have been set for this aggregate.
      * 
      * @query An encoded query to add to the aggregate.
+     * @example
+     * //Number of incidents varies depending on the current state
+     * //of the incident table
+     * var count = new GlideAggregate('incident');
+     * count.addEncodedQuery('active=true');
+     * count.addAggregate('COUNT');
+     * count.query();
+     * var incidents = 0;
+     * if (count.next())
+     *    incidents = count.getAggregate('COUNT');
+     * gs.info(incidents);
      */
     addEncodedQuery(query: String);
 
@@ -1334,6 +1986,13 @@ declare class GlideAggregate {
      * Adds a not null query to the aggregate.
      * 
      * @fieldname The name of the field.
+     * @example
+     * var count = new GlideAggregate('incident');
+     *   count.addNotNullQuery('short_description');
+     *   count.query();   // Issue the query to the database to get all records
+     *   while (count.next()) {   
+     *      // add code here to process the aggregate
+     *   }
      * @returns The scoped query condition.
      */
     addNotNullQuery(fieldname: String): GlideQueryCondition;
@@ -1342,6 +2001,13 @@ declare class GlideAggregate {
      * Adds a null query to the aggregate.
      * 
      * @fieldName The name of the field.
+     * @example
+     * var count = new GlideAggregate('incident');
+     *   count.addNullQuery('short_description');
+     *   count.query();   // Issue the query to the database to get all records
+     *   while (count.next()) {   
+     *      // add code here to process the aggregate
+     *   }
      * @returns The scoped query condition.
      */
     addNullQuery(fieldName: String): GlideQueryCondition;
@@ -1352,6 +2018,18 @@ declare class GlideAggregate {
      * @name The query to add.
      * @operator The operator for the query.
      * @value The list of values to include in the query.
+     * @example
+     * //Number of incidents varies depending on the current state
+     * //of the incident table
+     * var count = new GlideAggregate('incident');
+     * count.addQuery('active', '=','true');
+     * count.addAggregate('COUNT', 'category');
+     * count.query();  
+     * while (count.next()) {
+     *    var category = count.category;
+     *    var categoryCount = count.getAggregate('COUNT', 'category');
+     *    gs.info("There are currently " + categoryCount + " incidents with a category of " + category);
+     * }
      * @returns The query condition.
      */
     addQuery(name: String, operator: String, value: String): GlideQueryCondition;
@@ -1369,6 +2047,17 @@ declare class GlideAggregate {
      * 
      * @agg The type of the aggregate, for example, SUM or Count.
      * @name Name of the field to get the aggregate from.
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('COUNT');
+     * count.query();
+     * var incidents = 0;
+     * if (count.next()) {
+     *    incidents = count.getAggregate('COUNT');
+     * }
+     * //Number of incidents varies depending on the current state
+     * //of the incident table
+     * gs.info('Number of incidents: ' + incidents);
      * @returns The value of the aggregate.
      */
     getAggregate(agg: String, name: String): String;
@@ -1376,6 +2065,14 @@ declare class GlideAggregate {
     /**
      * Gets the query necessary to return the current aggregate.
      * 
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('MIN', 'sys_mod_count');
+     * count.groupBy('category');
+     * count.query();  
+     * while (count.next()) {
+     *     gs.info(count.getAggregateEncodedQuery());
+     * }
      * @returns The encoded query to get the aggregate.
      */
     getAggregateEncodedQuery(): String;
@@ -1383,6 +2080,14 @@ declare class GlideAggregate {
     /**
      * Retrieves the encoded query.
      * 
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('MIN', 'sys_mod_count');
+     * count.addAggregate('MAX', 'sys_mod_count');
+     * count.addAggregate('AVG', 'sys_mod_count');
+     * count.groupBy('category');
+     * count.query();
+     * gs.info(count.getEncodedQuery());
      * @returns The encoded query.
      */
     getEncodedQuery(): String;
@@ -1390,6 +2095,21 @@ declare class GlideAggregate {
     /**
      * Retrieves the number of rows in the GlideAggregate object.
      * 
+     * @example
+     * var count = new GlideAggregate('incident');
+     *   count.addAggregate('MIN', 'sys_mod_count');
+     *   count.addAggregate('MAX', 'sys_mod_count');
+     *   count.addAggregate('AVG', 'sys_mod_count');
+     *   count.groupBy('category');
+     *   count.query();
+     *   gs.info(count.getRowCount());
+     *   while (count.next()) {  
+     *      var min = count.getAggregate('MIN', 'sys_mod_count');
+     *      var max = count.getAggregate('MAX', 'sys_mod_count');
+     *      var avg = count.getAggregate('AVG', 'sys_mod_count');
+     *      var category = count.category.getDisplayValue();
+     *      gs.info(category + " Update counts: MIN = " + min + " MAX = " + max + " AVG = " + avg);
+     *   }
      * @returns The number of rows in the GlideAggregate object.
      */
     getRowCount(): Number;
@@ -1397,6 +2117,14 @@ declare class GlideAggregate {
     /**
      * Retrieves the table name associated with this GlideAggregate object.
      * 
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('MIN', 'sys_mod_count');
+     * count.addAggregate('MAX', 'sys_mod_count');
+     * count.addAggregate('AVG', 'sys_mod_count');
+     * count.groupBy('category');
+     * count.query();
+     * gs.info(count.getTableName());
      * @returns The table name.
      */
     getTableName(): String;
@@ -1405,6 +2133,20 @@ declare class GlideAggregate {
      * Gets the value of a field.
      * 
      * @name The name of the field.
+     * @example
+     * var count = new GlideAggregate('incident');
+     *   count.addAggregate('MIN', 'sys_mod_count');
+     *   count.addAggregate('MAX', 'sys_mod_count');
+     *   count.addAggregate('AVG', 'sys_mod_count');
+     *   count.groupBy('category');
+     *   count.query();   
+     *   while (count.next()) {  
+     *      var min = count.getAggregate('MIN', 'sys_mod_count');
+     *      var max = count.getAggregate('MAX', 'sys_mod_count');
+     *      var avg = count.getAggregate('AVG', 'sys_mod_count');
+     *      var category = count.category.getDisplayValue();
+     *   }
+     * gs.info("Current category is: " + count.getValue('category'));
      * @returns The value of the field.
      */
     getValue(name: String): String;
@@ -1413,12 +2155,37 @@ declare class GlideAggregate {
      * Provides the name of a field to use in grouping the aggregates.May be called numerous times to set multiple group fields.
      * 
      * @name Name of the field.
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('MIN', 'sys_mod_count');
+     * count.addAggregate('MAX', 'sys_mod_count');
+     * count.addAggregate('AVG', 'sys_mod_count');
+     * count.groupBy('category');
+     * count.query();   
+     * while (count.next()) {  
+     *      var min = count.getAggregate('MIN', 'sys_mod_count');
+     *      var max = count.getAggregate('MAX', 'sys_mod_count');
+     *      var avg = count.getAggregate('AVG', 'sys_mod_count');
+     *      var category = count.category.getDisplayValue();
+     *      gs.info(category + " Update counts: MIN = " + min + " MAX = " + max + " AVG = " + avg);
+     * }
      */
     groupBy(name: String);
 
     /**
      * Determines if there are any more records in the GlideAggregate object.
      * 
+     * @example
+     * var agg = new GlideAggregate('incident');
+     * agg.addAggregate('AVG', 'sys_mod_count');
+     * agg.groupBy('category');
+     * agg.query();
+     * while (agg.hasNext()) {
+     *     agg.next();
+     *     var avg = agg.getAggregate('AVG', 'sys_mod_count');
+     *     var category = agg.category.getDisplayValue();
+     *     gs.info(category + ': AVG = ' + avg);
+     * }
      * @returns True if there are more results in the query set.
      */
     hasNext(): Boolean;
@@ -1426,6 +2193,15 @@ declare class GlideAggregate {
     /**
      * Moves to the next record in the GlideAggregate.
      * 
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('COUNT');
+     * count.query();
+     * var incidents = 0;
+     * if (count.next()) {
+     *    incidents = count.getAggregate('COUNT');
+     *    gs.info(incidents);
+     * }
      * @returns True if there are more records in the query set; otherwise, false.
      */
     next(): Boolean;
@@ -1434,6 +2210,19 @@ declare class GlideAggregate {
      * Orders the aggregates using the value of the specified field. The field will also be added to the group-by list.
      * 
      * @name Name of the field to order the aggregates by.
+     * @example
+     * var agg = new GlideAggregate('incident');
+     * agg.addAggregate('count', 'category'); 
+     * agg.orderBy('category'); 
+     * agg.query(); 
+     * while (agg.next()) { 
+     *   var category = agg.category;
+     *   var count = agg.getAggregate('count', 'category');
+     *   var agg2 = new GlideAggregate('incident');   
+     *   agg2.addAggregate('count', 'category');
+     *   agg2.orderBy('category');
+     *   gs.info(category + ": Current number of incidents:" + count);
+     * }
      */
     orderBy(name: String);
 
@@ -1442,6 +2231,16 @@ declare class GlideAggregate {
      * 
      * @agg Type of aggregation.
      * @fieldName Name of the field to aggregate.
+     * @example
+     * ga.addAggregate(‘COUNT’, ‘category’);
+     *  
+     * ga.orderByAggregate('count', 'category');
+     *  
+     * ga.query();
+     *  
+     * while(ga.next()) {
+     *   gs.info(‘Category ’ + ga.category + ‘ ‘ + ga.getAggregate(‘COUNT’, ‘category’));
+     *   }
      */
     orderByAggregate(agg: String, fieldName: String);
 
@@ -1449,12 +2248,34 @@ declare class GlideAggregate {
      * Sorts the aggregates in descending order based on the specified field. The field will also be added to the group-by list.
      * 
      * @name Name of the field.
+     * @example
+     * var agg = new GlideAggregate('incident');
+     * agg.addAggregate('count', 'category'); 
+     * agg.orderByDesc('category'); 
+     * agg.query(); 
+     * while (agg.next()) { 
+     *   var category = agg.category;
+     *   var count = agg.getAggregate('count', 'category');
+     *   var agg2 = new GlideAggregate('incident');   
+     *   agg2.addAggregate('count', 'category');
+     *   agg2.orderBy('category');
+     *   gs.info(category + ": Current number of incidents:" + count);
+     * }
      */
     orderByDesc(name: String);
 
     /**
      * Issues the query and gets the results.
      * 
+     * @example
+     * var count = new GlideAggregate('incident');
+     * count.addAggregate('COUNT');
+     * count.query();
+     * var incidents = 0;
+     * if (count.next()) {
+     *    incidents = count.getAggregate('COUNT');
+     * }
+     * gs.info('Number of incidents: ' + incidents);
      */
     query();
 
@@ -1462,6 +2283,18 @@ declare class GlideAggregate {
      * Sets whether the results are to be grouped.
      * 
      * @b When true the results are grouped.
+     * @example
+     * var ga = new GlideAggregate('incident');
+     * ga.addAggregate('COUNT', 'category');
+     *  
+     * ga.setGroup(true);
+     * ga.groupBy("category");
+     *  
+     * ga.query();
+     *  
+     * while(ga.next()) {
+     *   gs.info('Category ' + ga.category + ' ' + ga.getAggregate('COUNT', 'category'));
+     *   }
      */
     setGroup(b: Boolean);
 
@@ -1486,6 +2319,10 @@ declare class GlideDate {
      * Gets the date in the specified date format.
      * 
      * @format the desired date format
+     * @example
+     * var gd = new GlideDate(); 
+     * gd.setValue('2015-01-01');
+     * gs.info(gd.getByFormat("dd-MM-yyyy"));
      * @returns the date in the specified format
      */
     getByFormat(format: String): String;
@@ -1493,6 +2330,10 @@ declare class GlideDate {
     /**
      * Gets the day of the month stored by the GlideDate object, expressed in the UTC time zone.
      * 
+     * @example
+     * //Today's date is 2016-05-13 
+     * var gd =new GlideDate();
+     * gs.info(gd.getDayOfMonthNoTZ());
      * @returns The day of the month in the UTC time zone, from 1 to 31.
      */
     getDayOfMonthNoTZ(): Number;
@@ -1500,6 +2341,10 @@ declare class GlideDate {
     /**
      * Gets the date in the current user's display format and time zone.
      * 
+     * @example
+     * var gd =new GlideDate(); 
+     * gd.setValue('2015-01-01');
+     * gs.info(gd.getDisplayValue());
      * @returns The date in the user's format and time zone. Keep in mind when designing business rules or script includes that this method may return values in different formats for different users.
      */
     getDisplayValue(): String;
@@ -1507,6 +2352,9 @@ declare class GlideDate {
     /**
      * Gets the display value in the internal format (yyyy-MM-dd).
      * 
+     * @example
+     * var gd =new GlideDate(); 
+     * gs.info(gd.getDisplayValueInternal());
      * @returns The date values for the GlideDate object in the current user's time zone and the internal time format of yyyy-MM-dd.
      */
     getDisplayValueInternal(): String;
@@ -1514,6 +2362,10 @@ declare class GlideDate {
     /**
      * Gets the month stored by the GlideDate object, expressed in the UTC time zone.
      * 
+     * @example
+     * //Today's date is 2016-05-13
+     * var gd =new GlideDate();
+     * gs.info(gd.getMonthNoTZ());
      * @returns The numerical value of the month from 1 to 12.
      */
     getMonthNoTZ(): Number;
@@ -1521,6 +2373,10 @@ declare class GlideDate {
     /**
      * Gets the date value stored in the database by the GlideDate object in the internal format, yyyy-MM-dd, and the system time zone, UTC by default.
      * 
+     * @example
+     * var gd =new GlideDate();
+     * gd.setValue('2015-01-01');
+     * gs.info(gd.getValue());
      * @returns The date value in the internal format and system time zone.
      */
     getValue(): String;
@@ -1528,6 +2384,10 @@ declare class GlideDate {
     /**
      * Gets the year stored by the GlideDate object, expressed in the UTC time zone.
      * 
+     * @example
+     * //Today's date is 2016-05-13
+     * var gd =new GlideDate();
+     * gs.info(gd.getYearNoTZ());
      * @returns The numerical value of the year.
      */
     getYearNoTZ(): Number;
@@ -1536,6 +2396,10 @@ declare class GlideDate {
      * Sets a date value using the current user's display format and time zone.
      * 
      * @asDisplayed The date in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format, such as yyyy-MM-dd.
+     * @example
+     * var gd =new GlideDate();
+     * gd.setDisplayValue("2011-01-01");
+     * gs.info(gd.getValue());
      */
     setDisplayValue(asDisplayed: String);
 
@@ -1543,6 +2407,10 @@ declare class GlideDate {
      * Sets the date of the GlideDate object.
      * 
      * @o The date and time to use.
+     * @example
+     * var gd = new GlideDate(); 
+     * gd.setValue('2015-01-01');
+     * gs.info(gd.getValue());
      */
     setValue(o: String);
 
@@ -1551,6 +2419,14 @@ declare class GlideDate {
      * 
      * @start The start value.
      * @end The end value.
+     * @example
+     * var sgd1 = new GlideDate(); 
+     * sgd1.setDisplayValue('2014-07-18'); 
+     * var sgd2 = new GlideDate(); 
+     * sgd2.setDisplayValue('2014-07-19'); 
+     *  
+     * duration= GlideDate.subtract(sgd1, sgd2); 
+     * gs.info(duration.getDisplayValue());
      * @returns The duration between the two values.
      */
     subtract(start: GlideDate, end: GlideDate): GlideDuration;
@@ -1570,6 +2446,8 @@ declare class GlideDateTime {
      * Instantiates a new GlideDateTime object from a date and time value in the UTC time zone specified with the format yyyy-MM-dd HH:mm:ss.
      * 
      * @value A UTC date and time using the internal format yyyy-MM-dd HH:mm:ss.
+     * @example
+     * var gdt = new GlideDateTime("2011-01-01 12:00:00");
      */
     constructor(value: String);
 
@@ -1577,12 +2455,18 @@ declare class GlideDateTime {
      * Instantiates a new GlideDateTime object set to the time of the GlideDateTime object passed in the parameter.
      * 
      * @g The GlideDateTime object to use for setting the time of the new object.
+     * @example
+     * var start = new GlideDateTime("2011-01-01 12:00:00");
+     * var end = new GlideDateTime(start);
+     * gs.info(end);
      */
     constructor(g: GlideDateTime);
 
     /**
      * Instantiates a new GlideDateTime object with the current date and time in Greenwich Mean Time (GMT).
      * 
+     * @example
+     * var gdt = new GlideDateTime();
      */
     constructor();
 
@@ -1590,6 +2474,13 @@ declare class GlideDateTime {
      * Adds a GlideTime object to the current GlideDateTime object.
      * 
      * @gd The GlideTime object to add.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * var gtime1 = new GlideTime();
+     * gtime1.setValue("00:00:20");
+     * gdt.add(gtime1);
+     * var gtime2 = gdt.getTime();
+     * gs.info(gtime2.getByFormat('hh:mm:ss'));
      */
     add(gd: GlideTime);
 
@@ -1597,6 +2488,11 @@ declare class GlideDateTime {
      * Adds the specified number of milliseconds to the current GlideDateTime object.
      * 
      * @milliseconds The number of milliseconds to add.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.getNumericValue());
+     * gdt.add(10);
+     * gs.info(gdt.getNumericValue());
      */
     add(milliseconds: Number);
 
@@ -1604,6 +2500,10 @@ declare class GlideDateTime {
      * Adds a specified number of days to the current GlideDateTime object. A negative parameter subtracts days. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts days using the local date and time values.
      * 
      * @days The number of days to add. Use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gdt.addDaysLocalTime(-1);
+     * gs.info(gdt.getLocalDate());
      */
     addDaysLocalTime(days: Number);
 
@@ -1611,6 +2511,10 @@ declare class GlideDateTime {
      * Adds a specified number of days to the current GlideDateTime object. A negative parameter subtracts days. The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts days using the UTC date and time values.
      * 
      * @days The number of days to add. Use a negative number to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gdt.addDaysUTC(-1);
+     * gs.info(gdt.getDate());
      */
     addDaysUTC(days: Number);
 
@@ -1618,6 +2522,10 @@ declare class GlideDateTime {
      * Adds a specified number of months to the current GlideDateTime object. A negative parameter subtracts months. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts months using the local date and time values.
      * 
      * @months The number of months to add. use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gdt.addMonthsLocalTime(2);
+     * gs.info(gdt.getDate());
      */
     addMonthsLocalTime(months: Number);
 
@@ -1625,6 +2533,10 @@ declare class GlideDateTime {
      * Adds a specified number of months to the current GlideDateTime object. A negative parameter subtracts months. The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts months using the UTC date and time values.
      * 
      * @months The number of months to add. Use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gdt.addMonthsUTC(2);
+     * gs.info(gdt.getDate());
      */
     addMonthsUTC(months: Number);
 
@@ -1632,6 +2544,10 @@ declare class GlideDateTime {
      * Adds the specified number of seconds to the current GlideDateTime object.
      * 
      * @seconds The number of seconds to add.
+     * @example
+     * var gdt = new GlideDateTime("2011-12-07 08:00:00");
+     * gdt.addSeconds(1000);
+     * gs.info(gdt.getValue());
      */
     addSeconds(seconds: Number);
 
@@ -1639,6 +2555,10 @@ declare class GlideDateTime {
      * Adds a specified number of weeks to the current GlideDateTime object. A negative parameter subtracts weeks. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts weeks using the local date and time values.
      * 
      * @weeks The number of weeks to add. Use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gdt.addWeeksLocalTime(-1);
+     * gs.info(gdt.getDate());
      */
     addWeeksLocalTime(weeks: Number);
 
@@ -1646,6 +2566,10 @@ declare class GlideDateTime {
      * Adds a specified number of weeks to the current GlideDateTime object. A negative parameter subtracts weeks. The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts weeks using the UTC date and time values.
      * 
      * @weeks The number of weeks to add. Use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gdt.addWeeksUTC(-1);
+     * gs.info(gdt.getDate());
      */
     addWeeksUTC(weeks: Number);
 
@@ -1653,6 +2577,10 @@ declare class GlideDateTime {
      * Adds a specified number of years to the current GlideDateTime object. A negative parameter subtracts years. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts years using the local date and time values.
      * 
      * @years The number of years to add. Use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2010-08-31 08:00:00");
+     * gdt.addYearsLocalTime(1);
+     * gs.info(gdt.getDate());
      */
     addYearsLocalTime(years: Number);
 
@@ -1660,6 +2588,10 @@ declare class GlideDateTime {
      * Adds a specified number of years to the current GlideDateTime object. A negative parameter subtracts years. The date and time value stored by GlideDateTime object is interpreted as being in the UTC time zone.
      * 
      * @years The number of years to add. Use a negative value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2010-08-31 08:00:00");
+     * gdt.addYearsUTC(1);
+     * gs.info(gdt.getDate());
      */
     addYearsUTC(years: Number);
 
@@ -1667,6 +2599,10 @@ declare class GlideDateTime {
      * Determines if the GlideDateTime object occurs after the specified GlideDateTime.
      * 
      * @gdt The time to check against.
+     * @example
+     * var gdt1 = new GlideDateTime("2016-05-09 10:11:12");
+     * var gdt2 = new GlideDateTime("2017-06-12 15:11:12");
+     * gs.info(gdt1.after(gdt2)); 
      * @returns Returns true if the GlideDateTime object's time is after the time specified by the parameter.
      */
     after(gdt: GlideDateTime): Boolean;
@@ -1675,6 +2611,10 @@ declare class GlideDateTime {
      * Determines if the GlideDateTime object occurs before the specified GlideDateTime.
      * 
      * @gdt The time to check against.
+     * @example
+     * var gdt1 = new GlideDateTime("2016-05-09 10:11:12");
+     * var gdt2 = new GlideDateTime("2017-06-12 15:11:12");
+     * gs.info(gdt1.before(gdt2));  
      * @returns Returns true if the GlideDateTime object's time is before the time specified by the parameter.
      */
     before(gdt: GlideDateTime): Boolean;
@@ -1683,6 +2623,15 @@ declare class GlideDateTime {
      * Compares two date and time objects to determine whether they are equivalent or one occurs before or after the other.
      * 
      * @o Date and time object in GlideDateTime format
+     * @example
+     * var initDate = new GlideDateTime("2011-08-01 12:00:00");
+     * var compDate1 = new GlideDateTime("2011-08-01 12:00:00");
+     * var compDate2 = new GlideDateTime("2011-07-31 12:00:00");
+     * var compDate3 = new GlideDateTime("2011-08-04 16:00:00");
+     *  
+     * gs.info(initDate.compareTo(compDate1)); // Equals (0)
+     * gs.info(initDate.compareTo(compDate2)); // initDate is after compDate2 (1)
+     * gs.info(initDate.compareTo(compDate3)); // initDate is before compDate3 (-1)
      * @returns  0 = Dates are equal 1 = The object's date is after the date specified in the parameter -1 = The object's date is before the date specified in the parameter 
      */
     compareTo(o: Object): Number;
@@ -1691,6 +2640,9 @@ declare class GlideDateTime {
      * Compares a datetime with an existing value for equality.
      * 
      * @dateTime The datetime to compare.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 00:00:00");
+     * gs.info(gdt.equals("2011-09-30 00:12:01"));
      * @returns Returns true if they are equal; otherwise, false.
      */
     equals(dateTime: GlideDateTime): Boolean;
@@ -1698,6 +2650,9 @@ declare class GlideDateTime {
     /**
      * Gets the date stored by the GlideDateTime object, expressed in the standard format, yyyy-MM-dd, and the system time zone, UTC by default.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.getDate());
      * @returns The date in the system time zone.
      */
     getDate(): GlideDate;
@@ -1705,6 +2660,9 @@ declare class GlideDateTime {
     /**
      * Gets the day of the month stored by the GlideDateTime object, expressed in the current user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-02 12:00:00");
+     * gs.info(gdt.getDayOfMonthLocalTime());
      * @returns The day of the month in the user's time zone, from 1 to 31.
      */
     getDayOfMonthLocalTime(): Number;
@@ -1712,6 +2670,9 @@ declare class GlideDateTime {
     /**
      * Gets the day of the month stored by the GlideDateTime object, expressed in the UTC time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-02 12:00:00");
+     * gs.info(gdt.getDayOfMonthUTC());
      * @returns The day of the month in the UTC time zone, from 1 to 31.
      */
     getDayOfMonthUTC(): Number;
@@ -1719,6 +2680,9 @@ declare class GlideDateTime {
     /**
      * Gets the day of the week stored by the GlideDateTime object, expressed in the user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-01 12:00:00");//Thursday
+     * gs.info(gdt.getDayOfWeekLocalTime());
      * @returns The day of week value, in the user's time zone, from 1 to 7. Monday equals 1, Sunday equals 7.
      */
     getDayOfWeekLocalTime(): Number;
@@ -1726,6 +2690,9 @@ declare class GlideDateTime {
     /**
      * Gets the day of the week stored by the GlideDateTime object, expressed in the UTC time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-01 12:00:00");//Thursday
+     * gs.info(gdt.getDayOfWeekLocalTime());
      * @returns The day of week value from 1 to 7. Monday equals 1, Sunday equals 7.
      */
     getDayOfWeekUTC(): Number;
@@ -1733,6 +2700,9 @@ declare class GlideDateTime {
     /**
      * Gets the number of days in the month stored by the GlideDateTime object, expressed in the current user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-02 12:00:00"); //December
+     * gs.info(gdt.getDaysInMonthLocalTime());
      * @returns The number of days in the current month in the user's time zone.
      */
     getDaysInMonthLocalTime(): Number;
@@ -1740,6 +2710,9 @@ declare class GlideDateTime {
     /**
      * Gets the number of days in the month stored by the GlideDateTime object, expressed in the UTC time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-11-02 12:00:00"); //November
+     * gs.info(gdt.getDaysInMonthUTC());
      * @returns The number of days in the month stored by the GlideDateTime object, expressed in the UTC time zone.
      */
     getDaysInMonthUTC(): Number;
@@ -1747,6 +2720,9 @@ declare class GlideDateTime {
     /**
      * Gets the date and time value in the current user's display format and time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.getDisplayValue()); //uses current user session time zone (US/Pacific)
      * @returns The date and time in the user's format and time zone. Keep in mind when designing business rules or script includes that this method may return values in different formats for different users.
      */
     getDisplayValue(): String;
@@ -1754,6 +2730,9 @@ declare class GlideDateTime {
     /**
      * Gets the display value in the internal format (yyyy-MM-dd HH:mm:ss).
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00"); 
+     * gs.info(gdt.getDisplayValueInternal()); //uses current user session time zone (US/Pacific)
      * @returns The date and time values for the GlideDateTime object in the current user's time zone and the internal date and time format of yyyy-MM-dd HH:mm:ss.
      */
     getDisplayValueInternal(): String;
@@ -1761,6 +2740,9 @@ declare class GlideDateTime {
     /**
      * Gets the amount of time that daylight saving time is offset.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2014-08-31 08:00:00"); 
+     * gs.info(gdt.getDSTOffset()); //uses current user session time zone (US/Pacific)
      * @returns Amount of time, in milliseconds, that daylight saving is offset. Returns 0 if there is no offset or if the time is not during daylight saving time.
      */
     getDSTOffset(): Number;
@@ -1768,6 +2750,10 @@ declare class GlideDateTime {
     /**
      * Gets the current error message.
      * 
+     * @example
+     * var gdt = new GlideDateTime(); 
+     * gdt.setDisplayValue("2011-aa-01 00:00:00"); 
+     * gs.info(gdt.getErrorMsg());
      * @returns The error message.
      */
     getErrorMsg(): String;
@@ -1782,6 +2768,9 @@ declare class GlideDateTime {
     /**
      * Gets the date stored by the GlideDateTime object, expressed in the standard format, yyyy-MM-dd, and the current user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.getLocalDate());
      * @returns The date in the user's time zone.
      */
     getLocalDate(): GlideDate;
@@ -1789,6 +2778,10 @@ declare class GlideDateTime {
     /**
      * Returns a GlideTime object that represents the time portion of the GlideDateTime object in the user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2014-08-31 08:00:00");
+     * gt = gdt.getLocalTime();
+     * gs.info("local time is " + gt.getByFormat('hh:mm:ss'));
      * @returns The time in the user's time zone.
      */
     getLocalTime(): GlideTime;
@@ -1796,6 +2789,9 @@ declare class GlideDateTime {
     /**
      * Gets the month stored by the GlideDateTime object, expressed in the current user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-11-02 12:00:00"); //November
+     * gs.info(gdt.getMonthLocalTime());
      * @returns The numerical value of the month.
      */
     getMonthLocalTime(): Number;
@@ -1803,6 +2799,9 @@ declare class GlideDateTime {
     /**
      * Gets the month stored by the GlideDateTime object, expressed in the UTC time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-11-02 12:00:00"); //November
+     * gs.info(gdt.getMonthUTC());
      * @returns The numerical value of the month.
      */
     getMonthUTC(): Number;
@@ -1810,6 +2809,9 @@ declare class GlideDateTime {
     /**
      * Gets the number of milliseconds since January 1, 1970, 00:00:00 GMT.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.getNumericValue());
      * @returns The number of milliseconds since January 1, 1970, 00:00:00 GMT.
      */
     getNumericValue(): Number;
@@ -1817,6 +2819,10 @@ declare class GlideDateTime {
     /**
      * Returns a GlideTime object that represents the time portion of the GlideDateTime object.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2014-08-31 08:00:00");
+     * gt = gdt.getTime();
+     * gs.info(gt.getByFormat('hh:mm:ss'));
      * @returns The Unix duration stamp in system format based on GMT time.
      */
     getTime(): GlideTime;
@@ -1824,6 +2830,10 @@ declare class GlideDateTime {
     /**
      * Gets the time zone offset in milliseconds.
      * 
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.getLocalTime(); // PST local time
+     * gs.info(gdt.getTZOffset());
      * @returns The number of milliseconds of time zone offset.
      */
     getTZOffset(): Number;
@@ -1838,6 +2848,9 @@ declare class GlideDateTime {
     /**
      * Gets the date and time value stored by the GlideDateTime object in the internal format, yyyy-MM-dd HH:mm:ss, and the system time zone, UTC by default.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2014-08-31 08:00:00");
+     * gs.info(gdt.getValue());
      * @returns The date and time value in the internal format and system time zone.
      */
     getValue(): String;
@@ -1845,6 +2858,9 @@ declare class GlideDateTime {
     /**
      * Gets the number of the week stored by the GlideDateTime object, expressed in the current user's time zone. All weeks begin on Sunday. The first week of the year is the week that contains at least one day of the new year. The week beginning Sunday 2015-12-27 is considered the first week of 2016 as that week contains January 1 and 2.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-01 12:00:00");//49th week, 1st week in december 
+     * gs.info(gdt.getWeekOfYearLocalTime());
      * @returns The number of the current week in local time. The highest week number in a year is either 52 or 53.
      */
     getWeekOfYearLocalTime(): Number;
@@ -1852,6 +2868,9 @@ declare class GlideDateTime {
     /**
      * Gets the number of the week stored by the GlideDateTime object, expressed in the UTC time zone. All weeks begin on Sunday. The first week of the year is the week that contains at least one day of the new year. The week beginning Sunday 2015-12-27 is considered the first week of 2016 as that week contains January 1 and 2.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-12-01 12:00:00");//49th week, 1st week in december 
+     * gs.info(gdt.getWeekOfYearUTC());
      * @returns The number of the current week in UTC time. The highest week number in a year is either 52 or 53.
      */
     getWeekOfYearUTC(): Number;
@@ -1859,6 +2878,9 @@ declare class GlideDateTime {
     /**
      * Gets the year stored by the GlideDateTime object, expressed in the current user's time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-11-02 12:00:00");
+     * gs.info(gdt.getYearLocalTime());
      * @returns Four-digit year value in the user's time zone.
      */
     getYearLocalTime(): Number;
@@ -1866,6 +2888,9 @@ declare class GlideDateTime {
     /**
      * Gets the year stored by the GlideDateTime object, expressed in the UTC time zone.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-11-02 12:00:00"); 
+     * gs.info(gdt.getYearUTC());
      * @returns 4-digit year value in the UTC time zone.
      */
     getYearUTC(): Number;
@@ -1873,6 +2898,9 @@ declare class GlideDateTime {
     /**
      * Determines if an object's date is set.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.hasDate());
      * @returns True if the object date is set; otherwise, returns false.
      */
     hasDate(): Boolean;
@@ -1880,6 +2908,9 @@ declare class GlideDateTime {
     /**
      * Determines if an object's time uses a daylight saving offset.
      * 
+     * @example
+     * var gdt = new GlideDateTime("2014-08-31 00:00:00");
+     * gs.info(gdt.isDST()); //true
      * @returns True if the time is daylight saving; otherwise, returns false.
      */
     isDST(): Boolean;
@@ -1887,6 +2918,10 @@ declare class GlideDateTime {
     /**
      * Determines if a value is a valid date and time.
      * 
+     * @example
+     * var gdt = new GlideDateTime(); 
+     * gdt.setDisplayValue("2011-aa-01 00:00:00"); 
+     * gs.info(gdt.isValid());
      * @returns True if value is valid; otherwise, returns false.
      */
     isValid(): Boolean;
@@ -1895,6 +2930,10 @@ declare class GlideDateTime {
      * Determines if the GlideDateTime object occurs on or after the specified GlideDateTime.
      * 
      * @gdt The time to check against.
+     * @example
+     * var gdt1 = new GlideDateTime("2016-05-09 10:11:12");
+     * var gdt2 = new GlideDateTime("2017-06-12 15:11:12");
+     * gs.info(gdt1.onOrAfter(gdt2));   
      * @returns Returns true if the GlideDateTime object's time is on or after the time specified by the parameter.
      */
     onOrAfter(gdt: GlideDateTime): Boolean;
@@ -1903,6 +2942,10 @@ declare class GlideDateTime {
      * Determines if the GlideDateTime object occurs on or before the specified GlideDateTime.
      * 
      * @gdt The time to check against.
+     * @example
+     * var gdt1 = new GlideDateTime("2016-05-09 10:11:12");
+     * var gdt2 = new GlideDateTime("2017-06-12 15:11:12");
+     * gs.info(gdt1.onOrBefore(gdt2));   
      * @returns Returns true if the GlideDateTime object's time is on or before the time specified by the parameter.
      */
     onOrBefore(gdt: GlideDateTime): Boolean;
@@ -1911,6 +2954,10 @@ declare class GlideDateTime {
      * Sets the day of the month to a specified value in the current user's time zone.
      * 
      * @day The day of month to change to, from 1 to 31. If this value is greater than the maximum number of days in the month, the value is set to the last day of the month.
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.setDayOfMonthLocalTime(9);
+     * gs.info(gdt.getDayOfMonthLocalTime());
      */
     setDayOfMonthLocalTime(day: Number);
 
@@ -1918,6 +2965,10 @@ declare class GlideDateTime {
      * Sets the day of the month to a specified value in the UTC time zone.
      * 
      * @day The day of month to change to, from 1 to 31. If this value is greater than the maximum number of days in the month, the value is set to the last day of the month.
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.setDayOfMonthUTC(9);
+     * gs.info(gdt.getDayOfMonthUTC());
      */
     setDayOfMonthUTC(day: Number);
 
@@ -1925,6 +2976,10 @@ declare class GlideDateTime {
      * Sets a date and time value using the current user's display format and time zone.
      * 
      * @asDisplayed The date and time in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format, such as MM-dd-yyyy HH:mm:ss. To assign the current date and time to a variable in a workflow script, use variable.setDisplayValue(gs.nowDateTime);.
+     * @example
+     * var gdt = new GlideDateTime("2014-02-02 12:00:00");
+     * gdt.setDisplayValue("2014-01-01 12:00:00");//uses current user session time zone (US/Pacific) 
+     * gs.info(gdt.getValue());
      */
     setDisplayValue(asDisplayed: String);
 
@@ -1933,6 +2988,10 @@ declare class GlideDateTime {
      * 
      * @value The date and time in the current user's time zone.
      * @format The date and time format to use to parse the value parameter.
+     * @example
+     * var gdt = new GlideDateTime("2011-02-02 12:00:00");
+     * gdt.setDisplayValue("20-5-2011 12:00:00", "dd-MM-yyyy HH:mm:ss"); //uses current user session time zone (US/Pacific)
+     * gs.info(gdt.getValue());
      */
     setDisplayValue(value: String, format: String);
 
@@ -1940,6 +2999,10 @@ declare class GlideDateTime {
      * Sets a date and time value using the internal format (yyyy-MM-dd HH:mm:ss) and the current user's time zone.
      * 
      * @value The date and time in internal format.
+     * @example
+     * var gdt = new GlideDateTime("2014-02-02 12:00:00");
+     * gdt.setDisplayValueInternal("2014-01-01 12:00:00"); //uses current user session time zone (US/Pacific)
+     * gs.info(gdt.getValue());
      */
     setDisplayValueInternal(value: String);
 
@@ -1947,6 +3010,11 @@ declare class GlideDateTime {
      * Sets the date and time of the current object using an existing GlideDateTime object. This method is equivalent to instantiating a new object with a GlideDateTime parameter.
      * 
      * @g The object to use for setting the datetime value.
+     * @example
+     * var dt1 = new GlideDateTime("2011-01-01 12:00:00");
+     * var dt2 = new GlideDateTime("2011-02-02 08:00:00");
+     * dt1.setGlideDateTime(dt2);
+     * gs.info(dt1.getValue());
      */
     setGlideDateTime(g: GlideDateTime);
 
@@ -1954,6 +3022,10 @@ declare class GlideDateTime {
      * Sets the month stored by the GlideDateTime object to the specified value using the current user's time zone.
      * 
      * @month The month to change to.
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.setMonthLocalTime(1);
+     * gs.info(gdt.getMonthLocalTime());
      */
     setMonthLocalTime(month: Number);
 
@@ -1961,6 +3033,10 @@ declare class GlideDateTime {
      * Sets the month stored by the GlideDateTime object to the specified value using the UTC time zone.
      * 
      * @month The month to change to.
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.setMonthUTC(1);
+     * gs.info(gdt.getMonthUTC());
      */
     setMonthUTC(month: Number);
 
@@ -1968,6 +3044,10 @@ declare class GlideDateTime {
      * Sets the date and time of the GlideDateTime object.
      * 
      * @o The date and time to use. This parameter may be one of several types: A string in the UTC time zone and the internal format of yyyy-MM-dd HH:mm:ss. Sets the value of the object to the specified date and time. Using the method this way is equivalent to instantiating a new GlideDateTime object using the GlideDateTime(String value) constructor. If the date and time format used does not match the internal format, the method attempts to set the date and time using other available formats. Resolving the date and time this way can lead to inaccurate data due to ambiguity in the day and month values. When using a non-standard date and time format, use etValueUTC(String dt, String format) instead. A GlideDateTime object. Sets the value of the object to the date and time stored by the GlideDateTime passed in the parameter. Using the method this way is equivalent to instantiating a new GlideDateTime object using the GlideDateTime(GlideDateTime g) constructor. A JavaScript Number. Sets the value of the object using the Number value as milliseconds past January 1, 1970 00:00:00 GMT. 
+     * @example
+     * var gdt = new GlideDateTime("2011-01-01 12:00:00");
+     * gdt.setValue("2011-02-02 08:00:00");  // value set =  2011-02-02 08:00:00
+     * gs.info(gdt.getValue());
      */
     setValue(o: String);
 
@@ -1976,6 +3056,10 @@ declare class GlideDateTime {
      * 
      * @dt The date and time to use.
      * @format The date and time format to use.
+     * @example
+     * var gdt = new GlideDateTime("2011-01-01 12:00:00");
+     * gdt.setValueUTC("15-02-2011 08:00:00", "dd-MM-yyyy HH:mm:ss");
+     * gs.info(gdt.getValue());
      */
     setValueUTC(dt: String, format: String);
 
@@ -1983,6 +3067,10 @@ declare class GlideDateTime {
      * Sets the year stored by the GlideDateTime object to the specified value using the current user's time zone.
      * 
      * @year The year to change to.
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.setYearLocalTime(2013);
+     * gs.info(gdt.getYearLocalTime());
      */
     setYearLocalTime(year: Number);
 
@@ -1990,6 +3078,10 @@ declare class GlideDateTime {
      * Sets the year stored by the GlideDateTime object to the specified value using the UTC time zone.
      * 
      * @year The year to change to.
+     * @example
+     * var gdt = new GlideDateTime();
+     * gdt.setYearUTC(2013);
+     * gs.info(gdt.getYearUTC());
      */
     setYearUTC(year: Number);
 
@@ -1998,6 +3090,12 @@ declare class GlideDateTime {
      * 
      * @Start The start value.
      * @End The end value.
+     * @example
+     * var gdt1 = new GlideDateTime("2011-08-28 09:00:00");
+     * var gdt2 = new GlideDateTime("2011-08-31 08:00:00");
+     *  
+     * var dur = GlideDateTime.subtract(gdt1, gdt2); //the difference between gdt1 and gdt2
+     * gs.info(dur.getDisplayValue());
      * @returns The duration between the two values.
      */
     subtract(Start: GlideDateTime, End: GlideDateTime): GlideDuration;
@@ -2006,6 +3104,13 @@ declare class GlideDateTime {
      * Subtracts a specified amount of time from the current GlideDateTime object.
      * 
      * @time The time value to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * var gtime1 = new GlideTime();
+     * gtime1.setValue("00:00:20");
+     * gdt.subtract(gtime1);
+     * var gtime2 = gdt.getTime();
+     * gs.info(gtime2.getByFormat('hh:mm:ss'));
      */
     subtract(time: GlideTime);
 
@@ -2013,12 +3118,19 @@ declare class GlideDateTime {
      * Subtracts the specified number of milliseconds from the GlideDateTime object.
      * 
      * @milliseconds The number of milliseconds to subtract.
+     * @example
+     * var gdt = new GlideDateTime("2011-12-07 08:00:00");
+     * gdt.subtract(1000);
+     * gs.info(gdt.getValue());
      */
     subtract(milliseconds: Number);
 
     /**
      * Gets the date and time value stored by the GlideDateTime object in the internal format, yyyy-MM-dd HH:mm:ss, and the system time zone, UTC by default. This method is equivalent to getValue().
      * 
+     * @example
+     * var gdt = new GlideDateTime("2011-08-31 08:00:00");
+     * gs.info(gdt.toString());
      * @returns The date and time stored by the GlideDateTime object in the system time zone and format.
      */
     toString(): String;
@@ -2037,24 +3149,46 @@ declare class GlideDBFunctionBuilder {
     /**
      * Instantiates a GlideDBFunctionBuilder object.
      * 
+     * @example
+     * var builder = new GlideDBFunctionBuilder();
+     * 
      */
     constructor();
 
     /**
      * Adds the values of two or more integer fields.Use the field(String field) method to define fields on which the operation is performed.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myAddingFunction = functionBuilder.add();
+     * myAddingFunction = functionBuilder.field('order');
+     * myAddingFunction = functionBuilder.field('priority');
+     * myAddingFunction = functionBuilder.build();
      */
     add();
 
     /**
      * Builds the database function defined by the GlideDBFunctionBuilder object.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myAddingFunction = functionBuilder.add();
+     * myAddingFunction = functionBuilder.field('order');
+     * myAddingFunction = functionBuilder.field('priority');
+     * myAddingFunction = functionBuilder.build();
+     * gs.print(myAddingFunction);
      */
     build();
 
     /**
      * Concatenates the values of two or more fields.Use the field(String field) method to define fields on which the operation is performed.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myConcatFunction = functionBuilder.concat();
+     * myConcatFunction = functionBuilder.field('short_description');
+     * myConcatFunction = functionBuilder.field('caller_id.name');
+     * myConcatFunction = functionBuilder.build();
      */
     concat();
 
@@ -2068,11 +3202,30 @@ declare class GlideDBFunctionBuilder {
     /**
      * Determines the duration using a given start date/time and end date/time.Use the field(String field) method to define start and end date/time fields.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myDateDiffFunction = functionBuilder.datediff();
+     * myDateDiffFunction = functionBuilder.field('sys_updated_on');
+     * myDateDiffFunction = functionBuilder.field('opened_at');
+     * myDateDiffFunction = functionBuilder.build();
      */
     datediff();
 
     /**
      * Returns an integer representing the day of the week for a given date.Use the field(String field) method to define the given date/time. Use the constant(String constant) method to define whether the week starts on a Sunday or Monday.This method can be used with MySQL, Oracle, and Microsoft SQL Server databases only. If using an Oracle database, the NLS_TERRITORY setting must be set to a territory with Sunday as the first day of the week.
+     * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var dayOfWeekFunction = functionBuilder.dayofweek();
+     * dayOfWeekFunction = functionBuilder.field('opened_at');
+     * dayOfWeekFunction = functionBuilder.constant('2');
+     * dayOfWeekFunction = functionBuilder.build();
+     * 
+     * var gr = new GlideRecord('incident');
+     * gr.addFunction(dayOfWeekFunction);
+     * gr.query();
+     * while(gr.next())
+     * gs.log(gr.getValue(dayOfWeekFunction));
      * 
      * @returns If the first day of the week is set to Sunday in the constant(String constant) method, return values are associated with the following days of the week: 1: Sunday 2: Monday 3: Tuesday 4: Wednesday 5: Thursday 6: Friday 7: Saturday If the first day of the week is set to Monday: 1: Monday 2: Tuesday 3: Wednesday 4: Thursday 5: Friday 6: Saturday 7: Sunday If a value other than 1 or 2 is provided in the constant(String constant) method, the dayofweek() method uses Sunday as the first day of the week.
      */
@@ -2081,6 +3234,12 @@ declare class GlideDBFunctionBuilder {
     /**
      * Divides the value of one integer field by another.Use the field(String field) method to define fields on which the operation is performed.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myDivideFunction = functionBuilder.divide();
+     * myDivideFunction = functionBuilder.field('order');
+     * myDivideFunction = functionBuilder.field('priority');
+     * myDivideFunction = functionBuilder.build();
      */
     divide();
 
@@ -2088,11 +3247,23 @@ declare class GlideDBFunctionBuilder {
      * Defines a field on which a SQL operation is performed.
      * 
      * @field The field on which you are performing the SQL operation.
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myAddingFunction = functionBuilder.add();
+     * myAddingFunction = functionBuilder.field('order');
+     * myAddingFunction = functionBuilder.field('priority');
+     * myAddingFunction = functionBuilder.build();
      */
     field(field: String);
 
     /**
      * Determines the number of code units in a field.Use the field(String field) method to define fields on which the operation is performed.
+     * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myLengthFunction = functionBuilder.length();
+     * myLengthFunction = functionBuilder.field('short_description');
+     * myLengthFunction = functionBuilder.build();
      * 
      */
     length();
@@ -2100,12 +3271,24 @@ declare class GlideDBFunctionBuilder {
     /**
      * Multiplies the values of two integer fields.Use the field(String field) method to define fields on which the operation is performed.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myMultiplyFunction = functionBuilder.multiply();
+     * myMultiplyFunction = functionBuilder.field('order');
+     * myMultiplyFunction = functionBuilder.field('priority');
+     * myMultiplyFunction = functionBuilder.build();
      */
     multiply();
 
     /**
      * Subtracts the value of one integer field from another.Use the field(String field) method to define fields on which the operation is performed.
      * 
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var mySubtractFunction = functionBuilder.subtract();
+     * mySubtractFunction = functionBuilder.field('order');
+     * mySubtractFunction = functionBuilder.field('priority');
+     * mySubtractFunction = functionBuilder.build();
      */
     subtract();
 
@@ -2130,6 +3313,10 @@ declare class GlideDigest {
      * Create a message digest from a string using the MD5 algorithm. The output string is in Base64.
      * 
      * @source The source string.
+     * @example
+     * var inputString = "Her molasses flowed slowly down the hill.";
+     * var digest = new GlideDigest();
+     * gs.info(digest.getMD5Base64(inputString));
      * @returns The message digest.
      */
     getMD5Base64(source: String): String;
@@ -2138,6 +3325,10 @@ declare class GlideDigest {
      * Create a message digest from an input stream using the MD5 algorithm. The output string is in Base64.
      * 
      * @inputStream The source input stream.
+     * @example
+     * var inputStream = new GlideSysAttachment().getContentStream(attachmentSysID);
+     * var digest = new GlideDigest();
+     * gs.info(digest.getMD5Base64FromInputStream(inputStream));
      * @returns The message digest.
      */
     getMD5Base64FromInputStream(inputStream: GlideScriptableInputStream): String;
@@ -2146,6 +3337,10 @@ declare class GlideDigest {
      * Create a message digest from a string using the MD5 algorithm. The output string is in hexadecimal.
      * 
      * @source The source string.
+     * @example
+     * var inputString = "Her molasses flowed slowly down the hill.";
+     * var digest = new GlideDigest();
+     * gs.info(digest.getMD5Hex(inputString));
      * @returns The message digest.
      */
     getMD5Hex(source: String): String;
@@ -2154,6 +3349,10 @@ declare class GlideDigest {
      * Create a message digest from an input stream using the MD5 algorithm. The output string is in hexadecimal.
      * 
      * @inputStream The source input stream.
+     * @example
+     * var inputStream = new GlideSysAttachment().getContentStream(attachmentSysID);
+     * var digest = new GlideDigest();
+     * gs.info(digest.getMD5HexFromInputStream(inputStream));
      * @returns The message digest.
      */
     getMD5HexFromInputStream(inputStream: GlideScriptableInputStream): String;
@@ -2162,6 +3361,10 @@ declare class GlideDigest {
      * Create a message digest from a string using the SHA1 algorithm. The output string is in Base64.
      * 
      * @source The source string.
+     * @example
+     * var inputString = "Her molasses flowed slowly down the hill.";
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA1Base64(inputString));
      * @returns The message digest.
      */
     getSHA1Base64(source: String): String;
@@ -2170,6 +3373,10 @@ declare class GlideDigest {
      * Create a message digest from an input stream using the SHA1 algorithm. The output string is in Base64.
      * 
      * @inputStream The source input stream.
+     * @example
+     * var inputStream = new GlideSysAttachment().getContentStream(attachmentSysID);
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA1Base64FromInputStream(inputStream));
      * @returns The message digest.
      */
     getSHA1Base64FromInputStream(inputStream: GlideScriptableInputStream): String;
@@ -2178,6 +3385,10 @@ declare class GlideDigest {
      * Create a message digest from a string using the SHA1 algorithm. The output string is in hexadecimal.
      * 
      * @source The source string.
+     * @example
+     * var inputString = "Her molasses flowed slowly down the hill.";
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA1Hex(inputString));
      * @returns The message digest.
      */
     getSHA1Hex(source: String): String;
@@ -2186,6 +3397,10 @@ declare class GlideDigest {
      * Create a message digest from an input stream using the SHA1 algorithm. The output string is in hexadecimal.
      * 
      * @inputStream The source input stream.
+     * @example
+     * var inputStream = new GlideSysAttachment().getContentStream(attachmentSysID);
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA1HexFromInputStream(inputStream));
      * @returns The message digest.
      */
     getSHA1HexFromInputStream(inputStream: GlideScriptableInputStream): String;
@@ -2194,6 +3409,10 @@ declare class GlideDigest {
      * Create a message digest from a string using the SHA256 algorithm. The output string is in Base64.
      * 
      * @source The source string.
+     * @example
+     * var inputString = "Her molasses flowed slowly down the hill.";
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA256Base64(inputString));
      * @returns The message digest.
      */
     getSHA256Base64(source: String): String;
@@ -2202,6 +3421,10 @@ declare class GlideDigest {
      * Create a message digest from an input stream using the SHA256 algorithm. The output string is in Base64.
      * 
      * @inputStream The source input stream.
+     * @example
+     * var inputStream = new GlideSysAttachment().getContentStream(attachmentSysID);
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA256Base64FromInputStream(inputStream));
      * @returns The message digest.
      */
     getSHA256Base64FromInputStream(inputStream: GlideScriptableInputStream): String;
@@ -2210,6 +3433,10 @@ declare class GlideDigest {
      * Create a message digest from a string using the SHA256 algorithm. The output string is in hexadecimal.
      * 
      * @source The source string.
+     * @example
+     * var inputString = "Her molasses flowed slowly down the hill.";
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA256Hex(inputString));
      * @returns The message digest.
      */
     getSHA256Hex(source: String): String;
@@ -2218,6 +3445,10 @@ declare class GlideDigest {
      * Create a message digest from an input stream using the SHA256 algorithm. The output string is in hexadecimal.
      * 
      * @inputStream The source input stream.
+     * @example
+     * var inputStream = new GlideSysAttachment().getContentStream(attachmentSysID);
+     * var digest = new GlideDigest();
+     * gs.info(digest.getSHA256HexFromInputStream(inputStream));
      * @returns The message digest.
      */
     getSHA256HexFromInputStream(inputStream: GlideScriptableInputStream): String;
@@ -2264,6 +3495,11 @@ declare class GlideDuration {
      * Add the specified duration to the object.
      * 
      * @duration The value to add to the object.
+     * @example
+     * var duration = new GlideDuration('3 12:00:00');
+     * var duration2 = new GlideDuration('3:00:00');
+     * var answer = duration.add(duration2);
+     * gs.info(answer.getDisplayValue());
      * @returns The sum of the current and the added duration.
      */
     add(duration: GlideDuration): GlideDuration;
@@ -2272,6 +3508,9 @@ declare class GlideDuration {
      * Gets the duration in the specified format.
      * 
      * @format The duration format.
+     * @example
+     * var dur = new GlideDuration('3 22:00:00');
+     * gs.info(dur.getByFormat('HH:mm'));
      * @returns The current duration in the specified format.
      */
     getByFormat(format: String): String;
@@ -2279,6 +3518,9 @@ declare class GlideDuration {
     /**
      * Gets the number of days.
      * 
+     * @example
+     * var dur = new GlideDuration('3 12:00:00');
+     * gs.info(dur.getDayPart());
      * @returns The number of days.
      */
     getDayPart(): Number;
@@ -2286,6 +3528,9 @@ declare class GlideDuration {
     /**
      * Gets the display value of the duration in number of days, hours, and minutes.
      * 
+     * @example
+     * var dur = new GlideDuration('3 12:00:00');
+     * gs.info(dur.getDisplayValue());
      * @returns The number of days, hours, and minutes.
      */
     getDisplayValue(): String;
@@ -2293,6 +3538,9 @@ declare class GlideDuration {
     /**
      * Gets the duration value in "d HH:mm:ss" format.
      * 
+     * @example
+     * var dur = new GlideDuration('3 12:00:00');
+     * gs.info(dur.getDurationValue());
      * @returns The duration value.
      */
     getDurationValue(): String;
@@ -2300,6 +3548,9 @@ declare class GlideDuration {
     /**
      * Gets the rounded number of days. If the time part is more than 12 hours, the return value is rounded up. Otherwise, it is rounded down.
      * 
+     * @example
+     * var dur = new GlideDuration('3 11:00:00');
+     * gs.info(dur.getRoundedDayPart());
      * @returns The day part, rounded.
      */
     getRoundedDayPart(): Number;
@@ -2307,6 +3558,9 @@ declare class GlideDuration {
     /**
      * Gets the internal value of the GlideDuration object.GlideDuration objects store the duration as a date and time from January 1, 1970, 00:00:00.
      * 
+     * @example
+     * var dur = new GlideDuration('3 12:00:00');
+     * gs.info(dur.getValue());
      * @returns The duration in the object's internal format, which is the date and time from January 1, 1970, 00:00:00.
      */
     getValue(): String;
@@ -2315,6 +3569,10 @@ declare class GlideDuration {
      * Sets the display value.
      * 
      * @asDisplayed The duration in "d HH:mm:ss" format.
+     * @example
+     * var dur = new GlideDuration(); 
+     * dur.setDisplayValue('3 08:00:00');
+     * gs.info(dur.getDisplayValue());
      */
     setDisplayValue(asDisplayed: String);
 
@@ -2322,6 +3580,10 @@ declare class GlideDuration {
      * Sets the internal value of the GlideDuration object.GlideDuration objects store the duration as a date and time from January 1, 1970, 00:00:00.
      * 
      * @o The duration in the object's internal format, which is the date and time from January 1, 1970, 00:00:00.
+     * @example
+     * var dur = new GlideDuration();
+     * dur.setValue('1970-01-05 08:00:00'); // sets internal DateTime value. The String will be parsed into a GlideDateTime object.
+     * gs.info(dur.getDisplayValue());
      */
     setValue(o: Object);
 
@@ -2329,6 +3591,11 @@ declare class GlideDuration {
      * Subtracts the specified duration from the current duration.
      * 
      * @duration The duration to subtract.
+     * @example
+     * var duration = new GlideDuration('3 12:00:00');
+     * var duration2 = new GlideDuration('3:00:00');
+     * var answer = duration.subtract(duration2);
+     * gs.info(answer.getDisplayValue());
      */
     subtract(duration: GlideDuration);
 
@@ -2367,6 +3634,12 @@ declare class GlideElement {
     /**
      * Determines if the current field has been modified. This functionality is available for all available data types, except Journal fields.
      * 
+     * @example
+     * // This method is often used in business rules. The following example shows is from a business rule, 
+     * // if "assigned_to" field value is changed, create a event in the EventQueue. 
+     * if (!current.assigned_to.nil() &amp;&amp; current.assigned_to.changes()) {
+     *   gs.eventQueue('incident.assigned', current, current.assigned_to.getDisplayValue() , previous.assigned_to.getDisplayValue());
+     *   }
      * @returns True if the fields have been changed, false if the field has not.
      */
     changes(): Boolean;
@@ -2375,6 +3648,12 @@ declare class GlideElement {
      * Determines if the previous value of the current field matches the specified object.Note: If the GlideRecord on which you are performing this method has only been initialized and read, and has not been written, the underlying before-and-after values are the same. In this case, the method returns "false", as there has been no change to the data store.
      * 
      * @o An object value to check against the previous value of the current field.
+     * @example
+     * / The following example shows that in a business rule, if "active" field is changed from true, 
+     * // insert a event in the EventQueue.
+     * if (current.active.changesFrom(true)) {
+     *   gs.eventQueue("incident.inactive", current, current.incident_state, previous.incident_state);
+     * }
      * @returns True if the previous value matches, false if it does not.
      */
     changesFrom(o: Object): Boolean;
@@ -2383,6 +3662,12 @@ declare class GlideElement {
      * Determines if the new value of a field, after a change, matches the specified object.Note: The changesTo() method is not supported within ACL scripts.
      * 
      * @o An object value to check against the new value of the current field.
+     * @example
+     * // The following example shows that in a business rule, if "active" field is changed to false, 
+     * // insert a event in the EventQueue.
+     * if (current.active.changesTo(false)) {
+     *   gs.eventQueue("incident.inactive", current, current.incident_state, previous.incident_state);
+     * }
      * @returns True if the previous value matches, false if it does not.
      */
     changesTo(o: Object): Boolean;
@@ -2391,6 +3676,17 @@ declare class GlideElement {
      * Returns the value of the specified attribute from the dictionary.If the attribute is a boolean attribute, use getBooleanAttribute(String) to get the value as a boolean rather than as a string.
      * 
      * @attributeName Attribute name
+     * @example
+     * doit();
+     * function doit() {
+     *   var gr = new GlideRecord('sys_user');
+     *   gr.query("user_name","admin");
+     *   if (gr.next()) {
+     *     gs.print("we got one");
+     *     gs.print(gr.location.getAttribute("tree_picker"));
+     *   }
+     *  
+     * }
      * @returns Attribute value
      */
     getAttribute(attributeName: String): String;
@@ -2407,6 +3703,14 @@ declare class GlideElement {
      * Generates a choice list for a field.
      * 
      * @dependent Optional: a dependent value
+     * @example
+     * var glideRecord = new GlideRecord('incident'); 
+     * glideRecord.query('priority','1'); 
+     * glideRecord.next(); 
+     *  
+     * // urgency has choice list: 1 - High, 2 - Medium, 3 - Low, with value: 1, 2, 3
+     * var choices = glideRecord.urgency.getChoices(); 
+     * gs.info(choices);
      * @returns An array list of choices.
      */
     getChoices(dependent: String): Array<any>;
@@ -2414,6 +3718,14 @@ declare class GlideElement {
     /**
      * Returns the choice label for the current choice.A choice has a value (number) and a label (string). This method returns the label.
      * 
+     * @example
+     * var glideRecord = new GlideRecord('incident'); 
+     * glideRecord.query('priority','1'); 
+     * glideRecord.next(); 
+     *  
+     * // urgency has choice list: 1 - High, 2 - Medium, 3 - Low, with value: 1, 2, 3
+     * var choiceLabel = glideRecord.urgency.getChoiceValue(); 
+     * gs.info(choiceLabel);
      * @returns The selected choice's label.
      */
     getChoiceValue(): String;
@@ -2421,6 +3733,16 @@ declare class GlideElement {
     /**
      * Returns the clear text value for Password (2 way encrypted) fields in scoped applications.
      * 
+     * @example
+     * var tablename = 'x_scoped_app_table'
+     * var CI = new GlideRecord(tablename);  
+     * CI.addQuery('number', '0001002'); 
+     * CI.query(); 
+     * CI.next(); 
+     * 
+     * var password = CI.password_field
+     * var decrypted = password.getDecryptedValue(); 
+     * gs.info(decrypted);
      * @returns The clear text password.
      */
     getDecryptedValue(): String;
@@ -2429,6 +3751,11 @@ declare class GlideElement {
      * Gets the formatted display value of the field.
      * 
      * @maxCharacters Optional: Maximum characters desired
+     * @example
+     * var glideRecord = new GlideRecord('incident');
+     * glideRecord.query('priority','1');
+     * glideRecord.next();
+     * gs.info(glideRecord.priority.getDisplayValue());
      * @returns The display value of the field
      */
     getDisplayValue(maxCharacters: Number): String;
@@ -2436,6 +3763,12 @@ declare class GlideElement {
     /**
      * Returns the field's element descriptor.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     *  
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
      * @returns The field's element descriptor.
      */
     getED(): GlideElementDescriptor;
@@ -2451,6 +3784,11 @@ declare class GlideElement {
      * Returns the HTML value of a field.
      * 
      * @maxChars Optional. Maximum number of characters to return.
+     * @example
+     * var inccause = new GlideRecord("incident");
+     * inccause.short_description = current.short_description;
+     * inccause.comments = current.comments.getHTMLValue();
+     * inccause.insert();
      * @returns HTML value for the field.
      */
     getHTMLValue(maxChars: Number): String;
@@ -2459,6 +3797,14 @@ declare class GlideElement {
      * Returns either the most recent journal entry or all journal entries.
      * 
      * @mostRecent If 1, returns the most recent entry. If -1, returns all journal entries.
+     * @example
+     * //gets all journal entries as a string where each entry is delimited by '\n\n'
+     * var notes = current.work_notes.getJournalEntry(-1); 
+     * //stores each entry into an array of strings
+     * var na = notes.split("\n\n");  
+     *                       
+     * for (var i = 0; i &lt; na.length; i++)                 
+     *   gs.print(na[i]);
      * @returns For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry. For all journal entries, returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
      */
     getJournalEntry(mostRecent: Number): String;
@@ -2466,6 +3812,27 @@ declare class GlideElement {
     /**
      * Returns the object label.
      * 
+     * @example
+     * var gr = new GlideRecord("sc_req_item");
+     * gr.addQuery("request", current.sysapproval);
+     * gr.query();
+     * while(gr.next()) {
+     *     var nicePrice = gr.price.toString();
+     *     if (nicePrice != ) {
+     *         nicePrice = parseFloat(nicePrice);
+     *         nicePrice = nicePrice.toFixed(2);
+     *     }
+     *     template.print(gr.number + ":  " + gr.quantity + " X " + gr.cat_item.getDisplayValue() + " at $" + nicePrice + " each \n");
+     *     template.print("    Options:\n");
+     *     var variables = gr.variables.getElements();    
+     *     for (var index in variables) {
+     *       var v = variables [key];
+     *       if(v.getQuestion().getLabel() != ) {
+     *          template.space(4);
+     *          template.print('     ' +  v.getQuestion().getLabel() + " = " + v.getDisplayValue() + "\n");  
+     *       }
+     *     }
+     * }
      * @returns Object label
      */
     getLabel(): String;
@@ -2480,6 +3847,14 @@ declare class GlideElement {
     /**
      * Gets the table name for a reference element.
      * 
+     * @example
+     * var grINC = new GlideRecord('incident');
+     * grINC.query('number','INC0010041'); // record assignment group assigned to "CAB Approval"
+     * if (grINC.next()) { 
+     *   // Get the table name 
+     *   var tableName = grINC.assignment_group.getReferenceTable();
+     *   gs.info( tableName ); 
+     * }
      * @returns The table name of the reference
      */
     getReferenceTable(): String;
@@ -2487,6 +3862,19 @@ declare class GlideElement {
     /**
      * Returns a GlideRecord object for a given reference element.
      * 
+     * @example
+     * 
+     * var grINC = new GlideRecord('incident'); 
+     * grINC.notNullQuery('caller_id'); 
+     * grINC.query(); 
+     * if (grINC.next()) { 
+     * 
+     * // Get a GlideRecord object for the referenced sys_user record 
+     * var grUSER = grINC.caller_id.getRefRecord(); 
+     * if (grUSER.isValidRecord()) 
+     *   gs.print( grUSER.getValue('name') ); 
+     * 
+     * } 
      * @returns A GlideRecord object
      */
     getRefRecord(): GlideRecord;
@@ -2494,6 +3882,27 @@ declare class GlideElement {
     /**
      * Returns the name of the table on which the field resides.
      * 
+     * @example
+     * if (current.approver.getTableName() == "sysapproval_approver") {
+     *   if (current.approver == email.from_sys_id)  {
+     *      current.comments = "reply from: " + email.from + "\n\n" + email.body_text;
+     *  
+     *    // if it's been cancelled, it's cancelled.
+     *   var doit = true;
+     *   if (current.state=='cancelled')
+     *       doit = false;
+     *  
+     *   if (email.body.state != undefined)
+     *      current.state= email.body.state;
+     *  
+     *    if (doit)
+     *       current.update();
+     * } else {
+     *    gs.log("Approval for task ("+current.sysapproval.getDisplayValue()+") rejected because user sending 
+     *            email( "+email.from+") does not match the approver ("+current.approver.getDisplayValue()+")");
+     * }
+     *  
+     * }
      * @returns Name of the table. The returned value may be different from the table Class that the record is in. See Tables and Classes in the product documentation.
      */
     getTableName(): String;
@@ -2501,6 +3910,11 @@ declare class GlideElement {
     /**
      * Determines if a field is null.
      * 
+     * @example
+     * var glideRecord = new GlideRecord('incident'); 
+     * glideRecord.query('priority','1'); 
+     * glideRecord.next(); 
+     * gs.info(glideRecord.state.nil());
      * @returns True if the field is null or an empty string, false if not.
      */
     nil(): Boolean;
@@ -2509,6 +3923,10 @@ declare class GlideElement {
      * Sets the value of a date/time element to the specified number of milliseconds since January 1, 1970 00:00:00 GMT.When called, setDateNumericValue() automatically creates the necessary GlideDateTime/GlideDate/GlideDuration object, and then sets the element to the specified value.
      * 
      * @milliseconds Number of milliseconds since 1/1/1970
+     * @example
+     * var gr = new GlideRecord("incident");
+     * gr.initialize();
+     * gr.opened_at.setDateNumericValue(10000);
      */
     setDateNumericValue(milliseconds: Number);
 
@@ -2516,6 +3934,14 @@ declare class GlideElement {
      * Sets the display value of the field.
      * 
      * @value The value to set for the field.
+     * @example
+     * var glideRecord = new GlideRecord('incident'); 
+     * glideRecord.query('priority','1'); 
+     * glideRecord.next();
+     *  
+     * //change the urgency to 3 
+     * glideRecord.urgency.setDisplayValue('3 - Low');
+     * gs.info(glideRecord.urgency);
      */
     setDisplayValue(value: Object);
 
@@ -2523,6 +3949,12 @@ declare class GlideElement {
      * Adds an error message. Available in Fuji patch 3.
      * 
      * @errorMessage The error message.
+     * @example
+     * var glideRecord = new GlideRecord('incident');
+     * glideRecord.query('priority','1');
+     * glideRecord.next();
+     *  
+     * glideRecord.short_description.setError('Error text');
      */
     setError(errorMessage: String);
 
@@ -2539,6 +3971,12 @@ declare class GlideElement {
      * Sets the value of a field.
      * 
      * @value Object value to set the field to.
+     * @example
+     * var glideRecord = new GlideRecord('incident');
+     * glideRecord.query('priority','1');
+     * glideRecord.next();
+     * glideRecord.short_description.setValue('Network failure');
+     * gs.info(glideRecord.short_description);
      */
     setValue(value: Object);
 
@@ -2546,6 +3984,11 @@ declare class GlideElement {
      * Converts the value to a string.
      * 
      * @value Object value to set the field to.
+     * @example
+     * var glideRecord = new GlideRecord('incident');
+     * glideRecord.query('priority','1');
+     * glideRecord.next();
+     * gs.info(glideRecord.opened_at.toString());
      * @returns The value as a string
      */
     toString(value: Object): String;
@@ -2564,6 +4007,16 @@ declare class GlideElementDescriptor {
     /**
      * Returns the encryption type used for attachments on the element's table.This method is for use with the Edge Encryption plugin.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * 
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * var isEdge = ed.getAttachmentEncryptionType();
+     * gs.info(isEdge);
+     * 
      * @returns The encryption type used on attachments. Returns null if attachments on the element's table are not being encrypted.
      */
     getAttachmentEncryptionType(): String;
@@ -2571,6 +4024,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns the element's encryption type.This method is for use with the Edge Encryption plugin.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * 
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * sEdge = ed.getEncryptionType();
+     * gs.info(isEdge);
      * @returns The element's encryption type. Returns null if the element is not encrypted.
      */
     getEncryptionType(): String;
@@ -2578,6 +4040,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns the element's internal data type.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     *  
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     *  
+     * var isEdge = ed.getInternalType();
+     * gs.info(isEdge);
      * @returns The element's internal data type.
      */
     getInternalType(): String;
@@ -2585,6 +4056,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns the element's label.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     *  
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     *  
+     * var isEdge = ed.getLabel();
+     * gs.info(isEdge);
      * @returns The element's label.
      */
     getLabel(): String;
@@ -2592,6 +4072,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns the element's length.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     *  
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     *  
+     * var isEdge = ed.getLength();
+     * gs.info(isEdge);
      * @returns The element's size.
      */
     getLength(): Number;
@@ -2599,6 +4088,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns the element's name.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     *  
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     *  
+     * var isEdge = ed.getName();
+     * gs.info(isEdge);
      * @returns The element's name.
      */
     getName(): String;
@@ -2606,6 +4104,11 @@ declare class GlideElementDescriptor {
     /**
      * Returns the element's plural label.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.query();
+     * var ed = gr.getED();
+     * gs.info(ed.getPlural());
      * @returns The element's plural label.
      */
     getPlural(): String;
@@ -2613,12 +4116,30 @@ declare class GlideElementDescriptor {
     /**
      * Returns true if an encrypted attachment has been added to the table.This method is for use with the Edge Encryption plugin.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * 
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * var isEdge = ed.hasAttachmentsEncrypted();
+     * gs.info(isEdge);
      * @returns Returns true if an encrypted attachment has been added to the table.
      */
     hasAttachmentsEncrypted(): Boolean;
 
     /**
      * Returns true if the element is an automatically generated or system field.Automatically generated and system fields cannot be encrypted. This method is for use with the Edge Encryption plugin.
+     * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * isEdge = ed.isAutoOrSysID();
+     * gs.info(isEdge);
      * 
      * @returns True if the element is automatically generated or a system field.
      */
@@ -2627,6 +4148,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns true if the element is defined as a dropdown choice in its dictionary definition.Choice fields cannnot be encrypted.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * 
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * var isChoiceTable = ed.isChoiceTable();
+     * gs.info(isChoiceTable);
      * @returns Returns true if the element is defined as a dropdown choice. Returns true even if there are no entries defined in the choice table. The last choice type, suggestion, does not return true.
      */
     isChoiceTable(): Boolean;
@@ -2634,6 +4164,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns true if an element is encrypted.This method is for use with the Edge Encryption plugin.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * 
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * var isEdge = ed.isEdgeEncrypted();
+     * gs.info(isEdge)
      * @returns Returns true if the element is encrypted, false otherwise.
      */
     isEdgeEncrypted(): Boolean;
@@ -2641,6 +4180,15 @@ declare class GlideElementDescriptor {
     /**
      * Returns true if the element is a virtual element.A virtual element is a calculated field as set by the dictionary definition of the field. Virtual fields cannot be encrypted.
      * 
+     * @example
+     * var grInc = new GlideRecord('incident');
+     * grInc.query('priority', '1');
+     * 
+     * var field = grInc.getElement('priority');
+     * var ed = field.getED();
+     * 
+     * var isVirtual = ed.isVirtual();
+     * gs.info(isVirtual);
      * @returns Returns true if the element is a virtual element.
      */
     isVirtual(): Boolean;
@@ -2667,6 +4215,8 @@ declare class GlideEmailOutbound {
      * 
      * @type Either cc or bcc, determines the list to which the address is added.
      * @address The recipient's email address.
+     * @example
+     * email.addAddress('cc', 'joe.employee@something.com');
      */
     addAddress(type: String, address: String);
 
@@ -2676,6 +4226,8 @@ declare class GlideEmailOutbound {
      * @type Either cc or bcc, determines the list to which the address is added.
      * @address The recipient's email address.
      * @displayName The name to be shown instead of the email address.
+     * @example
+     * email.addAddress('bcc', 'joe.employee@something.com', 'dudley rocks');
      */
     addAddress(type: String, address: String, displayName: String);
 
@@ -2689,6 +4241,8 @@ declare class GlideEmailOutbound {
     /**
      * Returns the email's watermark.
      * 
+     * @example
+     * var watermark = email.getWatermark();
      * @returns The email's watermark.
      */
     getWatermark(): String;
@@ -2697,6 +4251,8 @@ declare class GlideEmailOutbound {
      * Sets the body of the email.
      * 
      * @bodyText The body of the email.
+     * @example
+     * email.setBody('Dear Sir, ...');
      */
     setBody(bodyText: String);
 
@@ -2704,6 +4260,8 @@ declare class GlideEmailOutbound {
      * Sets the sender's address.
      * 
      * @address The sender's email address.
+     * @example
+     * email.setFrom('joe.employee@something.com');
      */
     setFrom(address: String);
 
@@ -2711,6 +4269,8 @@ declare class GlideEmailOutbound {
      * Sets the reply to address.
      * 
      * @address The reply to email address.
+     * @example
+     * email.setReplyTo('joe.employee@something.com');
      */
     setReplyTo(address: String);
 
@@ -2718,6 +4278,8 @@ declare class GlideEmailOutbound {
      * Sets the email's subject line.
      * 
      * @subject Text for the subject line.
+     * @example
+     * email.setSubject('Important Issues to discuss');
      */
     setSubject(subject: String);
 
@@ -2735,6 +4297,27 @@ declare class GlideExcelParser {
     /**
      * Creates an instance of GlideExcelParser.The API name space identifier "sn_impex" must be used when creating a GlideExcelParser object.
      * 
+     * @example
+     * var parser = new sn_impex.GlideExcelParser(); 
+     * var attachment = new GlideSysAttachment();
+     * // use attachment sys id of an excel file
+     * var attachmentStream = attachment.getContentStream(&lt;attachment sys id&gt;);
+     * 
+     * parser.parse(attachmentStream); 
+     * 
+     * //retrieve the column headers
+     * var headers = parser.getColumnHeaders();  
+     * var header1 = headers[0]; 
+     * var header2 = headers[1]; 
+     * 
+     * //print headers
+     * gs.print(header1 + " " + header2); 
+     * 
+     * while(parser.next()) { 
+     *   var row = parser.getRow(); 
+     *   //print row value for both columns   
+     *   gs.print(row[header1] + ' ' + row[header2]) 
+     * }
      */
     constructor();
 
@@ -2776,6 +4359,9 @@ declare class GlideExcelParser {
      * Parse an XLSX formatted Excel document.
      * 
      * @inputStream The Excel document to be parsed.
+     * @example
+     * var parser = new sn_impex.GlideExcelParser();
+     * parser.parse(request.body.dataStream); 
      * @returns Returns true if the parse was successful, otherwise, returns false.
      */
     parse(inputStream: GlideScriptableInputStream): Boolean;
@@ -2825,6 +4411,16 @@ declare class GlideFilter {
      * @gr GlideRecord to evaluate.
      * @filter Encoded query string (case-sensitive).
      * @match Optional. Flag that indicates whether all conditions must be met if the filter parameter contains multiple conditions. Valid values: true: all conditions must be met for the method to return true false: only one of the conditions must be met for the method to return true Default: true
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.query();
+     * var bool = true;
+     *  
+     * while(rec.next())
+     * {
+     *    bool = GlideFilter.checkRecord(rec, "active=true");
+     *    gs.info("number "+ rec. number + " is " + bool);
+     * }
      * @returns Results of the filter comparison. true: filter conditions were met false: filer conditions were not met 
      */
     checkRecord(gr: GlideRecord, filter: String, match: Boolean): Boolean;
@@ -2854,6 +4450,8 @@ declare class GlideLocale {
     /**
      * Returns the GlideLocale object.
      * 
+     * @example
+     * var locale = GlideLocale.get();
      * @returns The GlideLocale object.
      */
     get(): GlideLocale;
@@ -2861,6 +4459,10 @@ declare class GlideLocale {
     /**
      * Returns the decimal separator.
      * 
+     * @example
+     * var locale = GlideLocale.get();
+     * var decimalSeparator = locale.getDecimalSeparator();
+     * gs.info( "The decimal separator is " + decimalSeparator);
      * @returns The decimal separator.
      */
     getDecimalSeparator(): String;
@@ -2868,6 +4470,9 @@ declare class GlideLocale {
     /**
      * Returns the grouping separator.
      * 
+     * @example
+     * var locale = GlideLocale.get();var groupingSeparator = locale.getGroupingSeparator();
+     * gs.info( "The grouping separator is " + groupingSeparator);
      * @returns The grouping separator.
      */
     getGroupingSeparator(): String;
@@ -2891,6 +4496,8 @@ declare namespace sn_auth {
          * 
          * @OAuthEntityName The OAuth entity.
          * @requestor The request.
+         * @example
+         * token = oAuthClient.getToken(testAppProvider, someone@someemail.com);
          * @returns The token for the client.
          */
         getToken(OAuthEntityName: String, requestor: String): ScopedGlideOAuthToken;
@@ -2900,6 +4507,19 @@ declare namespace sn_auth {
          * 
          * @clientName The client name.
          * @jsonString The JSON string for the client.
+         * @example
+         * 
+         * var oAuthClient = new GlideOAuthClient();
+         * var params ={grant_type:"password", username:"itil", password:'itil'};
+         * var json =new JSON();
+         * var text = json.encode(params);
+         * var tokenResponse = oAuthClient.requestToken('TestClient', text);
+         * var token = tokenResponse.getToken();
+         * 
+         * gs.log("AccessToken:"+ token.getAccessToken());
+         * gs.log("AccessTokenExpiresIn:"+ token.getExpiresIn());
+         * gs.log(" RefreshToken:"+ token.getRefreshToken());
+         * 
          * @returns The token for the client.
          */
         requestToken(clientName: String, jsonString: String): sn_auth.GlideOAuthClientResponse;
@@ -3030,6 +4650,22 @@ declare namespace sn_auth {
          * Sets the refresh token with the string you provide.
          * 
          * @refreshToken The refresh token.
+         * @example
+         * 
+         *      var tokenRequest =new GlideOAuthClientRequest();
+         *      tokenRequest.setGrantType("password");
+         *      tokenRequest.setUserName("itil");
+         *      tokenRequest.setPassword("itil");
+         *      tokenRequest.setScope(null);
+         *  
+         *      var oAuthClient =new GlideOAuthClient();var tokenResponse = oAuthClient.requestToken("TestClient", tokenRequest);
+         *      gs.log("Error:"+ tokenResponse.getErrorMessage());
+         *  
+         *      var token = tokenResponse.getToken();if(token){
+         *        gs.log("AccessToken:"+ token.getAccessToken());
+         *        gs.log("AccessTokenExpiresIn:"+ token.getExpiresIn());
+         *        gs.log("RefreshToken:"+ token.getRefreshToken());
+         * 
          */
         setRefreshToken(refreshToken: String);
 
@@ -3174,6 +4810,20 @@ declare class GlidePluginManager {
      * Determines if the specified plugin has been activated.
      * 
      * @pluginID The plugin ID
+     * @example
+     * var gr = new GlideRecord('sys_plugins');
+     * var queryString = "active=0^ORactive=1";
+     * gr.addEncodedQuery(queryString);
+     * gr.query();
+     * pMgr = new GlidePluginManager();
+     *  
+     * while (gr.next()) {
+     *    var name = gr.getValue('name');
+     *    var pID = gr.getValue('source');
+     *    isActive = pMgr.isActive(pID);
+     *    if (isActive) 
+     *        gs.info('The plugin ' + name + " is  active"  );
+     * }
      * @returns True if the plugin has been activated.
      */
     isActive(pluginID: String): Boolean;
@@ -3195,6 +4845,14 @@ declare class GlideQueryCondition {
      * @name The name of a field.
      * @oper (Optional) The operator for the query. If you do not specify an operator, the condition uses an equals operator.
      * @value The value to query on.
+     * @example
+     * var gr = new GlideRecord('incident');
+     * var qc = gr.addQuery('category', 'Hardware');
+     * qc.addCondition('category', 'Network');
+     * gr.addQuery('number','INC0000003');
+     * gr.next();
+     * gr.number;
+     * gs.info(gr.getEncodedQuery());
      * @returns A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addCondition(name: String, oper: String, value: Object): GlideQueryCondition;
@@ -3205,6 +4863,22 @@ declare class GlideQueryCondition {
      * @name Field name
      * @oper (Optional) Query operator. The available values are dependent on the data type of the value parameter.Numbers: = != &gt; &gt;= &lt; &lt;= Strings (must be in upper case): = != IN STARTSWITH ENDSWITH CONTAINS DOESNOTCONTAIN 
      * @value Value on which to query (not case-sensitive).Note: All passed in arrays must contain a minimum of two elements. Single element arrays are not supported.
+     * @example
+     * var gr = new GlideRecord('incident');
+     * var qc = gr.addQuery('category', 'Hardware');
+     * qc.addOrCondition('category', 'Network');
+     * gr.addQuery('number','INC0000003');
+     * gr.next();
+     * gr.number;
+     * gs.info(gr.getEncodedQuery());
+     * 
+     * @example
+     * var myObj = new GlideRecord('incident');
+     * var q1 = myObj.addQuery('state', '&lt;', 3);
+     * q1.addOrCondition('state', '&gt;', 5);
+     * var q2 = myObj.addQuery('priority', 1);
+     * q2.addOrCondition('priority', 5);
+     * myObj.query();
      * @returns A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addOrCondition(name: String, oper: String, value: Object): GlideQueryCondition;
@@ -3224,12 +4898,18 @@ declare class GlideRecord {
      * Creates an instance of the GlideRecord class for the specified table.
      * 
      * @tableName The table to be used.
+     * @example
+     * var gr = new GlideRecord('incident');
      */
     constructor(tableName: String);
 
     /**
      * Adds a filter to return active records.
      * 
+     * @example
+     * var inc = new GlideRecord('incident');
+     * inc.addActiveQuery();
+     * inc.query();
      * @returns Filter to return active records.
      */
     addActiveQuery(): QueryCondition;
@@ -3238,6 +4918,14 @@ declare class GlideRecord {
      * Adds an encoded query to other queries that may have been set.Always test queries on a sub-production instance prior to deploying them on a production instance. An incorrectly constructed encoded query, such as including an invalid field name, produces an invalid query. When the invalid query is run, the invalid part of the query condition is dropped, and the results are based on the valid part of the query, which may return all records from the table. Using an insert(), update(), deleteRecord(), or deleteMultiple() method on bad query results can result in data loss.You can set the glide.invalid_query.returns_no_rows system property to true to have queries with invalid encoded queries return no records.
      * 
      * @query An encoded query string .
+     * @example
+     * var queryString = "priority=1^ORpriority=2";
+     * var gr = new GlideRecord('incident');
+     * gr.addEncodedQuery(queryString);
+     * gr.query();
+     * while (gr.next()) {
+     *   gs.addInfoMessage(gr.number);
+     * }
      */
     addEncodedQuery(query: String);
 
@@ -3245,6 +4933,20 @@ declare class GlideRecord {
      * Applies a pre-defined GlideDBFunctionBuilder object to a record.Use the GlideDBFunctionBuilder scoped class to define a function. After the function is defined, use the addFunction(Object function) method to apply the function to a record.
      * 
      * @func A GlideDBFunctionBuilder object that defines a SQL operation.
+     * @example
+     * var functionBuilder = new GlideDBFunctionBuilder();
+     * var myAddingFunction = functionBuilder.add();
+     * myAddingFunction = functionBuilder.field('order');
+     * myAddingFunction = functionBuilder.field('priority');
+     * myAddingFunction = functionBuilder.build();
+     * 
+     * var gr = new GlideRecord('incident');
+     * gr.addFunction(myAddingFunction);
+     * gr.addQuery(myAddingFunction, '&lt;', 5);
+     * gr.query();
+     * while(gr.next())
+     * gs.log(gr.getValue(myAddingFunction));
+     * 
      */
     addFunction(func: Object);
 
@@ -3254,6 +4956,32 @@ declare class GlideRecord {
      * @joinTable Table name
      * @primaryField (Optional) If other than sys_id, the primary field
      * @joinTableField (Optional) If other than sys_id, the field that joins the tables.
+     * @example
+     * var prob = new GlideRecord('problem');
+     * prob.addJoinQuery('incident');
+     * prob.query();
+     * @example
+     * // Look for Problem records that have associated Incident records
+     * var gr = new GlideRecord('problem');
+     * var grSQ = gr.addJoinQuery('incident');
+     *  
+     * // Where the Problem records are "active=false"
+     * gr.addQuery('active', 'false');
+     *  
+     * // And the Incident records are "active=true"
+     * grSQ.addCondition('active', 'true');
+     *  
+     * // Query
+     * gr.query();
+     *  
+     * // Iterate and output results
+     * while (gr.next()) {
+     *     gs.info(gr.getValue('number'));
+     * }
+     * @example
+     * var gr = new GlideRecord('problem'); 
+     * gr.addJoinQuery('incident', 'opened_by', 'caller_id'); 
+     * gr.query();
      * @returns A filter that lists records where the relationships match.
      */
     addJoinQuery(joinTable: String, primaryField: Object, joinTableField: Object): GlideQueryCondition;
@@ -3262,6 +4990,13 @@ declare class GlideRecord {
      * A filter that specifies records where the value of the field passed in the parameter is not null.Always test queries on a sub-production instance prior to deploying them on a production instance. An incorrectly constructed encoded query, such as including an invalid field name, produces an invalid query. When the invalid query is run, the invalid part of the query condition is dropped, and the results are based on the valid part of the query, which may return all records from the table. Using an insert(), update(), deleteRecord(), or deleteMultiple() method on bad query results can result in data loss.You can set the glide.invalid_query.returns_no_rows system property to true to have queries with invalid encoded queries return no records.
      * 
      * @fieldName The name of the field to be checked.
+     * @example
+     * var target = new GlideRecord('incident'); 
+     * target.addNotNullQuery('short_description');
+     * target.query();   // Issue the query to the database to get all records where short_description is not null
+     * while (target.next()) {   
+     *      // add code here to process the incident record
+     * }
      * @returns A filter that specifies records where the value of the field passed in the parameter is not null.
      */
     addNotNullQuery(fieldName: String): GlideQueryCondition;
@@ -3270,6 +5005,13 @@ declare class GlideRecord {
      * Adds a filter to return records where the value of the specified field is null.Always test queries on a sub-production instance prior to deploying them on a production instance. An incorrectly constructed encoded query, such as including an invalid field name, produces an invalid query. When the invalid query is run, the invalid part of the query condition is dropped, and the results are based on the valid part of the query, which may return all records from the table. Using an insert(), update(), deleteRecord(), or deleteMultiple() method on bad query results can result in data loss.You can set the glide.invalid_query.returns_no_rows system property to true to have queries with invalid encoded queries return no records.
      * 
      * @fieldName The name of the field to be checked.
+     * @example
+     * var target = new GlideRecord('incident'); 
+     * target.addNullQuery('short_description');
+     * target.query();   // Issue the query to the database to get all records where short_description is null
+     * while (target.next()) {   
+     *    // add code here to process the incident record
+     * }
      * @returns The query condition added to the GlideRecord.
      */
     addNullQuery(fieldName: String): GlideQueryCondition;
@@ -3279,6 +5021,15 @@ declare class GlideRecord {
      * 
      * @name Table field name.
      * @value Value on which to query (not case-sensitive).
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.addQuery('active', true);
+     * rec.query();
+     * while (rec.next()) { 
+     *   rec.active = false;
+     *   gs.info('Active incident ' + rec.number + ' closed');
+     *   rec.update();
+     * }
      * @returns The query condition added to the GlideRecord.
      */
     addQuery(name: String, value: Object): GlideQueryCondition;
@@ -3289,6 +5040,23 @@ declare class GlideRecord {
      * @name Table field name.
      * @operator Query operator. The available values are dependent on the data type of the value parameter.Numbers: = != &gt; &gt;= &lt; &lt;= Strings (must be in upper case): = != IN NOT IN STARTSWITH ENDSWITH CONTAINS DOES NOT CONTAIN INSTANCEOF 
      * @value Value on which to query (not case-sensitive).
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.addQuery('active',true);
+     * rec.addQuery('sys_created_on', "&gt;", "2010-01-19 04:05:00");
+     * rec.query();
+     * while (rec.next()) { 
+     *   rec.active = false;
+     *   gs.info('Active incident ' + rec.number + ' closed');
+     *   rec.update();
+     * }
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.addQuery('number','IN','INC00001,INC00002');
+     * gr.query();
+     * while(gr.next()) {
+     *   //do something....
+     * }
      * @returns The query condition that was added to the GlideRecord.
      */
     addQuery(name: String, operator: String, value: Object): GlideQueryCondition;
@@ -3297,6 +5065,15 @@ declare class GlideRecord {
      * Adds a filter to return records using an encoded query string.Always test queries on a sub-production instance prior to deploying them on a production instance. An incorrectly constructed encoded query, such as including an invalid field name, produces an invalid query. When the invalid query is run, the invalid part of the query condition is dropped, and the results are based on the valid part of the query, which may return all records from the table. Using an insert(), update(), deleteRecord(), or deleteMultiple() method on bad query results can result in data loss.You can set the glide.invalid_query.returns_no_rows system property to true to have queries with invalid encoded queries return no records.
      * 
      * @query An encoded query string .
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.addQuery('active=true');
+     * rec.query();
+     * while (rec.next()) { 
+     *   rec.active = false;
+     *   gs.info('Active incident ' + rec.number + ' closed');
+     *   rec.update();
+     * }
      * @returns The query condition added to the GlideRecord.
      */
     addQuery(query: String): GlideQueryCondition;
@@ -3304,6 +5081,9 @@ declare class GlideRecord {
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit inserting new records in this table.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gs.info(gr.canCreate());
      * @returns True if the user's roles permit creation of new records in this table.
      */
     canCreate(): Boolean;
@@ -3311,6 +5091,9 @@ declare class GlideRecord {
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit deleting records in this table.
      * 
+     * @example
+     * var att = new GlideRecord('sys_attachment');
+     * gs.info(att.canDelete());
      * @returns True if the user's roles permit deletions of records in this table.
      */
     canDelete(): Boolean;
@@ -3318,6 +5101,9 @@ declare class GlideRecord {
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit reading records in this table.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gs.info(gr.canRead());
      * @returns True if the user's roles permit reading records from this table.
      */
     canRead(): Boolean;
@@ -3325,6 +5111,9 @@ declare class GlideRecord {
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit editing records in this table.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gs.info(gr.canWrite());
      * @returns True if the user's roles permit writing to records from this table.
      */
     canWrite(): Boolean;
@@ -3335,12 +5124,24 @@ declare class GlideRecord {
      * @firstRow The first row to include.
      * @lastRow The last row to include.
      * @forceCount If true, the getRowCount() method will return all possible records.
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.orderBy('number');
+     * gr.chooseWindow(2, 4);
+     * gr.query();
+     * if (gr.next()) { 
+     *   gs.info(gr.number + ' is within window');
+     * }
      */
     chooseWindow(firstRow: Number, lastRow: Number, forceCount: Boolean);
 
     /**
      * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already a GlideDateTime object.
      * 
+     * @example
+     * var inc = new GlideRecord('incident');
+     * inc.get('17c90efb13418700cc36b1422244b05d');
+     * gs.info(inc.calendar_duration.dateNumericValue());
      * @returns Number of milliseconds since January 1, 1970, 00:00:00 GMT.
      */
     dateNumericValue(): Number;
@@ -3348,12 +5149,22 @@ declare class GlideRecord {
     /**
      * Deletes multiple records that satisfy the query condition.This method does not delete attachments.Do not use deleteMultiple() on tables with currency fields. Always delete each record individually. Also, do not use this method with the chooseWindow() or setLimit() methods when working with large tables.
      * 
+     * @example
+     * var gr = new GlideRecord('incident')
+     * gr.addQuery('active','false'); //to delete all inactive incidents
+     * gr.deleteMultiple();
      */
     deleteMultiple();
 
     /**
      * Deletes the current record.
      * 
+     * @example
+     * var gr = new GlideRecord('incident')
+     * //to delete one record
+     * if (gr.get('99ebb4156fa831005be8883e6b3ee4b9'))
+     *     gr.deleteRecord();
+     * }
      * @returns True if the record was deleted; false if no record was found to delete.
      */
     deleteRecord(): Boolean;
@@ -3363,6 +5174,16 @@ declare class GlideRecord {
      * 
      * @name Optional. Name of the instantiated GlideRecord column to search for the specified value parameter. If only a single parameter is passed in, the method assumes that this parameter is sys_id.
      * @value Value to match.
+     * @example
+     * var grIncident = new GlideRecord('incident');
+     * var returnValue = grIncident.get('99ebb4156fa831005be8883e6b3ee4b9');
+     * gs.info(returnValue); // logs true or false
+     * gs.info(grIncident.number); // logs Incident Number
+     * @example
+     * var grIncident = new GlideRecord('incident');
+     * var returnValue = grIncident.get('caller_id.name','Sylivia Wayland');
+     * gs.info(returnValue); // logs true or false
+     * gs.info(grIncident.number); // logs Incident Number
      * @returns Indicates whether the requested record was located: true: record was found false: record was not found 
      */
     get(name: Object, value: Object): Boolean;
@@ -3371,6 +5192,16 @@ declare class GlideRecord {
      * Returns the dictionary attributes for the specified field.
      * 
      * @fieldName Field name for which to return the dictionary attributes
+     * @example
+     * doit();
+     * function doit() {
+     *   var gr = new GlideRecord('sys_user');
+     *   gr.query("user_name","admin");
+     *   if (gr.next()) {
+     *     gs.print("we got one");
+     *     gs.print(gr.location.getAttribute("tree_picker"));
+     *   }
+     * }
      * @returns Dictionary attributes
      */
     getAttribute(fieldName: String): String;
@@ -3385,6 +5216,10 @@ declare class GlideRecord {
     /**
      * Retrieves the display value for the current record.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.get('sys_id','ef43c6d40a0a0b5700c77f9bf387afe3');
+     * gs.info(gr.getDisplayValue());
      * @returns The display value for the current record.
      */
     getDisplayValue(): String;
@@ -3392,6 +5227,42 @@ declare class GlideRecord {
     /**
      * Returns the element's descriptor.
      * 
+     * @example
+     * var totalCritical  = 0;
+     * var filledCritical = 0;
+     * var fields         = current.getFields();
+     *  
+     * gs.print(fields);
+     *  
+     * for (var num = 0; num &lt; fields.size(); num++) {
+     *  
+     * 	gs.print("RUNNING ARRAY VALUE " + num);
+     *  
+     * 	var ed = fields.get(num).getED();
+     *  
+     * 	if(ed.hasAttribute("tiaa_critical")) {
+     * 		gs.print("CRITICAL FIELD FOUND");
+     * 		totalCritical ++;
+     *  
+     * 		if (!fields.get(num).isNil()) {
+     * 			filledCritical ++;
+     * 		}
+     * 	}
+     *  
+     * }
+     *  
+     * var answer = 0;
+     * gs.print("TOTAL - " + totalCritical);
+     * gs.print("FILLED - " + filledCritical);
+     *  
+     * if (filledCritical &gt; 0 &amp;&amp; totalCritical &gt; 0) {
+     *  
+     * 	var pcnt = (filledCritical/totalCritical)*100;
+     * 	answer = pcnt.toFixed(2);;
+     *  
+     * }
+     *  
+     * answer;
      * @returns Element's descriptor
      */
     getED(): GlideElementDescriptor;
@@ -3400,6 +5271,13 @@ declare class GlideRecord {
      * Retrieves the GlideElement object for the specified field.
      * 
      * @columnName Name of the column to get the element from.
+     * @example
+     * var elementName = 'short_description'; 
+     * var gr = new GlideRecord('incident'); 
+     * gr.initialize(); 
+     * gr.setValue(elementName, "My DB is not working");
+     * gr.insert();
+     * gs.info(gr.getElement('short_description'));
      * @returns The GlideElement for the specified column of the current record.
      */
     getElement(columnName: String): GlideElement;
@@ -3407,6 +5285,13 @@ declare class GlideRecord {
     /**
      * Retrieves the query condition of the current result set as an encoded query string.
      * 
+     * @example
+     * var gr = new GlideRecord('incident'); 
+     * gr.addQuery('active', true);
+     * gr.addQuery('priority', 1); 
+     * gr.query(); 
+     * var encodedQuery = gr.getEncodedQuery(); 
+     * gs.info(encodedQuery);
      * @returns The encoded query as a string.
      */
     getEncodedQuery(): String;
@@ -3414,6 +5299,29 @@ declare class GlideRecord {
     /**
      * Returns the field's label.
      * 
+     * @example
+     * template.print("Summary of Requested items:\n");  
+     * var gr = new GlideRecord("sc_req_item");
+     * gr.addQuery("request", current.sysapproval);
+     * gr.query();
+     * while(gr.next()) {
+     *     var nicePrice = gr.price.toString();
+     *     if (nicePrice != '') {
+     *         nicePrice = parseFloat(nicePrice);
+     *         nicePrice = nicePrice.toFixed(2);
+     *     }
+     *     template.print(gr.number + ":  " + gr.quantity + " X " + gr.cat_item.getDisplayValue() 
+     *                      + " at $" + nicePrice + " each \n");
+     *     template.print("    Options:\n");
+     *     for (key in gr.variables) {
+     *       var v = gr.variables[key];
+     *       if(v.getGlideObject().getQuestion().getLabel() != '') {
+     *          template.space(4);
+     *          template.print('     ' +  v.getGlideObject().getQuestion().getLabel() + " = " 
+     *                      + v.getDisplayValue() + "\n");  
+     *       }
+     *     }
+     * }
      * @returns Field's label
      */
     getLabel(): String;
@@ -3421,6 +5329,12 @@ declare class GlideRecord {
     /**
      * Retrieves the last error message. If there is no last error message, null is returned.
      * 
+     * @example
+     * // Setup a data policy where short_description field in incident is mandatory
+     * var gr = new GlideRecord('incident');
+     * gr.insert(); // insert without data in mandatory field
+     * var errormessage = gr.getLastErrorMessage(); 
+     * gs.info(errormessage);
      * @returns The last error message as a string.
      */
     getLastErrorMessage(): String;
@@ -3429,6 +5343,13 @@ declare class GlideRecord {
      * Retrieves a link to the current record.
      * 
      * @noStack If true, the sysparm_stack parameter is not appended to the link. The parameter sysparm_stack specifies the page to visit after closing the current link.
+     * @example
+     * gr = new GlideRecord('incident');
+     * gr.addActiveQuery();
+     * gr.addQuery("priority", 1);
+     * gr.query();
+     * gr.next()
+     * gs.info(gs.getProperty('glide.servlet.uri') + gr.getLink(false));
      * @returns A link to the current record as a string.
      */
     getLink(noStack: Boolean): String;
@@ -3436,6 +5357,10 @@ declare class GlideRecord {
     /**
      * Retrieves the class name for the current record.
      * 
+     * @example
+     * var gr = new GlideRecord('incident'); 
+     * var recordClassName = gr.getRecordClassName(); 
+     * gs.info(recordClassName);
      * @returns The class name.
      */
     getRecordClassName(): String;
@@ -3443,6 +5368,10 @@ declare class GlideRecord {
     /**
      * Retrieves the number of rows in the query result.
      * 
+     * @example
+     * var gr = new GlideRecord('incident')
+     * gr.query();
+     * gs.info("Records in incident table: " + gr.getRowCount());
      * @returns The number of rows.
      */
     getRowCount(): Number;
@@ -3450,6 +5379,9 @@ declare class GlideRecord {
     /**
      * Retrieves the name of the table associated with the GlideRecord.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gs.info(gr.getTableName());
      * @returns The table name
      */
     getTableName(): String;
@@ -3457,6 +5389,12 @@ declare class GlideRecord {
     /**
      * Gets the primary key of the record, which is usually the sys_id unless otherwise specified.
      * 
+     * @example
+     * var gr = new GlideRecord('kb_knowledge');
+     * gr.query();
+     * gr.next();
+     * var uniqueid = gr.getUniqueValue();
+     * gs.info(uniqueid);
      * @returns The unique primary key as a String, or null if the key is null.
      */
     getUniqueValue(): String;
@@ -3465,6 +5403,12 @@ declare class GlideRecord {
      * Retrieves the string value of an underlying element in a field.
      * 
      * @name The name of the field to get the value from.
+     * @example
+     * var gr = new GlideRecord('incident'); 
+     * gr.orderBy('number');
+     * gr.query('active','true'); 
+     * gr.next() ; 
+     * gs.info(gr.getValue('number'));
      * @returns The value of the field.
      */
     getValue(name: String): String;
@@ -3472,6 +5416,12 @@ declare class GlideRecord {
     /**
      * Determines if there are any more records in the GlideRecord object.
      * 
+     * @example
+     * var rec = new GlideRecord('incident'); 
+     * rec.query(); 
+     * if (rec.hasNext()) { 
+     *   gs.info("Table is not empty"); 
+     * }
      * @returns True if there are more records in the query result set.
      */
     hasNext(): Boolean;
@@ -3479,12 +5429,24 @@ declare class GlideRecord {
     /**
      * Creates an empty record suitable for population before an insert.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.initialize(); 
+     * gr.name='New Incident'; 
+     * gr.description='Incident description'; 
+     * gr.insert();
      */
     initialize();
 
     /**
      * Inserts a new record using the field values that have been set for the current record.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.initialize(); 
+     * gr.name = 'New Incident'; 
+     * gr.description = 'Incident description'; 
+     * gr.insert();
      * @returns Unique ID of the inserted record, or null if the record is not inserted.
      */
     insert(): String;
@@ -3492,6 +5454,10 @@ declare class GlideRecord {
     /**
      * Checks to see if the current database action is to be aborted.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     *  
+     * gs.info(gr.isActionAborted());
      * @returns True if the current database action is to be aborted
      */
     isActionAborted(): Boolean;
@@ -3500,6 +5466,16 @@ declare class GlideRecord {
      * Verifies whether the specified encoded query is valid.
      * 
      * @query Encoded query to validate.
+     * @example
+     * var gr = new GlideRecord('incident_sla');
+     * var isValidQuery = gr.isEncodedQueryValid('inc_impact=1^taskslatable_active=true');
+     * if (isValidQuery) {
+     *        gr.addEncodedQuery('inc_impact=1^taskslatable_active=true');
+     *        gr.query();
+     *        .
+     *        .
+     *        .
+     * }
      * @returns Indicates whether the specified encoded query is valid. true: passed-in encoded query is valid false: passed-in encoded query is not valid 
      */
     isEncodedQueryValid(query: String): Boolean;
@@ -3507,6 +5483,10 @@ declare class GlideRecord {
     /**
      * Checks if the current record is a new record that has not yet been inserted into the database.
      * 
+     * @example
+     * var gr = new GlideRecord("x_app_table"); 
+     * gr.newRecord(); // create a new record and populate it with default values
+     * gs.info(gr.isNewRecord());
      * @returns True if the record is new and has not been inserted into the database.
      */
     isNewRecord(): Boolean;
@@ -3514,6 +5494,12 @@ declare class GlideRecord {
     /**
      * Determines if the table exists.
      * 
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gs.info(gr.isValid());
+     *  
+     * var anotherGr = new GlideRecord('wrong_table_name');
+     * gs.info(anotherGr.isValid());
      * @returns True if table is valid or if record was successfully retrieved. False if table is invalid or record was not successfully retrieved.
      */
     isValid(): Boolean;
@@ -3522,6 +5508,10 @@ declare class GlideRecord {
      * Determines if the specified field is defined in the current table.
      * 
      * @columnName The name of the the field.
+     * @example
+     * var gr = new GlideRecord('incident'); 
+     * gr.initialize(); 
+     * gs.info(gr.isValidField("short_description"));
      * @returns True if the field is defined for the current table.
      */
     isValidField(columnName: String): Boolean;
@@ -3529,6 +5519,13 @@ declare class GlideRecord {
     /**
      * Determines if current record is a valid record.
      * 
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.query();
+     * while (rec.next()) { 
+     *   gs.info(rec.number + ' exists');
+     * }
+     * gs.info(rec.isValidRecord());
      * @returns True if the current record is valid. False if past the end of the record set.
      */
     isValidRecord(): Boolean;
@@ -3536,12 +5533,22 @@ declare class GlideRecord {
     /**
      * Creates a new GlideRecord record, sets the default values for the fields, and assigns a unique ID to the record.
      * 
+     * @example
+     * var gr = new GlideRecord("x_app_table"); 
+     * gr.newRecord(); 
+     * gs.info(gr.isNewRecord());
      */
     newRecord();
 
     /**
      * Moves to the next record in the GlideRecord object.
      * 
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.query();
+     * while (rec.next()) { 
+     *   gs.info(rec.number + ' exists');
+     * }
      * @returns True if moving to the next record is successful. False if there are no more records in the result set.
      */
     next(): Boolean;
@@ -3549,6 +5556,9 @@ declare class GlideRecord {
     /**
      * Retrieves the current operation being performed, such as insert, update, or delete.
      * 
+     * @example
+     * //Commonly used in a business rule, returns insert if the current operation is insert
+     * gs.info("current operation " + current.operation());
      * @returns The current operation.
      */
     operation(): String;
@@ -3557,6 +5567,15 @@ declare class GlideRecord {
      * Specifies an orderBy column.Call this method more than once to order by multiple columns. Results are arranged in ascending order, see orderByDesc(String name) to arrange records in descending order.
      * 
      * @name The column name used to order the records in this GlideRecord object.
+     * @example
+     * var queryString = "priority=2"; 
+     * var gr = new GlideRecord('incident'); 
+     * gr.orderBy('short_description'); // Ascending Order
+     * gr.addEncodedQuery(queryString); 
+     * gr.query(); 
+     * while (gr.next()) { 
+     *     gs.info(gr.short_description); 
+     * }
      */
     orderBy(name: String);
 
@@ -3564,6 +5583,15 @@ declare class GlideRecord {
      * Specifies a decending orderBy column.
      * 
      * @name The column name to be used to order the records in a GlideRecord object.
+     * @example
+     * var queryString = "priority=2"; 
+     * var gr = new GlideRecord('incident'); 
+     * gr.orderByDesc('short_description'); //Descending Order
+     * gr.addEncodedQuery(queryString); 
+     * gr.query(); 
+     * while (gr.next()) { 
+     *     gs.info(gr.short_description); 
+     * }
      */
     orderByDesc(name: String);
 
@@ -3572,6 +5600,12 @@ declare class GlideRecord {
      * 
      * @field The column name to query on.
      * @value The value to query for.
+     * @example
+     * var rec = new GlideRecord('incident');
+     * rec.query();
+     * while (rec.next()) { 
+     *   gs.info(rec.number + ' exists');
+     * }
      */
     query(field: Object, value: Object);
 
@@ -3579,6 +5613,11 @@ declare class GlideRecord {
      * Sets a flag to indicate if the next database action (insert, update, delete) is to be aborted. This is often used in business rules.Use in an onBefore business rule to prevent the database action from being done. The business rule continues to run after setAbortAction() is called. Calling setAbortAction() does not stop subsequent business rules from executing. Calling this method only prevents the database action from occurring.
      * 
      * @b True to abort the next action. False if the action is to be allowed.
+     * @example
+     * // Often used in business rule to check whether the current operation should be aborted.
+     * if (current.size &gt; 16) {
+     *   current.setAbortAction(true);
+     * }
      */
     setAbortAction(b: Boolean);
 
@@ -3586,6 +5625,13 @@ declare class GlideRecord {
      * Sets the duration field to a number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already a GlideDateTime object.
      * 
      * @milliseconds Number of milliseconds spanned by the duration.
+     * @example
+     * var inc = new GlideRecord('incident');
+     * inc.get('17c90efb13418700cc36b1422244b05d');
+     * var timems = inc.calendar_duration.dateNumericValue();
+     * timems = timems + 11*1000; 
+     * inc.calendar_duration.setDateNumericValue(timems)
+     * gs.info(inc.calendar_duration.getValue());
      */
     setDateNumericValue(milliseconds: Number);
 
@@ -3593,6 +5639,11 @@ declare class GlideRecord {
      * Sets the limit for number of records are fetched by the GlideRecord query.
      * 
      * @maxNumRecords The maximum number of records to fetch.
+     * @example
+     * var gr = new GlideRecord('incident');
+     * gr.orderByDesc('sys_created_on');
+     * gr.setLimit(10);
+     * gr.query(); // this retrieves latest 10 incident records created
      */
     setLimit(maxNumRecords: Number);
 
@@ -3600,6 +5651,12 @@ declare class GlideRecord {
      * Sets sys_id value for the current record.
      * 
      * @guid The GUID to be assigned to the current record.
+     * @example
+     * ar gr = new GlideRecord('incident');
+     * gr.short_description='The third floor printer is broken';
+     * gr.setNewGuidValue('eb4636ca6f6d31005be8883e6b3ee333');
+     * gr.insert();
+     * gs.info(gr.sys_id);
      */
     setNewGuidValue(guid: String);
 
@@ -3608,6 +5665,12 @@ declare class GlideRecord {
      * 
      * @name Name of the field.
      * @value The value to assign to the field.
+     * @example
+     * var elementName = 'short_description'; 
+     * var gr = new GlideRecord('incident'); 
+     * gr.initialize(); 
+     * gr.setValue(elementName, "My DB is not working");
+     * gr.insert();
      */
     setValue(name: String, value: Object);
 
@@ -3615,6 +5678,10 @@ declare class GlideRecord {
      * Enables or disables the running of business rules, script engines, and audit.
      * 
      * @enable If true (default), enables business rules. If false, disables business rules.
+     * @example
+     * //Enable business rules, scripts engines for x_app_table
+     * var gr = new GlideRecord("x_app_table"); 
+     * gr.setWorkflow(true);
      */
     setWorkflow(enable: Boolean);
 
@@ -3622,6 +5689,12 @@ declare class GlideRecord {
      * Updates the GlideRecord with any changes that have been made. If the record does not already exist, it is inserted.
      * 
      * @reasonOptional The reason for the update. The reason is displayed in the audit record.
+     * @example
+     * var gr = new GlideRecord('incident')
+     * gr.get('99ebb4156fa831005be8883e6b3ee4b9');
+     * gr.short_description='Update the short description';
+     * gr.update();
+     * gs.info(gr.getElement('short_description'));
      * @returns Unique ID of the new or updated record. Returns null if the update fails.
      */
     update(reasonOptional: String): String;
@@ -3629,12 +5702,25 @@ declare class GlideRecord {
     /**
      * Updates each GlideRecord in the list with any changes that have been made.When changing field values, use setValue() instead of directly setting the field (field = something). When using updateMultiple(), directly setting the field (gr. state = 4) results in all records in the table being updated instead of just the records returned by the query.Do not use this method with the chooseWindow() or setLimit() methods when working with large tables.This method sets new values and does not clear existing values.
      * 
+     * @example
+     * // update the state of all active incidents to 4 - "Awaiting User Info"
+     * var gr = new GlideRecord('incident')
+     * gr.addQuery('active', true);
+     * gr.query();
+     * gr.setValue('state',  4);
+     * gr.updateMultiple();
      */
     updateMultiple();
 
     /**
      * Moves to the next record in the GlideRecord. Provides the same functionality as next(), it is intended to be used in cases where the GlideRecord has a column named next.
      * 
+     * @example
+     * var rec = new GlideRecord('sys_template');
+     * rec.query();
+     * while (rec._next()) { 
+     *   gs.print(rec.number + ' exists');
+     * }
      * @returns True if there are more records in the query set.
      */
     _next(): Boolean;
@@ -3644,6 +5730,12 @@ declare class GlideRecord {
      * 
      * @name Column name on which to query
      * @value Value for which to query
+     * @example
+     * var rec = new GlideRecord('sys_app_module');
+     * rec._query();
+     * while (rec.next()) { 
+     *  gs.print(rec.number + ' exists');
+     * }
      */
     _query(name: Object, value: Object);
 
@@ -3663,6 +5755,8 @@ declare class GlideSchedule {
      * 
      * @sysID The system ID for the schedule.
      * @timeZone The time zone. (Optional)
+     * @example
+     * var schedule = new GlideSchedule('090eecae0a0a0b260077e1dfa71da828', 'US/Pacific');
      */
     constructor(sysID: String, timeZone: String);
 
@@ -3677,6 +5771,13 @@ declare class GlideSchedule {
      * 
      * @startDate The starting date of the new schedule segment.
      * @offSet The time offset of the new schedule segment.
+     * @example
+     * var startDate = new GlideDateTime('2014-01-02');
+     * var days = 2;
+     * var dur = new GlideDuration(60 * 60 * 24 * 1000 * days);
+     * var schedule = new GlideSchedule();
+     * var end = schedule.add(startDate, dur);
+     * gs.info(end);
      * @returns The schedule updated with the new schedule segment.
      */
     add(startDate: GlideDateTime, offSet: GlideDuration): GlideDateTime;
@@ -3686,6 +5787,14 @@ declare class GlideSchedule {
      * 
      * @startDate The starting datetime.
      * @endDate The ending datetime.
+     * @example
+     * var startDate = new GlideDateTime('2014-10-16 02:00:00');
+     * var endDate = new GlideDateTime('2014-10-18 04:00:00');
+     * var schedule = new GlideSchedule();
+     *  
+     * schedule.load('090eecae0a0a0b260077e1dfa71da828'); // loads "8-5 weekdays excluding holidays" schedule
+     * var duration = schedule.duration(startDate, endDate);
+     * gs.info(duration.getDurationValue()); // gets the elapsed time in schedule
      * @returns The difference between the starting and ending datetime.
      */
     duration(startDate: GlideDateTime, endDate: GlideDateTime): GlideDuration;
@@ -3693,6 +5802,10 @@ declare class GlideSchedule {
     /**
      * Retrieves the schedule name.
      * 
+     * @example
+     * sys_id ='04e664654a36232701a2247dcd8fc4cf'; // sys_id for "Application" schedule record
+     * var sched = new GlideSchedule(sys_id);
+     * gs.info(sched.getName());
      * @returns The name of the current schedule.
      */
     getName(): String;
@@ -3701,6 +5814,19 @@ declare class GlideSchedule {
      * Determines if the given datetime is within the current schedule.
      * 
      * @time The datetime value to check.
+     * @example
+     * var g = new GlideRecord('cmn_schedule');
+     * g.addQuery('type', 'blackout');
+     * g.query();
+     * if (g.next()) {
+     *    var sched = new GlideSchedule(g.sys_id);
+     *    var d = new GlideDateTime();
+     *    d.setDisplayValue("2007-09-18 12:00:00");
+     *    if (sched.isInSchedule(d)) 
+     *       gs.info("Is in the schedule");
+     *    else
+     *       gs.info("Is NOT in the schedule");
+     * }
      * @returns True if the specified datetime is within the schedule; otherwise, false.
      */
     isInSchedule(time: GlideDateTime): Boolean;
@@ -3708,6 +5834,20 @@ declare class GlideSchedule {
     /**
      * Determines if the current schedule is valid. A schedule is valid if it has at least one schedule span.
      * 
+     * @example
+     * var g = new GlideRecord('cmn_schedule');
+     * g.addQuery('type', 'blackout');
+     * g.query();
+     * if (g.next()) {
+     *    var sched = new GlideSchedule(g.sys_id);
+     *    var d = new GlideDateTime();
+     *    d.setDisplayValue("2007-09-18 12:00:00");
+     *    if (sched.isValid()) 
+     *       gs.info("Is valid");
+     *  
+     *    else
+     *       gs.info("Is not valid");
+     * }
      * @returns True if the schedule is valid.
      */
     isValid(): Boolean;
@@ -3718,6 +5858,9 @@ declare class GlideSchedule {
      * @sysID The system ID of the schedule.
      * @timeZone (Optional) The timezone. If a timezone is not specified, or is nil, the current session timezone is used for the schedule.
      * @excludeSpanID Any span to exclude.
+     * @example
+     * var x = new GlideSchedule();
+     * x.load('08fcd0830a0a0b2600079f56b1adb9ae');
      */
     load(sysID: String, timeZone: String, excludeSpanID: String);
 
@@ -3725,6 +5868,9 @@ declare class GlideSchedule {
      * Sets the timezone for the current schedule.
      * 
      * @timeZone The timezone.
+     * @example
+     * var schedule = new GlideSchedule();
+     * schedule.setTimeZone('US/Pacific');
      */
     setTimeZone(timeZone: String);
 
@@ -3733,6 +5879,10 @@ declare class GlideSchedule {
      * 
      * @time The time to be evaluated.
      * @timeZone The timezone.
+     * @example
+     * var startDate = new GlideDateTime('2014-10-25 08:00:00');
+     * var glideSchedule = new GlideSchedule('08fcd0830a0a0b2600079f56b1adb9ae', 'UTC');
+     * gs.info(glideSchedule.whenNext(startDate));
      * @returns The number of milliseconds until the start time of the next schedule item. Returns -1 if never.
      */
     whenNext(time: GlideDateTime, timeZone: String): Number;
@@ -3760,6 +5910,25 @@ declare class GlideScopedEvaluator {
      * @grObj The GlideRecord containing a script expression.
      * @scriptField (Optional) The name of the field containing the script expression.
      * @variables (Optional) A map of variables with name-value pairs. These variables are available to the script during execution of this method.
+     * @example
+     * // For this example, we created a table: "x_app_table" with two columns: "short_description", "test_script"
+     * // "test_script" will store the script to be evaluated by GlideScopedEvaluator.
+     * gr = new GlideRecord('x_app_table'); 
+     * gr.short_description = 'Testing GlideScopedEvaluator';  
+     * gr.test_script = "gs.getUser().getName() + ' says ' + greeting; "; 
+     * gr.insert(); 
+     *  
+     * // setup variables to be used by the script
+     * var vars = {'greeting' : 'hello'};
+     *  
+     * //Evaluate the script from the field
+     * var evaluator = new GlideScopedEvaluator(); 
+     * gr = new GlideRecord('x_app_table'); 
+     * gr.addQuery('short_description','Testing GlideScopedEvaluator'); 
+     * gr.query(); 
+     * if (gr.next()) { 
+     *     gs.info(evaluator.evaluateScript(gr, 'test_script', vars));
+     * }
      * @returns The result of the script execution.
      */
     evaluateScript(grObj: GlideRecord, scriptField: String, variables: Object): Object;
@@ -3768,6 +5937,26 @@ declare class GlideScopedEvaluator {
      * Returns a variable from a GlideScopedEvaluator object.
      * 
      * @name The name of the variable.
+     * @example
+     * //setting up a record that contains the script to be executed.
+     * gr = new GlideRecord('x_app_table'); 
+     * gr.short_description = 'Calculate Addition';  
+     * gr.calculate = "result = x + y"; 
+     * gr.insert(); 
+     *  
+     * var evaluator = new GlideScopedEvaluator();
+     * evaluator.putVariable('x', 100);
+     * evaluator.putVariable('y', 200);
+     * evaluator.putVariable('result', null);
+     *  
+     * // Now retrieve the result 
+     * gr = new GlideRecord('x_app_table'); 
+     * gr.addQuery('short_description','Calculate Addition'); 
+     * gr.query(); 
+     * if (gr.next()) { 
+     *     evaluator.evaluateScript(gr, 'calculate', null);
+     *     gs.info(evaluator.getVariable('result'));
+     * }
      * @returns The value of the specified variable.
      */
     getVariable(name: String): Object;
@@ -3777,6 +5966,26 @@ declare class GlideScopedEvaluator {
      * 
      * @name The name of the variable.
      * @value The value of the variable.
+     * @example
+     * /setting up a record that contains the script to be executed.
+     * gr = new GlideRecord('x_app_table'); 
+     * gr.short_description = 'Calculate Addition';  
+     * gr.calculate = "result = x + y"; 
+     * gr.insert(); 
+     *  
+     * var evaluator = new GlideScopedEvaluator();
+     * evaluator.putVariable('x', 100);
+     * evaluator.putVariable('y', 200);
+     * evaluator.putVariable('result', null);
+     *  
+     * // Now retrieve the result 
+     * gr = new GlideRecord('x_app_table'); 
+     * gr.addQuery('short_description','Calculate Addition'); 
+     * gr.query(); 
+     * if (gr.next()) { 
+     *     evaluator.evaluateScript(gr, 'calculate', null);
+     *     gs.info(evaluator.getVariable('result'));
+     * }
      */
     putVariable(name: String, value: Object);
 
@@ -3806,6 +6015,9 @@ declare class GlideScriptedProcessor {
      * Redirects to the specified URL.
      * 
      * @url the destination URL
+     * @example
+     * //Do whatever processing you need and redirect to the homepage
+     * g_processor.redirect("/navpage.do")
      */
     redirect(url: String);
 
@@ -3813,6 +6025,9 @@ declare class GlideScriptedProcessor {
      * Encodes an object as a JSON string and writes it to the current URL.
      * 
      * @o The object to encode to a JSON string.
+     * @example
+     * var map = {"key1":"value1","key2":"value2"};
+     * g_processor.writeJSON(map);
      */
     writeJSON(o: Object);
 
@@ -3821,6 +6036,9 @@ declare class GlideScriptedProcessor {
      * 
      * @contentType Sets the content type of the response sent to the client, if the response has not been committed, and may include a character-encoding specification.
      * @s The string to write.
+     * @example
+     * var name = g_request.getParameter("name");
+     * g_processor.writeOutput("text/plain", "Hello " + name);
      */
     writeOutput(contentType: String, s: String);
 
@@ -3828,6 +6046,9 @@ declare class GlideScriptedProcessor {
      * Writes the specified string to the current URL.
      * 
      * @s The string to write.
+     * @example
+     * var name = g_request.getParameter("name");
+     * g_processor.writeOutput("Hello " + name);
      */
     writeOutput(s: String);
 
@@ -3845,6 +6066,9 @@ declare class GlideSecureRandomUtil {
     /**
      * Generates a pseudo-random integer.
      * 
+     * @example
+     * gs.info(GlideSecureRandomUtil.getSecureRandomInt());
+     * 
      * @returns The pseudo-randomly generated integer.
      */
     getSecureRandomInt(): Number;
@@ -3853,12 +6077,17 @@ declare class GlideSecureRandomUtil {
      * Generates a pseudo-random integer between 0 (inclusive) and the bound (exclusive) value that you pass into the method.
      * 
      * @bound The bound value.
+     * @example
+     * gs.info(GlideSecureRandomUtil.getSecureRandomIntBound(100));
      * @returns The pseudo-randomly generated integer.
      */
     getSecureRandomIntBound(bound: Number): Number;
 
     /**
      * Generates pseudo-random long value.
+     * 
+     * @example
+     * gs.info(GlideSecureRandomUtil.getSecureRandomLong());
      * 
      * @returns The pseudo-randomly generated 64-bit integer.
      */
@@ -3868,6 +6097,8 @@ declare class GlideSecureRandomUtil {
      * Generates a random alpha-numeric String with the specified length.
      * 
      * @length The length of the string in number of characters.
+     * @example
+     * gs.info(GlideSecureRandomUtil.getSecureRandomString(12));
      * @returns The randomly generated string.
      */
     getSecureRandomString(length: Number): String;
@@ -3887,6 +6118,10 @@ declare class GlideSecurityUtils {
      * Removes suspicious encoding to prevent reflected or DOM based cross site scripting.
      * 
      * @url The URL to be checked.
+     * @example
+     * myurl='javascript%3Aalert(1)';
+     * var clean=GlideSecurityUtils.cleanURL(myurl);
+     * gs.info(clean);
      * @returns The URL stripped of problem elements.
      */
     cleanURL(url: String): String;
@@ -3895,6 +6130,10 @@ declare class GlideSecurityUtils {
      * Removes the domain address from the URL, which leaves the page name and parameters.
      * 
      * @url The URL to be turned into a relative URL.
+     * @example
+     * myurl='http://evildomain.com/test.do';
+     * relativeURL=GlideSecurityUtils.enforceRelativeURL(myurl);
+     * gs.info(relativeURL);
      * @returns A relative URL.
      */
     enforceRelativeURL(url: String): String;
@@ -3903,6 +6142,10 @@ declare class GlideSecurityUtils {
      * Add escape characters to a script.Adding escape characters to a script helps prevent cross-site scripting.
      * 
      * @script The script to have escape characters added.
+     * @example
+     * theScript="&lt;script&gt; alert(1)&lt;/script&gt;";
+     * var escapedScript=GlideSecurityUtils.escapeScript(theScript);
+     * gs.info(escapedScript);
      * @returns The script with escape characters added.
      */
     escapeScript(script: String): String;
@@ -3911,6 +6154,10 @@ declare class GlideSecurityUtils {
      * Check the specified URL against the system defined white list.
      * 
      * @url The URL to be checked against the URL white list.
+     * @example
+     * myURL="http://evil.com/badscript.do";
+     * isWhitelisted=GlideSecurityUtils.isURLWhiteListed(myURL);
+     * gs.info(isWhitelisted);
      * @returns Returns true if the specified URL is in the white list.
      */
     isURLWhiteListed(url: String): Boolean;
@@ -3929,6 +6176,8 @@ declare class GlideServletRequest {
     /**
      * Returns the MIME type of the body of the request.
      * 
+     * @example
+     * var contentType = g_request.getContentType();
      * @returns The content type, returns null if the content type is not known.
      */
     getContentType(): String;
@@ -3937,6 +6186,8 @@ declare class GlideServletRequest {
      * Returns the header value.
      * 
      * @name The name of the header to be retrieved.
+     * @example
+     * var headerValue = g_request.getHeader("host");
      * @returns The header.
      */
     getHeader(name: String): String;
@@ -3944,6 +6195,8 @@ declare class GlideServletRequest {
     /**
      * Returns a comma-separated list of header names.
      * 
+     * @example
+     * var headerList = g_request.getHeaderNames();
      * @returns A comma-separated list of header names.
      */
     getHeaderNames(): String;
@@ -3952,6 +6205,8 @@ declare class GlideServletRequest {
      * Returns the header values.
      * 
      * @name Names of the headers to be retrieved.
+     * @example
+     * var headerValue = g_request.getHeaders("host");
      * @returns The header values.
      */
     getHeaders(name: String): String;
@@ -3960,6 +6215,8 @@ declare class GlideServletRequest {
      * Returns the value of the parameter contained in the request URL.
      * 
      * @name The name of the parameter to be retrieved. This can be the parameter endpoint from the processor form.
+     * @example
+     * var name = g_request.getParameter("x_snc_custom_x_snc_name");
      * @returns The parameter value. Returns null if the parameter is not found.
      */
     getParameter(name: String): Strings;
@@ -3967,6 +6224,8 @@ declare class GlideServletRequest {
     /**
      * Returns a list of the parameter names found in the request URL.
      * 
+     * @example
+     * var paramList = g_request.getParameterNames();
      * @returns A comma-separated list of parameter names.
      */
     getParameterNames(): String;
@@ -3974,6 +6233,9 @@ declare class GlideServletRequest {
     /**
      * Returns the query string from the request.
      * 
+     * @example
+     * var daString = g_request.getQueryString();
+     * g_processor.writeOutput("The query string is: " + daString);
      * @returns The query string.
      */
     getQueryString(): String;
@@ -4000,6 +6262,8 @@ declare class GlideServletResponse {
      * Sets the MIME type of the response
      * 
      * @type The MIME type.
+     * @example
+     * g_response.setContentType('text/html;charset=UTF-8');
      */
     setContentType(type: String);
 
@@ -4008,6 +6272,8 @@ declare class GlideServletResponse {
      * 
      * @key Specifies the header.
      * @value The value to be assigned to the header. If the header exists, it is over written.
+     * @example
+     * g_response.setHeader("host", "demonightlyus.service-now.com");
      */
     setHeader(key: String, value: String);
 
@@ -4015,6 +6281,9 @@ declare class GlideServletResponse {
      * Sets the status code for the response.
      * 
      * @status The status to be set.
+     * @example
+     * // set the status to okay
+     * g_response.setStatus(200);
      */
     setStatus(status: Number);
 
@@ -4033,6 +6302,11 @@ declare class GlideSession {
      * Retrieves a session client value previously set with putClientData().This method is used in a client script to retrieve data values that were set by a server script that used the putClientData() method.
      * 
      * @paramName Name of the client data to retrieve.
+     * @example
+     * var session = gs.getSession();
+     * session.putClientData('test1', 'Harry');
+     * var clientData = session.getClientData('test1');
+     * gs.info(clientData);
      * @returns The client data as a string.
      */
     getClientData(paramName: String): String;
@@ -4040,6 +6314,10 @@ declare class GlideSession {
     /**
      * Returns the client IP address.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var addr = session.getClientIP();
+     * gs.info(addr);
      * @returns The IP address.
      */
     getClientIP(): String;
@@ -4047,6 +6325,10 @@ declare class GlideSession {
     /**
      * Returns the application currently selected in the application picker.This method requires admin privileges.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var appID = session.getCurrentApplicationId();
+     * gs.info(appID);
      * @returns The currently selected application.
      */
     getCurrentApplicationId(): String;
@@ -4054,6 +6336,10 @@ declare class GlideSession {
     /**
      * Returns the session's language code.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var language = session.getLanguage();
+     * gs.info(language);
      * @returns The session's language code.
      */
     getLanguage(): String;
@@ -4061,6 +6347,10 @@ declare class GlideSession {
     /**
      * Returns the session token.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var token = session.getSessionToken();
+     * gs.info(token);
      * @returns The session token.
      */
     getSessionToken(): String;
@@ -4068,6 +6358,10 @@ declare class GlideSession {
     /**
      * Returns the name of the session's time zone.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var zoneName = session.getTimeZoneName();
+     * gs.info(zoneName);
      * @returns The name of the session's time zone.
      */
     getTimeZoneName(): String;
@@ -4075,6 +6369,10 @@ declare class GlideSession {
     /**
      * Returns the URL on the stack. Returns null if the stack is empty.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var URL = session.getUrlOnStack();
+     * gs.info(URL);
      * @returns The URL. Returns null if the stack is empty.
      */
     getUrlOnStack(): String;
@@ -4082,6 +6380,9 @@ declare class GlideSession {
     /**
      * Returns true if the user is impersonating another user.
      * 
+     * @example
+     * var isImpersonator = gs.getSession().isImpersonating();
+     * gs.info(isImpersonator);
      * @returns Returns true if the user is impersonating another user; otherwise, returns false.
      */
     isImpersonating(): Boolean;
@@ -4089,6 +6390,9 @@ declare class GlideSession {
     /**
      * Returns true if the session is interactive.An interactive session is one that involves an end-user interacting with a user interface that then retrieves information from a server. An example of this type of session is when a user logs in using the log-in screen or uses a form to query a data store. A non-interactive session is one that only involves programmatic interaction with a server such as a SOAP request to retrieve data.
      * 
+     * @example
+     * var interActive = gs.getSession().isInteractive();
+     * gs.info(interActive);
      * @returns True if the session is interactive.
      */
     isInteractive(): Boolean;
@@ -4096,6 +6400,10 @@ declare class GlideSession {
     /**
      * Returns true if the user is logged in.
      * 
+     * @example
+     * var session = gs.getSession();
+     * var loggedIn = session.isLoggedIn();
+     * gs.info(loggedIn);
      * @returns True if the user is logged in.
      */
     isLoggedIn(): Boolean;
@@ -4105,6 +6413,11 @@ declare class GlideSession {
      * 
      * @paramName Name of the client data to set.
      * @paramValue Value of the client data.
+     * @example
+     * var session = gs.getSession();
+     * session.putClientData('test1', 'Harry');
+     * var clientData = session.getClientData('test1');
+     * gs.info(clientData);
      */
     putClientData(paramName: String, paramValue: String);
 
@@ -4123,6 +6436,26 @@ declare class GlideSPScriptable {
      * Returns true if the user can read the specified GlideRecord.If the record type is kb_knowledge, sc_cat_item, or sc_category, the method checks if the user can view the item.
      * 
      * @gr The GlideRecord to check.
+     * @example
+     * //Server script
+     * data.items = [];
+     * data.userName = gs.getUserDisplayName();
+     * var gr = new GlideRecord("sc_cat_item");
+     * gr.query();
+     * while(gr.next() &amp;&amp; data.items.length &lt; 10) {
+     *     if ($sp.canReadRecord(gr)) {
+     *         data.items.push(gr.getDisplayValue("name"));
+     *     }
+     * }
+     * 
+     * //HTML template
+     * &lt;div class="panel panel-default"&gt;
+     *     &lt;div class="panel-heading"&gt;Hi, {{c.data.userName}}!&lt;/div&gt;
+     *     &lt;div class="panel-body"&gt;
+     *         Here are some things you can order:
+     *         &lt;ul&gt;&lt;li ng-repeat="item in c.data.items"&gt;{{item}}&lt;/li&gt;&lt;/ul&gt;
+     *     &lt;/div&gt;
+     * &lt;/div&gt;
      * @returns True if the record is valid and readable.
      */
     canReadRecord(gr: GlideRecord): Boolean;
@@ -4140,6 +6473,66 @@ declare class GlideSPScriptable {
      * Returns a model and view model for a sc_cat_item or sc_cat_item_guide.This method is deprecated. Use the getCatalogItem(String sysId, Boolean isOrdering) method instead. This method calls the getCatalogItem(String sysId, Boolean isOrdering) method with the isOrdering parameter set to false, which means that write roles security checking is done.This method is a quick way to get the data necessary to render and order a catalog item using &lt;sp-model /&gt;. If you just need to get a catalog item to show its picture or name, use GlideRecord to query the sc_cat_item table.
      * 
      * @sysId The sys_id of the catalog item (sc_cat_item) or order guide (sc_cat_item_guide).
+     * @example
+     * // Server script
+     * (function() {
+     *     var sys_id = $sp.getParameter("sys_id")
+     *     data.catItem = $sp.getCatalogItem(sys_id);
+     * })();
+     * 
+     * // Client script
+     * function($http, spUtil) {
+     *     var c = this;
+     *     var submitting = false;
+     *     c.getIt = function() {
+     *         if (submitting) return;
+     *         $http.post(spUtil.getURL('sc_cat_item'), c.data.catItem).success(function(response) {
+     *             if (response.answer) {
+     *                 c.req = response.answer;
+     *                 c.req.page = c.req.table == 'sc_request' ? 'sc_request' : 'ticket';
+     *             }
+     *         });
+     *     }
+     * }
+     * 
+     * //SCSS
+     * .img-bg {
+     *     padding: 5px;
+     *     background-color: $brand-primary;
+     * }
+     * 
+     * .img-responsive {
+     *     margin: 0 auto;
+     * }
+     * 
+     * .cat-icon {
+     *     display: block;
+     *     margin: -40px auto 0;
+     * }
+     * 
+     * // HTML template
+     * &lt;div class="col-sm-4"&gt;
+     *   &lt;div class="panel panel-default"&gt;
+     *     &lt;div class="img-bg"&gt;
+     *       &lt;img ng-src="{{::data.catItem.picture}}" class="img-responsive" /&gt;
+     *     &lt;/div&gt;
+     *     &lt;span class="cat-icon fa fa-stack fa-lg fa-3x hidden-xs"&gt;
+     *       &lt;i class="fa fa-circle fa-stack-2x text-success"&gt;&lt;/i&gt;
+     *       &lt;i class="fa fa-desktop fa-stack-1x fa-inverse"&gt;&lt;/i&gt;
+     *     &lt;/span&gt;
+     *     &lt;div class="panel-body"&gt;
+     *       &lt;p class="lead text-center"&gt;{{::data.catItem.name}}&lt;/p&gt;
+     *       &lt;ul class="list-unstyled"&gt;
+     *         &lt;li class="text-center" ng-if="::data.catItem.price"&gt;${Price}: {{::data.catItem.price}}&lt;/li&gt;
+     *       &lt;/ul&gt;
+     *       &lt;sp-model form-model="::data.catItem" mandatory="mandatory"&gt;&lt;/sp-model&gt;
+     *       &lt;p ng-if="c.req" class="text-center text-success"&gt;
+     *         ${Request created!} &lt;a href="?id={{c.req.page}}&amp;table={{c.req.table}}&amp;sys_id={{c.req.sys_id}}"&gt;{{c.req.number}}&lt;/a&gt;
+     *       &lt;/p&gt;
+     *       &lt;button ng-if="!c.req" class="btn btn-default btn-block" ng-click="c.getIt()"&gt;${Get it}&lt;/button&gt;
+     *     &lt;/div&gt;
+     *   &lt;/div&gt;
+     * &lt;/div&gt;
      * @returns An object containing the catalog item variable model, view, sections, pricing, and client scripts.
      */
     getCatalogItem(sysId: String): Object;
@@ -4158,6 +6551,18 @@ declare class GlideSPScriptable {
      * Returns the display value of the specified field (if it exists and has a value) from either the widget's sp_instance or the sp_portal record.
      * 
      * @fieldName Name of the field
+     * @example
+     * //Server script
+     * (function() {
+     *     data.title = $sp.getDisplayValue("title");
+     *     data.catalog = $sp.getDisplayValue("sc_catalog");
+     * })();
+     * 
+     * //HTML template
+     * &lt;div&gt;
+     *     &lt;h1&gt;sp_instance.title: {{::data.title}}&lt;/h1&gt;
+     *     &lt;h1&gt;sp_portal.sc_catalog: {{::data.catalog}}&lt;/h1&gt;
+     * &lt;/div&gt;
      * @returns The display value from either the sp_instance or sp_portal record.
      */
     getDisplayValue(fieldName: String): String;
@@ -4203,6 +6608,17 @@ declare class GlideSPScriptable {
      * 
      * @sys_id Sys_id of the KB article category.
      * @limit Maximum number of KB articles returned.
+     * @example
+     * //Server script 
+     * (function() {
+     *     data.kbs = $sp.getKBCategoryArticles("0ac1bf8bff0221009b20ffffffffffec", 5);
+     * })();
+     * 
+     * //HTML template
+     * &lt;div&gt;
+     * articles: {{::data.kbs}}
+     * &lt;/div&gt;
+     * 
      * @returns The articles within the category and its subcategories with: A workflow_state of published. A valid_to date greater than or equal to the current date. 
      */
     getKBCategoryArticles(sys_id: String, limit: Number): Array<any>;
@@ -4213,6 +6629,17 @@ declare class GlideSPScriptable {
      * @sys_id Sys_id of the KB article category.
      * @limit Maximum number of KB articles returned.
      * @maxChars Maximum number of characters to return from the article text. For full article text, set the value to -1.
+     * @example
+     * //Server script 
+     * (function() {
+     *     data.summary = $sp.getKBCategoryArticleSummaries("0ac1bf8bff0221009b20ffffffffffec", 5, 200);
+     * })();
+     * 
+     * //HTML template
+     * &lt;div&gt;
+     * articles: {{::data.summary}}
+     * &lt;/div&gt;
+     * 
      * @returns The articles within the category and its subcategories with: A workflow_state of published. A valid_to date greater than or equal to the current date. 
      */
     getKBCategoryArticleSummaries(sys_id: String, limit: Number, maxChars: Number): Array<any>;
@@ -4221,6 +6648,17 @@ declare class GlideSPScriptable {
      * Returns the number of articles in the defined Knowledge Base.
      * 
      * @sys_id Sys_id of a Knowledge Base record.
+     * @example
+     * //Server script 
+     * (function() {
+     *     data.count = $sp.getKBCount("a7e8a78bff0221009b20ffffffffff17");
+     * })();
+     * 
+     * //HTML template
+     * &lt;div&gt;
+     * articles: {{::data.count}}
+     * &lt;/div&gt;
+     * 
      * @returns Number of knowledge articles in the defined Knowledge Base with: A workflow_state of published. A valid_to date greater than or equal to the current date. 
      */
     getKBCount(sys_id: String): Number;
@@ -4261,6 +6699,19 @@ declare class GlideSPScriptable {
     /**
      * Returns the portal GlideRecord from the Service Portals [sp_portal] table.
      * 
+     * @example
+     * //Server script
+     * (function() {
+     *     var portalGr = $sp.getPortalRecord();
+     *     data.logo = portalGr.getDisplayValue("logo");
+     *     data.homepage = portalGr.getDisplayValue("homepage.id");
+     * })();
+     * 
+     * //HTML template
+     * &lt;div&gt;
+     *     &lt;img ng-src="{{::c.data.logo}}" /&gt;
+     *     &lt;a href="?id={{::c.data.homepage}}"&gt;Click here to go home&lt;/a&gt;
+     * &lt;/div&gt;
      * @returns The portal record.
      */
     getPortalRecord(): GlideRecord;
@@ -4268,6 +6719,17 @@ declare class GlideSPScriptable {
     /**
      * Returns the current portal context.
      * 
+     * @example
+     * //Server script 
+     * (function(){ 
+     * var gr = $sp.getRecord(); 
+     * data.tableLabel = gr.getLabel(); 
+     * })(); 
+     * 
+     * //HTML template 
+     * &lt;div class="panel-heading"&gt; 
+     * &lt;h4 class="panel-title"&gt;${{{data.tableLabel}} details}&lt;/h4&gt; 
+     * &lt;/div&gt;
      * @returns The sp_portal record of the current portal context or null. Returns null if the widget is embedded by another widget.
      */
     getRecord(): GlideRecord;
@@ -4304,6 +6766,20 @@ declare class GlideSPScriptable {
      * 
      * @gr The record to retrieve Service Catalog variables for. Must be a record with Service Catalog variables defined, such as a requested item [sc_req_item] record or an incident submitted through a record producer.
      * @includeNilResponses Optional parameter. If true, variables with no user-defined value are included in the array.
+     * @example
+     * //Server script 
+     * (function() {
+     * var itemsGR = new GlideRecord("sc_req_item");
+     * itemsGR.get('585d1bc44f4f13008a959a211310c77d');
+     * 	
+     * data.scVars = $sp.getRecordVariablesArray(itemsGR);
+     * 
+     * })();
+     * 
+     * //HTML template
+     * &lt;div&gt;
+     * Requested item variables: {{::data.scVars}}
+     * &lt;/div&gt;
      * @returns Array of Service Catalog variables associated with the record.
      */
     getRecordVariablesArray(gr: GlideRecord, includeNilResponses: Boolean): Object;
@@ -4328,6 +6804,18 @@ declare class GlideSPScriptable {
      * Returns the named value of the JSON request, instance, or portal.
      * 
      * @name Name of the parameter
+     * @example
+     * //Server script
+     * (function() {
+     *     data.title = $sp.getValue("title");
+     *     data.catalog = $sp.getValue("sc_catalog");
+     * })();
+     * 
+     * //HTML templage
+     * &lt;div&gt;
+     *     &lt;h1&gt;sp_instance.title: {{::data.title}}&lt;/h1&gt;
+     *     &lt;h1&gt;sp_portal.sc_catalog: {{::data.catalog}}&lt;/h1&gt;
+     * &lt;/div&gt;
      * @returns Value of the specified parameter. Null if the request does not exist or has no such parameter, the rectangle does not exist or has no such parameter, or the portal is null or has no such parameter.
      */
     getValue(name: String): Object;
@@ -4345,6 +6833,12 @@ declare class GlideSPScriptable {
      * 
      * @sysID The widget sys_id or widget_id
      * @options An object to pass to the widget's server script. Refer to this object as options in your server script.Note: Any options passed into this function will only be available in the embedded widget's server script on the first execution of that script. Any subsequent calls into the server script from the embedded widget will not contain the object properties passed in.
+     * @example
+     * //Server script
+     * data.myWidget = $sp.getWidget('widget_id', {p1: param1, p2: param2});
+     * 
+     * //HTML
+     * &lt;sp-widget widget="c.data.myWidget"&gt;&lt;/sp-widget&gt;
      * @returns A widget model to be used with sp-widget.
      */
     getWidget(sysID: String, options: Object): Object;
@@ -4353,6 +6847,10 @@ declare class GlideSPScriptable {
      * Transforms a URL requesting a list or form in the platform UI into the URL of the corresponding id=list or id=form Service Portal page.Use this method to perform tasks such as redirecting a user after login to the correct Service Portal page when they request a platform UI form or list URL. Note that the id=list and id=form page targets are not customizable.Note: Table, sys_id, and sysparm_query values are preserved from the original URL; sysparm_view is not.
      * 
      * @url Platform UI URL
+     * @example
+     * GlideSPScriptable().mapUrlToSPUrl("http://demo.service-now.com/task_list.do?sysparm_userpref_module=1523b8d4c611227b00be8216ec331b9a&amp;sysparm_query=assigned_to=javascript:getMyAssignments()&amp;sysparm_clear_stack=true"))
+     * @example
+     * GlideSPScriptable().mapUrlToSPUrl("incident.do?sys_id=12bc12bc12bc12bc12bc12bc12bc12bc")
      * @returns Transformed Service Portal URL.If the passed-in URL does not request a list or a form in the platform UI, a null value is returned.
      */
     mapUrlToSPUrl(url: String): String;
@@ -4372,6 +6870,10 @@ declare class GlideStringUtil {
      * Replaces periods with underscore characters.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * var filename="../../../../../../etc/passwd";
+     * cleanFilename=GlideStringUtil.dotToUnderBar(filename);
+     * gs.info(cleanFilename);
      * @returns The string with periods replaced with underscores.
      */
     dotToUnderBar(sourceString: String): String;
@@ -4380,6 +6882,10 @@ declare class GlideStringUtil {
      * Remove quotes from a string.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring="let's escape some quotes";
+     * escapeQuote=GlideStringUtil.escapeAllQuotes(mystring);
+     * gs.info(escapeQuote);
      * @returns The string with quotes removed.
      */
     escapeAllQuotes(sourceString: String): String;
@@ -4388,6 +6894,10 @@ declare class GlideStringUtil {
      * Use for home pages to replace problem characters with escape characters.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring="&lt;test&gt; string \n to escape";
+     * escapedString=GlideStringUtil.escapeForHomePage(mystring);
+     * gs.info(escapedString);
      * @returns A string with problem characters replaced with escape characters.
      */
     escapeForHomePage(sourceString: String): String;
@@ -4396,6 +6906,10 @@ declare class GlideStringUtil {
      * Use to replace illegal characters with their escape codes.Using this method removes illegal characters that might cause the UI to render improperly, or trigger a client side attack such as JavaScript or HTML injection.
      * 
      * @htmlString The string to be processed.
+     * @example
+     * mydata='"&lt;&gt;&amp;';
+     * mydata=GlideStringUtil.escapeHTML(mydata);
+     * gs.info(mydata);
      * @returns The string with illegal characters replaced with their escape codes.
      */
     escapeHTML(htmlString: String): String;
@@ -4404,6 +6918,10 @@ declare class GlideStringUtil {
      * Replaces non-printable characters with their printable notation.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring="test \x09 non \x00 printable \x07 chars";
+     * escapedString=GlideStringUtil.escapeNonPrintable(mystring);
+     * gs.info(escapedString);
      * @returns The string with non-printable characters replaced with printable notation.
      */
     escapeNonPrintable(sourceString: String): String;
@@ -4412,6 +6930,10 @@ declare class GlideStringUtil {
      * Replaces query term separators "^" with their escape sequence "^^".
      * 
      * @sourceString The string to be processed.
+     * @example
+     * myquery="test^Test";
+     * escapedQuery=GlideStringUtil.escapeQueryTermSeparator(myquery);
+     * gs.info(escapedQuery);
      * @returns A string with query term separators replaced with the escape characters.
      */
     escapeQueryTermSeparator(sourceString: String): String;
@@ -4420,6 +6942,10 @@ declare class GlideStringUtil {
      * Replace quotes with escape characters by adding a backslash before each quote.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring="let's try escapeTicks";
+     * escaped=GlideStringUtil.escapeTicks(mystring);
+     * gs.info(escaped); 
      * @returns The string with backslashes added before quotes.
      */
     escapeTicks(sourceString: String): String;
@@ -4428,6 +6954,10 @@ declare class GlideStringUtil {
      * Use to replace illegal HTML characters into HTML notation.Using this method removes illegal characters that might cause the UI to render improperly, or trigger a client side attack such as JavaScript or HTML injection.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mydata='&amp;';
+     * htmlvalue=GlideStringUtil.getHTMLValue(mydata);
+     * gs.info(htmlvalue);
      * @returns The string with illegal characters replaced with HTML notation.
      */
     getHTMLValue(sourceString: String): String;
@@ -4436,6 +6966,10 @@ declare class GlideStringUtil {
      * Extract numeric characters from a string.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring='123 test 456 String 789 cleaning';
+     * onlyNumeric=GlideStringUtil.getNumeric(mystring);
+     * gs.info(onlyNumeric); 
      * @returns A string containing only numeric characters.
      */
     getNumeric(sourceString: String): String;
@@ -4444,6 +6978,11 @@ declare class GlideStringUtil {
      * Returns true if the specified string is a valid base64 string.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * //(adding a "*" to corrupt the base64 format)
+     * base64="GethdTYehdtshetB*";
+     * isValid=GlideStringUtil.isBase64(base64);
+     * gs.info(isValid);
      * @returns True if the specified string is in valid base64 format.
      */
     isBase64(sourceString: String): Boolean;
@@ -4452,6 +6991,10 @@ declare class GlideStringUtil {
      * Returns true if the specified string is in valid sys ID format.The sys ID format is a sequence of 32 hexadecimal characters where all the characters are in the range [0-9, a-f, A-F].
      * 
      * @sourceString The string to be processed.
+     * @example
+     * sysID="62826bf03710200044e0bfc8bcbe5df1";
+     * isElig=GlideStringUtil.isEligibleSysID(sysID);
+     * gs.info(isElig);
      * @returns True when the specified string is in the valid sys ID format.
      */
     isEligibleSysID(sourceString: String): Boolean;
@@ -4460,6 +7003,10 @@ declare class GlideStringUtil {
      * Replaces the new line character, "/n", with a break code " * ".
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring="new line break \n, this is after the break";
+     * replaceNewLine=GlideStringUtil.newLinesToBreaks(mystring);
+     * gs.info(replaceNewLine); 
      * @returns The string with new line characters replaced with HTML break code.
      */
     newLinesToBreaks(sourceString: String): String;
@@ -4468,6 +7015,10 @@ declare class GlideStringUtil {
      * Replaces carriage returns, line feeds, and tabs with spaces, and then removes leading, trailing, and duplicate spaces.
      * 
      * @sourceString The string to be processed.
+     * @example
+     * mystring="test with \n (new line) and \t (tabulation)";
+     * normalizedString=GlideStringUtil.normalizeWhitespace(mystring);
+     * gs.info(normalizedString);
      * @returns The string with carriage returns, line feeds, and tabs replaced with spaces, and then leading, trailing, and duplicate spaces removed.
      */
     normalizeWhitespace(sourceString: String): String;
@@ -4476,6 +7027,10 @@ declare class GlideStringUtil {
      * Use to replace escape characters with their respective character.This method replaces these escape characters, &amp;lt; &amp;gt: &amp;nbsp; &amp;amp; &amp;quote;.
      * 
      * @htmlString The string to be processed.
+     * @example
+     * mydata='&amp;quot;&amp;lt;&amp;gt;&amp;amp;';
+     * unescaped=GlideStringUtil.unescapeHTML(mydata);
+     * gs.info(unescaped);
      * @returns A string with the escape characters replaced.
      */
     unescapeHTML(htmlString: String): String;
@@ -4593,6 +7148,10 @@ declare class GlideSysListControl {
     /**
      * Returns the sys_id for the control.
      * 
+     * @example
+     * var sysListCtrl = new GlideSysListControl("incident");
+     * var controlID = sysListCtrl.getControlID();
+     * gs.info(controlID);
      * @returns sys_id of the control
      */
     getControlID(): String;
@@ -4600,6 +7159,10 @@ declare class GlideSysListControl {
     /**
      * Returns true if the edit button is not displayed.
      * 
+     * @example
+     * var sysListCtrl = new GlideSysListControl("incident");
+     * var isOmitted = sysListCtrl.isOmitEditButton();
+     * gs.info(isOmitted);
      * @returns True when the edit button is not displayed.
      */
     isOmitEditButton(): Boolean;
@@ -4607,6 +7170,10 @@ declare class GlideSysListControl {
     /**
      * Returns true when the New button is not displayed.
      * 
+     * @example
+     * var sysListCtrl = new GlideSysListControl("incident");
+     * var isOmitted = sysListCtrl.isOmitNewButton();
+     * gs.info(isOmitted);
      * @returns True when the new button is not displayed.
      */
     isOmitNewButton(): Boolean;
@@ -4626,6 +7193,37 @@ declare class GlideSystem {
      * Adds an error message for the current session.
      * 
      * @message The message to add.
+     * @example
+     * gs.include("PrototypeServer");
+     *   var ValidatePasswordStronger = Class.create();
+     *   ValidatePasswordStronger.prototype = {
+     *        process : function() {
+     *           var user_password = request.getParameter("user_password");
+     *           var min_len = 8;
+     *           var rules = "Password must be at least " + min_len + 
+     *              " characters long and contain a digit, an uppercase letter, and a lowercase letter.";
+     *           if (user_password.length() &lt; min_len) {
+     *              gs.addErrorMessage("TOO SHORT: " + rules);
+     *              return false;
+     *           }
+     *           var digit_pattern = new RegExp("[0-9]", "g");
+     *           if (!digit_pattern.test(user_password)) {
+     *              gs.addErrorMessage("DIGIT MISSING: " + rules);
+     *              return false;
+     *           }
+     *           var upper_pattern = new RegExp("[A-Z]", "g");
+     *           if (!upper_pattern.test(user_password)) {
+     *              gs.addErrorMessage("UPPERCASE MISSING: " + rules);
+     *              return false;
+     *           }
+     *           var lower_pattern = new RegExp("[a-z]", "g");
+     *           if (!lower_pattern.test(user_password)) {
+     *              gs.addErrorMessage("LOWERCASE MISSING: " + rules);
+     *              return false;
+     *           }
+     *           return true; // password is OK
+     *        }
+     *   }
      */
     addErrorMessage(message: Object);
 
@@ -4633,6 +7231,16 @@ declare class GlideSystem {
      * Adds an info message for the current session. This method is not supported for asynchronous business rules.
      * 
      * @message An info message object.
+     * @example
+     * if ((!current.u_date1.nil()) &amp;&amp; (!current.u_date2.nil())) {
+     *   var start = current.u_date1.getGlideObject().getNumericValue();
+     *   var end = current.u_date2.getGlideObject().getNumericValue();
+     *   if (start &gt; end) {
+     *     gs.addInfoMessage('start must be before end');
+     *     current.u_date1.setError('start must be before end');
+     *     current.setAbortAction(true);
+     *   }
+     * }
      */
     addInfoMessage(message: Object);
 
@@ -4728,6 +7336,24 @@ declare class GlideSystem {
      * Returns the date and time for a specified number of days ago.
      * 
      * @days Integer number of days
+     * @example
+     * function contractNoticeDue() {
+     *     var gr = new GlideRecord("contract");
+     *     gr.addQuery("u_contract_status", "Active");
+     *     gr.query();
+     *     while (gr.next()) {
+     *         if ((gr.u_termination_date &lt;= gs.daysAgo(-90)) &amp;&amp; (gr.u_contract_duration == "Long")) {
+     *             gr.u_contract_status = "In review";
+     *         } 
+     *         else if ((gr.u_termination_date &lt;= gs.daysAgo(-50)) &amp;&amp; (gr.u_contract_duration == "Medium")) {
+     *             gr.u_contract_status = "In review";
+     *         } 
+     *         else if ((gr.u_termination_date &lt;= gs.daysAgo(-10)) &amp;&amp; (gr.u_contract_duration == "Short")) {
+     *             gr.u_contract_status = "In review";
+     *         }
+     *     }
+     *     gr.update();
+     * }
      * @returns GMT in the format yyyy-mm-dd hh:mm:ss
      */
     daysAgo(days: Number): String;
@@ -4744,6 +7370,11 @@ declare class GlideSystem {
      * Returns the date and time for the beginning of the day a specified number of days ago.
      * 
      * @days Integer number of days
+     * @example
+     * var gr = new GlideRecord('sysapproval_approver');
+     * gr.addQuery('state', 'requested');
+     * gr.addQuery('sys_updated_on', '&lt;', gs.daysAgoStart(5));
+     * gr.query();
      * @returns GMT start of the day in the format yyyy-mm-dd hh:mm:ss
      */
     daysAgoStart(days: String): String;
@@ -4757,6 +7388,11 @@ declare class GlideSystem {
      * @param3 (Optional) Third variable argument.
      * @param4 (Optional) Fourth variable argument.
      * @param5 (Optional) Fifth variable argument.
+     * @example
+     * gs.debug("This is a debug message");
+     * var myFirstName = "Abel";
+     * var myLastName = "Tuter";
+     * gs.debug("This is a debug message from {0}.{1}", myFirstName, myLastName);
      */
     debug(message: String, param1: Object, param2: Object, param3: Object, param4: Object, param5: Object);
 
@@ -4839,6 +7475,11 @@ declare class GlideSystem {
      * @param3 (Optional) Third variable argument.
      * @param4 (Optional) Fourth variable argument.
      * @param5 (Optional) Fifth variable argument.
+     * @example
+     * gs.error("This is an error message");
+     * var myFirstName = "Abel";
+     * var myLastName = "Tuter";
+     * gs.error("This is an error message from {0}.{1}", myFirstName, myLastName);
      */
     error(message: String, param1: Object, param2: Object, param3: Object, param4: Object, param5: Object);
 
@@ -4850,6 +7491,10 @@ declare class GlideSystem {
      * @parm1 (Optional) Saved with the instance if specified.
      * @parm2 (Optional) Saved with the instance if specified.
      * @queue Name of the queue.
+     * @example
+     * if (current.operation() != 'insert' &amp;&amp; current.comments.changes()) {
+     *     gs.eventQueue('incident.commented', current, gs.getUserID(), gs.getUserName());
+     * }
      */
     eventQueue(name: String, instance: Object, parm1: String, parm2: String, queue: String);
 
@@ -4875,6 +7520,9 @@ declare class GlideSystem {
     /**
      * Generates a GUID that can be used when a unique identifier is required.
      * 
+     * @example
+     * personalId = gs.generateGUID();
+     * gs.info(personalId);
      * @returns A 32-character hexadecimal GUID.
      */
     generateGUID(): String;
@@ -4882,6 +7530,40 @@ declare class GlideSystem {
     /**
      * Gets the caller scope name; returns null if there is no caller.
      * 
+     * @example
+     * var Scopea = Class.create(); 
+     *  
+     * Scopea.prototype = { 
+     *     initialize: function() { 
+     *     }, 
+     *  
+     *     callerScope: function() { 
+     *         var scopeb = new app_scope_b.Scopeb(); 
+     *         return scopeb.callerscope(); 
+     *     }, 
+     *  
+     *     type: 'Scopea' 
+     * }
+     * @example
+     * var Scopeb = Class.create(); 
+     *  
+     * Scopeb.prototype = { 
+     *     initialize: function() { 
+     *         this._constructorCallerScope = gs.getCallerScopeName(); 
+     *     }, 
+     *  
+     *     callerscope: function() { 
+     *         return gs.getCallerScopeName(); 
+     *     }, 
+     *  
+     *     getConstructorCallerScope: function() { 
+     *         return this._constructorCallerScope; 
+     *     }, 
+     *  
+     *     type: 'Scopeb' 
+     * }
+     * @example
+     * gs.info(new Scopea().getCallerScopeName());
      * @returns The caller's scope name, or null if there is no caller.
      */
     getCallerScopeName(): String;
@@ -4889,6 +7571,9 @@ declare class GlideSystem {
     /**
      * Gets a string representing the cache version for a CSS file.
      * 
+     * @example
+     * var verStr = gs.getCssCacheVersionString();
+     * gs.info(verStr);
      * @returns The CSS cache version.
      */
     getCssCacheVersionString(): String;
@@ -4896,6 +7581,9 @@ declare class GlideSystem {
     /**
      * Gets the ID of the current application as set using the Application Picker.
      * 
+     * @example
+     * var currentId = gs.getCurrentApplicationId();
+     * gs.info(currentId);
      * @returns The current application's sys_id, or global in none is set.
      */
     getCurrentApplicationId(): String;
@@ -4903,6 +7591,9 @@ declare class GlideSystem {
     /**
      * Gets the name of the current scope.
      * 
+     * @example
+     * var currentScope = gs.getCurrentScopeName();
+     * gs.info(currentScope);
      * @returns The current scope name.
      */
     getCurrentScopeName(): String;
@@ -4919,6 +7610,8 @@ declare class GlideSystem {
      * 
      * @id The ID of the message.
      * @args (Optional) a list of strings or other values defined by java.text.MessageFormat, which allows you to produce language-neutral messages for display to users.
+     * @example
+     * var myMessage = gs.geEscapedMessage("Hello {0}", ["mom"]);
      * @returns The UI message with HTML special characters replaced with escape sequences.
      */
     getEscapedMessage(id: String, args: Array<any>): String;
@@ -4928,6 +7621,9 @@ declare class GlideSystem {
      * 
      * @id The ID of the message.
      * @args (Optional) a list of strings or other values defined by java.text.MessageFormat, which allows you to produce language-neutral messages for display to users.
+     * @example
+     * var my_message = '${gs.getMessage("This is a message.")}'; 
+     * alert(my_message);
      * @returns The UI message.
      */
     getMessage(id: String, args: Array<any>): String;
@@ -4937,6 +7633,9 @@ declare class GlideSystem {
      * 
      * @key The key for the property whose value should be returned.
      * @alt (Optional) Alternate object to return if the property is not found.
+     * @example
+     * var attachment_link = gs.getProperty('glide.servlet.uri');
+     * gs.info(attachment_link);
      * @returns The value of the Glide property, or the alternate object defined above.
      */
     getProperty(key: String, alt: Object): String;
@@ -4944,6 +7643,10 @@ declare class GlideSystem {
     /**
      * Gets a reference to the current Glide session.
      * 
+     * @example
+     * if (!gs.hasRole("admin") &amp;&amp; !gs.hasRole("user_admin") &amp;&amp; gs.getSession().isInteractive()) {
+     *   current.addQuery("active", "true");
+     * }
      * @returns A reference for the current session.
      */
     getSession(): String;
@@ -4951,6 +7654,9 @@ declare class GlideSystem {
     /**
      * Retrieves the GlideSession session ID.
      * 
+     * @example
+     * var myUserObject = gs.getSessionID();
+     * gs.info(myUserObject);
      * @returns The session ID.
      */
     getSessionID(): String;
@@ -4965,6 +7671,8 @@ declare class GlideSystem {
     /**
      * Returns the name of the time zone associated with the current user.
      * 
+     * @example
+     * gs.info(gs.getTimeZoneName());
      * @returns The time zone name.
      */
     getTimeZoneName(): String;
@@ -4972,6 +7680,8 @@ declare class GlideSystem {
     /**
      * Gets the current URI for the session.
      * 
+     * @example
+     * gs.info(gs.getUrlOnStack());
      * @returns The URI.
      */
     getUrlOnStack(): String;
@@ -4979,6 +7689,8 @@ declare class GlideSystem {
     /**
      * Returns a reference to the scoped GlideUser object for the current user.
      * 
+     * @example
+     * var myUserObject = gs.getUser();
      * @returns Reference to a scoped user object.
      */
     getUser(): GlideUser;
@@ -4986,6 +7698,8 @@ declare class GlideSystem {
     /**
      * Gets the display name of the current user.
      * 
+     * @example
+     * gs.info(gs.getUserDisplayName());
      * @returns The name field of the current user. Returns Abel Tuter, as opposed to abel.tuter.
      */
     getUserDisplayName(): String;
@@ -4993,6 +7707,8 @@ declare class GlideSystem {
     /**
      * Gets the sys_id of the current user.
      * 
+     * @example
+     * gs.info(gs.getUserID());
      * @returns The sys_id of the current user.
      */
     getUserID(): String;
@@ -5000,6 +7716,8 @@ declare class GlideSystem {
     /**
      * Gets the user name, or user id, of the current user.
      * 
+     * @example
+     * gs.info(gs.getUserName());
      * @returns The user name of the current user.
      */
     getUserName(): String;
@@ -5008,6 +7726,15 @@ declare class GlideSystem {
      * Determines if the current user has the specified role.
      * 
      * @role The role to check.
+     * @example
+     * if (!gs.hasRole("admin") &amp;&amp; !gs.hasRole("groups_admin")  &amp;&amp; gs.getSession().isInteractive()) {
+     *   var qc = current.addQuery("u_hidden", "!=", "true"); //cannot see hidden groups... 
+     *   qc.addOrCondition("sys_id", "javascript:getMyGroups()"); //...unless in the hidden group
+     *   gs.info("User has admin and groups admin roles");
+     * }
+     * else {
+     *   gs.info("User does not have both admin and groups admin roles");
+     * }
      * @returns True if the user had the role. Returns true for users with the administrator role.
      */
     hasRole(role: Object): Boolean;
@@ -5016,6 +7743,27 @@ declare class GlideSystem {
      * Returns the date and time for a specified number of hours ago.
      * 
      * @hours Integer number of hours
+     * @example
+     * if (current.operation() == 'insert') {
+     *  // If no due date was specified, calculate a default
+     *  if (current.due_date == '') {
+     *  
+     *   if (current.urgency == '1') {
+     *    // Set due date to 4 hours ahead of current time
+     *    current.due_date = gs.hoursAgo(-4);
+     *   }
+     *  
+     *   if (current.urgency == '2') {
+     *    // Set due date to 2 days ahead of current time
+     *    current.due_date = gs.daysAgo(-2);
+     *   }
+     *  
+     *   if (current.urgency == '3') {
+     *    // Set due date to 7 days ahead of current time
+     *    current.due_date = gs.daysAgo(-7);
+     *   }
+     *  }
+     * }
      * @returns GMT in the format yyyy-mm-dd hh:mm:ss
      */
     hoursAgo(hours: Number): String;
@@ -5040,6 +7788,8 @@ declare class GlideSystem {
      * Provides a safe way to call from the sandbox, allowing only trusted scripts to be included.
      * 
      * @name The name fo the script to include.
+     * @example
+     * gs.include("PrototypeServer");
      * @returns True if the include worked.
      */
     include(name: String): Boolean;
@@ -5053,12 +7803,23 @@ declare class GlideSystem {
      * @param3 (Optional) Third variable argument.
      * @param4 (Optional) Fourth variable argument.
      * @param5 (Optional) Fifth variable argument.
+     * @example
+     * gs.info("This is an info message");
+     * var myFirstName = "Abel";
+     * var myLastName = "Tuter";
+     * gs.info("This is an info message from {0}.{1}", myFirstName, myLastName);
      */
     info(message: String, param1: Object, param2: Object, param3: Object, param4: Object, param5: Object);
 
     /**
      * Determines if debugging is active for a specific scope.
      * 
+     * @example
+     * gs.debug("This is a log message");
+     * var myFirstName = "Abel";
+     * var myLastName = "Tuter";
+     * gs.debug("This is a log message from {0}.{1}", myFirstName, myLastName);
+     * gs.info(gs.isDebugging());
      * @returns True if either session debugging is active or the log level is set to debug for the specified scope.
      */
     isDebugging(): Boolean;
@@ -5066,6 +7827,16 @@ declare class GlideSystem {
     /**
      * Checks if the current session is interactive. An example of an interactive session is when a user logs in normally. An example of a non-interactive session is using a SOAP request to retrieve data.
      * 
+     * @example
+     * if (!gs.hasRole("admin") &amp;&amp; gs.getSession().isInteractive()) {
+     *     var qc1 = current.addQuery('u_group',"");
+     *     var gra = new GlideRecord('sys_user_grmember');
+     *     gra.addQuery('user', gs.getUserID());
+     *     gra.query();
+     *     while (gra.next()) {
+     *         qc1.addOrCondition('u_group', gra.group);
+     *     }
+     * }
      * @returns True if the session is interactive.
      */
     isInteractive(): Boolean;
@@ -5073,6 +7844,8 @@ declare class GlideSystem {
     /**
      * Determines if the current user is currently logged in.
      * 
+     * @example
+     * gs.info(gs.isLoggedIn());
      * @returns True if the current user is logged in.
      */
     isLoggedIn(): Boolean;
@@ -5080,6 +7853,11 @@ declare class GlideSystem {
     /**
      * You can determine if a request comes from a mobile device.This method can be used in UI action conditions and business rules.
      * 
+     * @example
+     * if (gs.isMobile())
+     *   gs.info("submitted from mobile UI");
+     *  else 
+     *    gs.info("NOT submitted from mobile UI");
      * @returns True if the request comes from a mobile device; otherwise, false.
      */
     isMobile(): Boolean;
@@ -5120,6 +7898,9 @@ declare class GlideSystem {
      * Queries an object and returns true if the object is null, undefined, or contains an empty string.
      * 
      * @o The object to be checked.
+     * @example
+     * var gr = new GlideRecord();
+     * gs.info(gs.nil(gr));
      * @returns True if the object is null, undefined, or contains an empty string; otherwise, returns false.
      */
     nil(o: Object): Boolean;
@@ -5146,6 +7927,9 @@ declare class GlideSystem {
      * @key The key for the property to be set.
      * @value The value of the property to be set.
      * @description A description of the property.
+     * @example
+     * gs.setProperty("glide.foo","bar","foo");
+     * gs.info(gs.getProperty("glide.foo"));
      */
     setProperty(key: String, value: String, description: String);
 
@@ -5153,6 +7937,9 @@ declare class GlideSystem {
      * Sets the redirect URI for this transaction, which then determines the next page the user will see.
      * 
      * @o URI object or URI string to set as the redirect
+     * @example
+     * gs.setRedirect("com.glideapp.servicecatalog_cat_item_view.do?sysparm_id=d41ce5bac611227a0167f4bf8109bf70&amp;sysparm_user=" 
+     * + current.sys_id + "&amp;sysparm_email=" + current.email)
      */
     setRedirect(o: Object);
 
@@ -5160,6 +7947,8 @@ declare class GlideSystem {
      * Determines if a database table exists.
      * 
      * @name Name of the table to check for existence.
+     * @example
+     * gs.info(gs.tableExists('incident'));
      * @returns True if the table exists. False if the table was not found.
      */
     tableExists(name: String): Boolean;
@@ -5189,6 +7978,11 @@ declare class GlideSystem {
      * @param3 (Optional) Third variable argument.
      * @param4 (Optional) Fourth variable argument.
      * @param5 (Optional) Fifth variable argument.
+     * @example
+     * gs.warn("This is a warning");
+     * var myFirstName = "Abel";
+     * var myLastName = "Tuter";
+     * gs.warn("This is a warning from {0}.{1}", myFirstName, myLastName);
      */
     warn(message: String, param1: Object, param2: Object, param3: Object, param4: Object, param5: Object);
 
@@ -5196,6 +7990,8 @@ declare class GlideSystem {
      * Takes an XML string and returns a JSON object.
      * 
      * @xmlString The XML string to be converted.
+     * @example
+     * var jsonObject = gs.xmlToJSON(xmlString);
      * @returns A JSON object representing the XML string. Null if unable to process the XML string.
      */
     xmlToJSON(xmlString: String): Object;
@@ -5230,12 +8026,18 @@ declare class GlideTableHierarchy {
      * Instantiates a GlideTableHierarchy object.
      * 
      * @tableName The name of the table.
+     * @example
+     * var table = new GlideTableHierarchy("incident"); 
+     * gs.info(table.getTables());
      */
     constructor(tableName: String);
 
     /**
      * Returns an array of strings containing all tables that extend the current table and includes the current table.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("task"); 
+     * gs.info(table.getAllExtensions());
      * @returns An array of strings containing the tables in the hierarchy that includes the current table.
      */
     getAllExtensions(): Array<any>;
@@ -5243,6 +8045,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns the parent class.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("cmdb_ci_server"); 
+     * gs.info(table.getBase());
      * @returns The parent class.
      */
     getBase(): String;
@@ -5250,6 +8055,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns an array of strings containing all classes in the hierarchy of the current table.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("incident"); 
+     * gs.info(table.getHierarchy());
      * @returns An array of strings of the classes in the hierarchy.
      */
     getHierarchy(): Array<any>;
@@ -5257,6 +8065,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns the table's name.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("incident"); 
+     * gs.info(table.getName());
      * @returns The table's name.
      */
     getName(): String;
@@ -5264,6 +8075,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns the top level class in the hierarchy.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("cmdb_ci_server"); 
+     * gs.info(table.getRoot());
      * @returns The root class.
      */
     getRoot(): String;
@@ -5271,6 +8085,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns an array of strings containing all tables that extend the current table.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("task"); 
+     * gs.info(table.getTableExtensions());
      * @returns An array of strings containing the tables that extend the current table.
      */
     getTableExtensions(): Array<any>;
@@ -5278,6 +8095,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns an array of strings of the table names in the hierarchy.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("incident"); 
+     * gs.info(table.getTables());
      * @returns An array of strings containing the names of tables in the hierarchy.
      */
     getTables(): Array<any>;
@@ -5285,6 +8105,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns true of this class has been extended.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("incident"); 
+     * gs.info(table.hasExtensions());
      * @returns True if the current table has extensions.
      */
     hasExtensions(): Boolean;
@@ -5292,6 +8115,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns true if this is a base class.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("incident"); 
+     * gs.info(table.isBaseClass());
      * @returns True if the current table has no parent and has extensions.
      */
     isBaseClass(): Boolean;
@@ -5299,6 +8125,9 @@ declare class GlideTableHierarchy {
     /**
      * Returns true if this table is not in a hierarchy.
      * 
+     * @example
+     * var table = new GlideTableHierarchy("sys_user"); 
+     * gs.info(table.isSoloClass());
      * @returns True if the current table has no parent and no extensions.
      */
     isSoloClass(): Boolean;
@@ -5331,6 +8160,13 @@ declare class GlideTextReader {
     /**
      * Returns a single line from the input stream and returns a string. Since this is working off of a stream, it is not subject to the 5MB size limit.
      * 
+     * @example
+     * var is = new GlideSysAttachment().getContentStream(attachmentSysId);
+     * var reader = new GlideTextReader(is);
+     * var ln = ' ';
+     * while((ln = reader.readLine()) != null) {
+     *   gs.info(ln);
+     * }
      * @returns A single line of input up to the carriage return. Does not include the carriage return. Returns null if there is no content.
      */
     readLine(): String;
@@ -5350,12 +8186,18 @@ declare class GlideTime {
      * Instantiates a GlideTime object with the specified time.
      * 
      * @milliseconds The datetime in milliseconds.
+     * @example
+     * var gt = new GlideTime(10000); 
+     * gs.info(gt.getDisplayValue());
      */
     constructor(milliseconds: Number);
 
     /**
      * Instantiates a GlideTime object with the current time.
      * 
+     * @example
+     * var gt = new GlideTime(); 
+     * gs.info(gt.getDisplayValue());
      */
     constructor();
 
@@ -5363,6 +8205,10 @@ declare class GlideTime {
      * Gets the time in the specified format.
      * 
      * @format The time format.
+     * @example
+     * var gt = new GlideTime(); 
+     * gt.setValue('12:00:00');
+     * gs.info(gt.getByFormat("HH:mm"));
      * @returns The time in the specified format.
      */
     getByFormat(format: String): String;
@@ -5370,6 +8216,10 @@ declare class GlideTime {
     /**
      * Gets the time in the current user's display format and time zone.When designing business rules or script includes remember that this method may return values in different formats for different users.
      * 
+     * @example
+     * var gt = new GlideTime();
+     * gt.setDisplayValue("12:00:00"); // User Time Zone
+     * gs.info(gt.getDisplayValue()); // User Time Zone
      * @returns The time in the user's format and time zone.
      */
     getDisplayValue(): String;
@@ -5377,6 +8227,10 @@ declare class GlideTime {
     /**
      * Gets the display value in the current user's time zone and the internal format (HH:mm:ss).
      * 
+     * @example
+     * var gt = new GlideTime();
+     * gt.setValue("01:00:00"); //Internal Time Zone , UTC
+     * gs.info(gt.getDisplayValueInternal()); //User Time Zone
      * @returns The time value for the GlideTime object in the current user's time zone and the internal time format of HH:mm:ss.
      */
     getDisplayValueInternal(): String;
@@ -5433,6 +8287,9 @@ declare class GlideTime {
     /**
      * Gets the time value stored in the database by the GlideTime object in the internal format, HH:mm:ss, and the system time zone.
      * 
+     * @example
+     * var gt = new GlideTime();
+     * gs.info(gt.getValue()); // Internal Time Zone, UTC
      * @returns The time value in the internal fomat and system time zone.
      */
     getValue(): String;
@@ -5441,6 +8298,10 @@ declare class GlideTime {
      * Sets a time value using the current user's display format and time zone.
      * 
      * @asDisplayed The time in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format, such as HH:mm:ss.
+     * @example
+     * var gt = new GlideTime();
+     * gt.setDisplayValue('01:00:00');   // User Time Zone
+     * gs.info(gt.getDisplayValueInternal()); // User Time Zone
      */
     setDisplayValue(asDisplayed: String);
 
@@ -5448,6 +8309,10 @@ declare class GlideTime {
      * Sets the time of the GlideTime object in the internal time zone.
      * 
      * @o The time in hh:mm:ss format.
+     * @example
+     * var gt = new GlideTime();
+     * gt.setValue('01:00:00');  //Internal Time Zone, UTC
+     * gs.info("time is "+ gt.getByFormat('hh:mm:ss'));
      */
     setValue(o: String);
 
@@ -5456,6 +8321,14 @@ declare class GlideTime {
      * 
      * @startTime The start value.
      * @endTime The end value.
+     * @example
+     * var gd1 = new GlideTime(); 
+     * gd1.setDisplayValue("09:00:00"); 
+     * var gd2 = new GlideTime(); 
+     * gd2.setDisplayValue("09:10:00"); 
+     *  
+     * var dur = GlideDate.subtract(gd1, gd2); //the difference between gdt1 and gdt2 
+     * gs.info(dur.getDisplayValue());
      * @returns The duration between the two values.
      */
     subtract(startTime: GlideTime, endTime: GlideTime): GlideDuration;
@@ -5481,6 +8354,10 @@ declare class GlideUICompatibility {
     /**
      * Returns the terms "block" or "allow" based upon the browser version.
      * 
+     * @example
+     * UICompatibility = new GlideUICompatibility(gs.getCurrentScopeName());
+     * var blockOrAllow = UICompatibility.getCompatibility();
+     * gs.info(blockOrAllow);
      * @returns Either block or allow
      */
     getCompatibility(): String;
@@ -5488,6 +8365,10 @@ declare class GlideUICompatibility {
     /**
      * Determines if the browser is not supported.
      * 
+     * @example
+     * UICompatibility = new GlideUICompatibility(gs.getCurrentScopeName());
+     * var blocked = UICompatibility.isBlocked();
+     * gs.info(blocked);
      * @returns True if the browser is not supported.
      */
     isBlocked(): Boolean;
@@ -5513,6 +8394,11 @@ declare class GlideURI {
      * Returns the specified parameter.
      * 
      * @name The parameter name.
+     * @example
+     * var gURI = new GlideURI();
+     * gURI.set('sysparm_query', 'priority=2^active=true' );
+     * var fileString = gURI.get('sysparm_query');
+     * gs.info(fileString);
      * @returns The URI for the specified parameter.
      */
     get(name: String): String;
@@ -5520,6 +8406,11 @@ declare class GlideURI {
     /**
      * Returns the file name portion of the URI.
      * 
+     * @example
+     * var gURI = new GlideURI();
+     *  
+     * var fileString = gURI.getFileFromPath();
+     * gs.info(fileString);
      * @returns The file name portion of the URI.
      */
     getFileFromPath(): String;
@@ -5529,6 +8420,11 @@ declare class GlideURI {
      * 
      * @name The parameter name.
      * @value The value.
+     * @example
+     * var gURI = new GlideURI();
+     * gURI.set('sysparm_query', 'priority=2^active=true' );
+     * var fileString = gURI.get('sysparm_query');
+     * gs.info(fileString);
      */
     set(name: String, value: String);
 
@@ -5536,6 +8432,8 @@ declare class GlideURI {
      * Reconstructs the URI string and performs the proper URL encoding by converting non-valid characters to their URL code. For example, converting & to '%26'.Parameters set with the set method are encoded with the URI as well.
      * 
      * @path The base portion of the system URL to which the URI is appended.
+     * @example
+     * fileString = gURI.toString('https://&lt;your instance&gt;.service-now.com/navpage.do');
      * @returns The URL.
      */
     toString(path: String): String;
@@ -5554,6 +8452,9 @@ declare class GlideUser {
     /**
      * Returns the current user's company sys_id.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getCompanyID());
      * @returns Company sys_id
      */
     getCompanyID(): String;
@@ -5561,6 +8462,9 @@ declare class GlideUser {
     /**
      * Returns the current user's display name.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getDisplayName());
      * @returns User's display name
      */
     getDisplayName(): String;
@@ -5568,6 +8472,10 @@ declare class GlideUser {
     /**
      * Returns the identifier of the user's current session domain.The identifier that is returned depends on the domain type and the instantiation of that domain.
      * 
+     * @example
+     * var domain = new GlideRecord('domain');
+     * domain.get(gs.getUser().getDomainID());
+     * gs.info(domain.name);
      * @returns Domain identifier
      */
     getDomainID(): String;
@@ -5575,6 +8483,9 @@ declare class GlideUser {
     /**
      * Returns the user's email address.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getEmail());
      * @returns User's email address
      */
     getEmail(): String;
@@ -5582,6 +8493,9 @@ declare class GlideUser {
     /**
      * Returns the user's first name.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getFirstName());
      * @returns User's first name
      */
     getFirstName(): String;
@@ -5589,6 +8503,9 @@ declare class GlideUser {
     /**
      * Gets the sys_id of the current user.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getID());
      * @returns User's sys_id
      */
     getID(): String;
@@ -5596,6 +8513,9 @@ declare class GlideUser {
     /**
      * Returns the user's last name.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getLastName());
      * @returns User's last name
      */
     getLastName(): String;
@@ -5603,6 +8523,9 @@ declare class GlideUser {
     /**
      * Returns the user ID, or login name, of the current user.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getName());
      * @returns User ID
      */
     getName(): String;
@@ -5611,6 +8534,10 @@ declare class GlideUser {
      * Gets the specified user preference value for the current user.
      * 
      * @name The name of the preference.
+     * @example
+     * var currentUser = gs.getUser(); 
+     * currentUser.savePreference(­'myPref','red'); 
+     * gs.info(currentUser.getPreference(­'myPref'));
      * @returns The preference value.
      */
     getPreference(name: String): String;
@@ -5618,6 +8545,9 @@ declare class GlideUser {
     /**
      * Returns a list of roles that includes explicitly granted roles, inherited roles, and roles acquired by group membership.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getRoles());
      * @returns List of all roles available to the user
      */
     getRoles(): Array<any>;
@@ -5625,6 +8555,9 @@ declare class GlideUser {
     /**
      * Returns the list of roles explicitly granted to the user.Unlike the getRoles() method, this method does not return roles the user inherits or roles acquired from group membership.
      * 
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.getUserRoles());
      * @returns List of roles explicitly assigned to the user
      */
     getUserRoles(): Array<any>;
@@ -5633,6 +8566,9 @@ declare class GlideUser {
      * Determines if the current user has the specified role.
      * 
      * @role Role to check
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.hasRole('admin'));
      * @returns True if the user has the role.
      */
     hasRole(role: String): Boolean;
@@ -5641,6 +8577,9 @@ declare class GlideUser {
      * Determines if the current user is a member of the specified group.
      * 
      * @group Group to check
+     * @example
+     * var currentUser = gs.getUser(); 
+     * gs.info(currentUser.isMemberOf(­'Capacity Mgmt'));
      * @returns True if the user is a member of the group.
      */
     isMemberOf(group: String): Boolean;
@@ -5650,6 +8589,10 @@ declare class GlideUser {
      * 
      * @name The preference to save.
      * @value The preference value.
+     * @example
+     * var currentUser = gs.getUser(); 
+     * currentUser.savePreference('myPref','red'); 
+     * gs.info(currentUser.getPreference('myPref'));
      */
     savePreference(name: String, value: String);
 
@@ -5668,6 +8611,11 @@ declare class GlideXMLUtil {
      * Removes invalid characters from an XML string.
      * 
      * @xmlString The string to be processed.
+     * @example
+     * var test = "test\btab";
+     * var removedTest = GlideXMLUtil.removeInvalidChars(test);
+     * 
+     * gs.info(removedTest);
      * @returns A string with invalid characters removed.
      */
     removeInvalidChars(xmlString: String): String;
@@ -5678,6 +8626,11 @@ declare class GlideXMLUtil {
      * @xmlString The string to be validated.
      * @nsAware When true, the validation is aware of name spaces. When false, the validation ignores name spaces.
      * @forgiveUnclosed When true, the validation does not check for tags enclosing the string.
+     * @example
+     * var s = "&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;&lt;unload unload_date=\"2017-11-27 21:56:14\"&gt;&lt;incident action=\"INSERT_OR_UPDATE\"&gt;&lt;active&gt;true&lt;/active&gt;&lt;/incident&gt;&lt;/unload&gt;";
+     * var xml = GlideXMLUtil.validateXML(s,false, false);
+     * gs.info(xml);
+     * 
      * @returns Returns null if the string is valid. Returns an error string describing the error if the specified string is not valid.
      */
     validateXML(xmlString: String, nsAware: Boolean, forgiveUnclosed: Boolean): String;
@@ -5702,6 +8655,17 @@ declare namespace sn_hw {
          * @tableName Name of table containing the record to retrieve.
          * @sydId sys_id of the record to retrieve.
          * @useAudit  If set to true, uses audit data to retrieve historic date. If set to false, uses history set to retrieve historic date. 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue(), true);
+         * if (hw.walkTo(3)) {
+         *     var oldPriority = hw.getWalkedRecord().priority;
+         *     gs.info('Incident priority in update number ' + hw.getUpdateNumber() + ' was ' + oldPriority);
+         * } else
+         *     gs.info('Incident does not have update number 3');
+         * 
          */
         constructor(tableName: String, sydId: String, useAudit: Boolean);
 
@@ -5710,12 +8674,29 @@ declare namespace sn_hw {
          * 
          * @tableName Name of table containing the record to retrieve.
          * @sydId sys_id of the record to retrieve.
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * if (hw.walkTo(3)) {
+         *     var oldPriority = hw.getWalkedRecord().priority;
+         *     gs.info('Incident priority in update number ' + hw.getUpdateNumber() + ' was ' + oldPriority);
+         * } else
+         *     gs.info('Incident does not have update number 3');
          */
         constructor(tableName: String, sydId: String);
 
         /**
          * Gets the update number of the current walked glide record.
          * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.walkTo(3);
+         * gs.info('Update number: ' + hw.getUpdateNumber());
          * @returns Current update number or, -1 if record is not found
          */
         getUpdateNumber(): int;
@@ -5723,12 +8704,37 @@ declare namespace sn_hw {
         /**
          * Gets the record filled with the history/audit data after walking to an update number.
          * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.walkTo(0);
+         * var walkedRecord = hw.getWalkedRecord();
+         * gs.info('Priority in update number 0: ' + walkedRecord.priority);
+         * hw.walkTo(1);
+         * walkedRecord = hw.getWalkedRecord();
+         * gs.info('Short description in update number 1: ' + walkedRecord.short_description);
          * @returns The walked GlideRecord.
          */
         getWalkedRecord(): GlideRecord;
 
         /**
          * Gets a copy of the record filled with the history/audit data after walking to an update number.
+         * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var walkedRecord = [];
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.walkTo(0);
+         * walkedRecord[0] = hw.getWalkedRecordCopy();
+         * hw.walkTo(1);
+         * walkedRecord[1] = hw.getWalkedRecordCopy();
+         * 
+         * gs.info('Priority in update number 0: ' + walkedRecord[0].priority);
+         * gs.info('Short description in update number 1: ' + walkedRecord[1].short_description);
          * 
          * @returns A copy of the walked GlideRecord.
          */
@@ -5737,12 +8743,25 @@ declare namespace sn_hw {
         /**
          * Specifies if the record-level read access is applied on the record when retrieving from the database.
          * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * gs.info('Field level security is active: ' + hw.isFieldLevelSecurity());
          * @returns Returns true if field level security is enabled, else returns false.
          */
         isFieldLevelSecurity(): Boolean;
 
         /**
          * Specifies if the record-level read access is applied on the record when retrieving from the database.
+         * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * gs.info('Record level security is active: ' + hw.isRecordLevelSecurity());
          * 
          * @returns Returns true if the record-level security is enabled, else returns false.
          */
@@ -5751,12 +8770,25 @@ declare namespace sn_hw {
         /**
          * Specifies if any of the methods that walk the record from one update to another, support the “changes” data for each element.
          * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * gs.info('Changes is active: ' + hw.isWithChanges());
          * @returns Returns true if the changes support is enabled, else returns false.
          */
         isWithChanges(): Boolean;
 
         /**
          * Specifies if journal type fields are populated from the historical values.
+         * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * gs.info('Populating journal fields is active: ' + hw. isWithJournalFields());
          * 
          * @returns Returns true if journal fields are populated, else returns false.
          */
@@ -5765,6 +8797,12 @@ declare namespace sn_hw {
         /**
          * Specifies if values are set for variables that are recorded in the history.
          * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * gs.info('Populating variables is active: ' + hw. isWithVariables());
          * @returns Returns true if including values for variables, else returns false.
          */
         isWithVariables(): Boolean;
@@ -5773,6 +8811,14 @@ declare namespace sn_hw {
          * Sets the field-level read access on each element before setting the historical value of that element in the GlideRecord. If the field-level security is enabled, it prevents the API to populate the fields of the walked record that the user of the API does not have access to.
          * 
          * @fieldLevelSecurity If set to true, field-level security is enabled. The default value is true.
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.setFieldLevelSecurity(false);
+         * hw.walkTo(0);
+         * 
          */
         setFieldLevelSecurity(fieldLevelSecurity: Boolean);
 
@@ -5780,6 +8826,14 @@ declare namespace sn_hw {
          * Sets the record-level read access on the record when retrieving from the database. The record-level security prevents the API to retrieve the walked record if the user of the API does not have access to the GlideRecord.
          * 
          * @recordLevelSecurity If set to true, record-level read access security is enabled. The default value is true.
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.setRecordLevelSecurity(false);
+         * hw.walkTo(0);
+         * 
          */
         setRecordLevelSecurity(recordLevelSecurity: Boolean);
 
@@ -5787,6 +8841,22 @@ declare namespace sn_hw {
          * Sets the “changes” data support for each element for a method that walks the record from one update to another.
          * 
          * @withChanges If set to true, the “changes” data is supported for each element. The default value is true.
+         * @example
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.walkTo(0);
+         * do {
+         *     printChangedFields(hw);
+         * } while (hw.walkForward());
+         * 
+         * function printChangedFields(hw) {
+         *     var walkedGr = hw.getWalkedRecord();
+         *     var fields = GlideScriptRecordUtil.get(walkedGr).getChangedFieldNames();
+         *     gs.print("Fields changed at update " + hw.getUpdateNumber() + " were:");
+         *     for (var j = 0; j &lt; fields.size(); j++)
+         *         gs.print(" " + fields.get(j));
+         *     gs.print("");
+         * }
+         * 
          */
         setWithChanges(withChanges: Boolean);
 
@@ -5794,6 +8864,17 @@ declare namespace sn_hw {
          * Specifies if journal type fields are populated from the historical values.
          * 
          * @withJournalFields If set to true, include journal-type fields. Th default value is false.
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.setWithJournalFields(true);
+         * if (hw.walkTo(0)) {
+         *     var workNotes = hw.getWalkedRecord().work_notes;
+         *     gs.info('Work Notes in update number ' + hw.getUpdateNumber() + ' was ' + workNotes);
+         * }
+         * 
          */
         setWithJournalFields(withJournalFields: Boolean);
 
@@ -5801,11 +8882,34 @@ declare namespace sn_hw {
          * Specifies if variables are populated from the historical values.
          * 
          * @withVariables If set to true, values are populated for variables. The default value is false.
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.setWithVariables(true);
+         * hw.walkTo(0);
+         * if (hw.walkTo(0)) {
+         *     var varUrgency = hw.getWalkedRecord().variables.urgency;
+         *     gs.info('Variable Urgency in update number ' + hw.getUpdateNumber() + ' was ' + varUrgency);
+         * }
+         * 
          */
         setWithVariables(withVariables: Boolean);
 
         /**
          * Applies the appropriate history/audit data to get a walked GlideRecord to the state when it was one update number backward. If the previous update count is missing from the history/audit data, it will walk to the previous available update count.
+         * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.walkTo(incGr.sys_mod_count);
+         * do {
+         *     var oldPriority = hw.getWalkedRecord().priority;
+         *     gs.info('Incident priority in update number ' + hw.getUpdateNumber() + ' was ' + oldPriority);
+         * } while (hw.walkBackward())
          * 
          * @returns Returns true if walking to the specified update number was possible. Else, returns false, for example if already walked to the update number 0.
          */
@@ -5813,6 +8917,17 @@ declare namespace sn_hw {
 
         /**
          * Applies the appropriate history/audit data to get a walked GlideRecord to the state when it was one update number forward. If next update count is missing from the history/audit data, it will walk to the next available update count.
+         * 
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * hw.walkTo(0);
+         * do {
+         *     var oldPriority = hw.getWalkedRecord().priority;
+         *     gs.info('Incident priority in update number ' + hw.getUpdateNumber() + ' was ' + oldPriority);
+         * } while (hw.walkForward())
          * 
          * @returns Returns true if walking to the specified update number was possible. Else, returns false, for example if already walked to the GlideRecord update count.
          */
@@ -5822,6 +8937,16 @@ declare namespace sn_hw {
          * Applies the appropriate history/audit data to get a GlideRecord to the state it was in a specific update count. Use getWalkedRecord() or getWalkedRecordCopy() after walking to an update number to retrieve the “walked” GlideRecord.
          * 
          * @updateCount The update number to walk to.
+         * @example
+         * var incGr = new GlideRecord('incident');
+         * incGr.get('number', 'INC0000015');
+         * 
+         * var hw = new sn_hw.HistoryWalker(incGr.getTableName(), incGr.getUniqueValue());
+         * if (hw.walkTo(3)) {
+         *     var oldPriority = hw.getWalkedRecord().priority;
+         *     gs.info('Incident priority in update number ' + hw.getUpdateNumber() + ' was ' + oldPriority);
+         * } else
+         *     gs.info('Incident does not have update number 3');
          * @returns true if walking to the specified update number was possible, false otherwise, for example if the requested update is greater than the update count of the GlideRecord, or if there is no history/audit data of the requested update number
          */
         walkTo(updateCount: Integer): Boolean;
@@ -5845,6 +8970,53 @@ declare namespace sn_cmdb {
          * 
          * @source Identifies the data source of the CI information. These must be one of the choice values defined for the discovery_source field of the cmdb_ci table.
          * @input A JSON formatted string of configuration items to be added or updated. Each input string is in the format 'items: [{}], relations:[{}], related[{}]', where each item within the items, relations, and related lists contains name-value pairs. The possible name-value pairs within the items list are: className - the sys_class_name of the CI to be created or updated. values:{} - the field information for the CI as name-value pairs, where the name is the field name. When updating reference fields, the value must be the referenced sys_id. lookup:[{}] - a list of records with each item having name-value pairs like the items list. related: [{}] - a list of records with each item having name-value pairs like the items list. The possible name-value pairs within the relations list are: parent - index of the parent item in the dependency relation child - index of the child item in the dependency relation type - the relationship type. This is one of the name field values from the cmdb_rel_type table. 
+         * @example
+         * var payload = {items: [{className:'cmdb_ci_linux_server', 
+         *                values: {name:'stry0900844 CI 2',
+         *                         serial_number:'9876EFGH',
+         *                         mac_address:'4653XYZ',
+         *                         ip_address:'10.10.10.4',
+         *                         ram:'1238'}}]
+         *               };
+         * 
+         * var jsonUntil = new JSON();
+         * var input = jsonUntil.encode(payload);
+         * var output = sn_cmdb.IdentificationEngine.createOrUpdateCI('ServiceNow', input);
+         * gs.print(output);
+         * 
+         * @example
+         * var payload = 
+         *               {items: [ 
+         *                     {className:'cmdb_ci_web_server', 
+         *                      values: {name:'apache linux den 200', 
+         *                               running_process_command: 'xyz',  
+         *                               running_process_key_parameters: 'abc', 
+         *                               tcp_port:'3452'}}, 
+         *                     {className:'cmdb_ci_linux_server', 
+         *                      values: {name:'lnux100', ram:'2048'}}],
+         *                relations:[{parent: 0, child: 1, type: 'Runs on::Runs'}]
+         *               };
+         * 
+         * var jsonUntil = new JSON();
+         * var input = jsonUntil.encode(payload);
+         * var output = sn_cmdb.IdentificationEngine.createOrUpdateCI('ServiceWatch', input);
+         * gs.print(output);
+         * 
+         * @example
+         * var payload = {items: [
+         *            {className:'cmdb_ci_netgear', 
+         *                values: {name:'ny8500-nbxs08',
+         *                         ports:'1200'}, 
+         *                lookup: [{className:'cmdb_serial_number',
+         *                             values:{serial_number:'1234ABCD', serial_number_type:'uuid',absent:'false',valid:'true'}},
+         *                         {className:'cmdb_serial_number',
+         *                             values:{serial_number:'3456EFGH', serial_number_type:'system',absent:'false',valid:'true'}}]}]};
+         * 
+         * var jsonUntil = new JSON();
+         * var input = jsonUntil.encode(payload);
+         * var output = sn_cmdb.IdentificationEngine.createOrUpdateCI('ServiceNow', input);
+         * gs.print(output);
+         * 
          * @returns A JSON formatted string that is a list of results for the configuration items in the input string. Each result string is in the format 'items: [{}], relations:[{}]', where each item within the items and relations lists contains name-value pairs. The possible name-value pairs within the items list are: className- the sys_class_name for the CI that was updated or created. operation, which is one of INSERT, UPDATE, UPDATE_WITH_UPGRADE, UPDATE_WITH_DOWNGRADE, UPDATE_WITH_SWITCH, DELETE, NO_CHANGE sysId - the sys_id of the CI that was updated or created. relatedSysIds - a list of sys_id values of CIs used during lookup based identification. maskedAttributes – a list of attributes whose update by a non-authoritative data source gets skipped as defined by the Reconciliation Rules. identifierEntrySysId - sys_id of identifier entry used during matching. errors - a list of errors in the format of (error, message string), where error can be ABANDONED, INVALID_INPUT_DATA, IDENTIFICATION_RULE_MISSING, IDENTIFICATION_RULE_FOR_LOOKUP_MISSING, NO_LOOKUP_RULES_FOR_DEPENDENT_CI, NO_CLASS_NAME_FOR_INDEPENDENT_CI, MISSING_DEPENDENCY, MULTIPLE_DEPENDENCIES, MULTIPLE_DUPLICATE_RECORDS, RELATION_CHAIN_ENDS_AT_QUALIFIER, QUALIFICATION_LOOP, TYPE_CONFLICT_IN_QUALIFICATION, MULTI_MATCH, REQUIRED_ATTRIBUTE_EMPTY, RECLASSIFICATION_NOT_ALLOWED duplicateIndices - a list of indexes of items that are duplicates of the current item. identificationAttempts - a list of attempts in the format of (attributes, identiferName, attemptResult, searchOnTable) where attributes - the attributes of identifier entry used during identification identiferName - the CI identifier to which this identifier entry belongs attemptResult - one of SKIPPED, NO_MATCH, MATCHED, MULTI_MATCH searchOnTable - the table searched during the identification process. The possible name-value pairs within the relations list are: className - the relationship CI's class name and is always cmdb_rel_ci operation - one of INSERT, UPDATE, NO_CHANGE sysId - the sys_id of the relationship CI inserted or updated 
          */
         createOrUpdateCI(source: String, input: String): String;
@@ -5881,6 +9053,10 @@ declare namespace sn_interaction {
         /**
          * Accept a new interaction.
          * 
+         * @example
+         * var GR = new GlideRecord('interaction');
+         * GR.get('b2c0a3af202a1300964f959e0488de75');
+         * var interaction = sn_interaction.Interaction.getInteraction(GR).accept();
          * @returns Returns true if the transfer is accepted.
          */
         accept(): Boolean;
@@ -5889,6 +9065,13 @@ declare namespace sn_interaction {
          * Create an interaction.
          * 
          * @options Field values for an interaction record. The channel field with the channel sys_id and channel metadata are required. If a queue is not included in the parameter, the system returns Interaction b2c0a3af202a1300964f959e0488de75 has no queue specified... running queue matching rules.
+         * @example
+         * var interactionObj = sn_interaction.Interaction.create({
+         * 	channel: '28a59893873103002ae97e2526cb0b5d',
+         * 	channel_metadata:{},
+         * 	opened_for: '46d44a23a9fe19810012d100cca80666',
+         * 	queue: 'f3a50867b30303002186a72256a8dcb7'
+         * });
          * @returns Interaction
          */
         create(options: Object): Object;
@@ -5897,6 +9080,10 @@ declare namespace sn_interaction {
          * Get an interaction record.
          * 
          * @interaction Interaction record from the interaction table [interaction] that is retrieved from the system.
+         * @example
+         * var gr = new GlideRecord('interaction');
+         * gr.get('608a21bd096a9300964ffbd57ba7dd8d');
+         * var interaction = sn_interaction.Interaction.getInteraction(gr);
          * @returns Interaction
          */
         getInteraction(interaction: GlideRecord): Object;
@@ -5905,6 +9092,11 @@ declare namespace sn_interaction {
          * Transfer an interaction record to an agent using the sys_id for the agent.When an interaction is transferred from one agent to another, the interaction needs to be accepted or rejected using GlideRecord APIs. Use the GlideRecord API to change the state of the interaction and update. For more information, see the GlideRecord - update method.
          * 
          * @SysID The sys_id of the user you want to transfer an interaction record to.
+         * @example
+         * var GR = new GlideRecord('interaction');
+         * GR.get('24b927ef202a1300964f959e0488de2d');
+         * var interaction = sn_interaction.Interaction.getInteraction(GR);
+         * interaction.transferToAgent('6816f79cc0a8016401c5a33be04be441');
          */
         transferToAgent(SysID: String);
 
@@ -5912,6 +9104,11 @@ declare namespace sn_interaction {
          * Transfer an interaction record to an interaction queue.Transferring an interaction from one queue to another closes the original interaction and creates an interaction in the new queue.
          * 
          * @SysID The sys_id of the interaction queue you want to transfer the interaction record to.
+         * @example
+         * var GR = new GlideRecord('interaction');
+         * GR.get('24b927ef202a1300964f959e0488de2d');
+         * var interaction = sn_interaction.Interaction.getInteraction(GR);
+         * interaction.transferToQueue('86fee1933b101300088d832b44efc474');
          */
         transferToQueue(SysID: String);
 
@@ -5932,6 +9129,10 @@ declare namespace sn_interaction {
         /**
          * Assign the next interaction in a queue to the current user.
          * 
+         * @example
+         * var queueGR = new GlideRecord('interaction_queue');
+         * queueGR.get('86fee1933b101300088d832b44efc474');
+         * var queue = sn_interaction.InteractionQueue.getQueue(queueGR).acceptNext();
          * @returns Interaction
          */
         acceptNext(): Object;
@@ -5940,6 +9141,10 @@ declare namespace sn_interaction {
          * Get an existing interaction queue by sys_id.
          * 
          * @queue Queue from the interaction_queue table.
+         * @example
+         * var queueGR = new GlideRecord("interaction_queue");
+         * queueGR.get('86fee1933b101300088d832b44efc474');
+         * var queue = sn_interaction.InteractionQueue.getQueue(queueGR);
          * @returns Interaction Queue
          */
         get(queue: GlideRecord): Object;
@@ -5947,6 +9152,11 @@ declare namespace sn_interaction {
         /**
          * Returns a list of agents who are online and assigned to a particular queue.Note: This API has been deprecated, use the Agent API instead.
          * 
+         * @example
+         * var queueGR = new GlideRecord('interaction_queue');
+         * queueGR.get('86fee1933b101300088d832b44efc474');
+         * var queue = sn_interaction.InteractionQueue.getQueue(queueGR);
+         * queue.getAvailableAgents();
          * @returns List of available agents by sys_id.
          */
         getAvailableAgents(): Array<any>;
@@ -5962,6 +9172,11 @@ declare namespace sn_interaction {
         /**
          * Find out whether the queue is in schedule.
          * 
+         * @example
+         * var queueRecord = new GlideRecord('interaction_queue');
+         * queueRecord.get('f3a50867b30303002186a72256a8dcb7');
+         * var queueInSchedule = sn_interaction.InteractionQueue.getQueue(queueRecord);
+         * queueInSchedule.isInSchedule();
          * @returns InteractionQueue
          */
         isInSchedule(): object;
@@ -5981,6 +9196,10 @@ declare class JSON {
      * Creates an object or primitive type from a JSON formatted string.
      * 
      * @str A JSON formatted string.
+     * @example
+     * var str = '{"name":"George","lastname":"Washington"}';
+     * var obj = JSON.parse(str);
+     * gs.info('The first name is' + obj.name);
      * @returns An object created from the specified string.
      */
     parse(str: String): Object;
@@ -5989,6 +9208,11 @@ declare class JSON {
      * Creates a string from a JSON object.
      * 
      * @jsonObject The JSON object to be turned into a string.
+     * @example
+     * var obj = {"name":"George","lastname":"Washington"};
+     * var str =  JSON.stringify(obj);
+     * gs.info('The object' + str);
+     * 
      * @returns A JSON formatted string.
      */
     stringify(jsonObject: Object): String;
@@ -6014,6 +9238,33 @@ declare namespace sn_notification {
          * @recipient Recipient of the message. When the instance receives an inbound message, you can send a response to a Slack channel, Team, or individual user ID found in the inbound payload.
          * @messagingContent Message content to send from the Messaging Contents [messaging_content] table.
          * @target Record used to define dynamic field values in the message. Table must match the Target table field in the Messaging Contents record. If the Messaging Contents record does not use a target table, set the value to null.
+         * @example
+         * //Send a message to a Teams user
+         * var app = new GlideRecord('messaging_application');
+         * app.get('1f2d26527f4213007f005212bdfa9102');
+         * 
+         * var content = new GlideRecord('messaging_content');
+         * content.get('17f1f9617320130082999cfd7bf6a706');
+         * 
+         * sn_notification.Messaging.send(app, '29:1ojsgDg1xuA_jZ70PDI2_6E7mn7P6Mc0wK7z0n2lblL-SaNXYVI1cR7i6qncllAGvdmhy2-kXh76IEVpUHXdz3w', content, null);
+         * 
+         * //Send a message to a Slack user
+         * var app = new GlideRecord('messaging_application');
+         * app.get('5d2e38c07f6113007f005212bdfa9160');
+         * 
+         * var content = new GlideRecord('messaging_content');
+         * content.get('69c48ba77310130082999cfd7bf6a7af');
+         * 
+         * sn_notification.Messaging.send(app, 'U8P706QFQ', content, null);
+         * 
+         * //Send a message to a Slack channel
+         * var app = new GlideRecord('messaging_application');
+         * app.get('5d2e38c07f6113007f005212bdfa9160');
+         * 
+         * var content = new GlideRecord('messaging_content');
+         * content.get('69c48ba77310130082999cfd7bf6a7af');
+         * 
+         * sn_notification.Messaging.send(app, 'CA6232N65', content, null);
          */
         send(messagingApplication: GlideRecord, recipient: String, messagingContent: GlideRecord, target: GlideRecord);
 
@@ -6040,6 +9291,27 @@ declare namespace sn_notify {
          * @userSysId Optional. Unique identifier (sys_id) of the user associated with the call.
          * @groupSysId Optional. Unique identifier (sys_id) of the group associated with the call.
          * @sourceRecord Optional. Source record that prompted this call.
+         * @example
+         * var from = '+14048007337';
+         * var to = '+31646810495';
+         * 
+         * // set up call
+         * new sn_notify.NotifyScoped().call(from, to);
+         * @example
+         * var notify = new sn_notify.NotifyScoped();
+         * var from = '+14041234567';
+         * var participants = ['+31612345678', '+31623456789', '+31687654321'];
+         * 
+         * // set up a conference call
+         * var conferenceCall = notify.conferenceCall();
+         * 
+         * // set up the outbound calls for all conference call participants
+         * for (var i in participants) {
+         *     var to = participants[i];
+         *     notify.call(from, to, conferenceCall);
+         * }
+         * 
+         * 
          */
         call(notifyPhoneNumber: String, toPhoneNumber: String, conferenceCall: GlideRecord, userSysId: String, groupSysId: String, sourceRecord: GlideRecord);
 
@@ -6047,6 +9319,19 @@ declare namespace sn_notify {
          * Creates a new conference call GlideRecord.
          * 
          * @sourceRecord Optional. Record that initiated the request to create the conference call. Used to populate the source and table fields on notify_conference_call record.
+         * @example
+         * var notify = new sn_notify.NotifyScoped();
+         * var from = '+14041234567';
+         * var participants = ['+31612345678', '+31623456789', '+31687654321'];
+         * 
+         * // set up a conference call
+         * var conferenceCall = notify.conferenceCall();
+         * 
+         * // set up the outbound calls for all conference call participants
+         * for (var i in participants) {
+         *     var to = participants[i];
+         *     notify.call(from, to, conferenceCall);
+         * }
          * @returns New Notify conference call [notify_conference_call] record.
          */
         conferenceCall(sourceRecord: GlideRecord): GlideRecord;
@@ -6055,6 +9340,13 @@ declare namespace sn_notify {
          * Resumes a call after it was put in a queue (on hold).Use this method to resume calls that were put in a queue with the queueCall() method.
          * 
          * @callRecord GlideRecord object on the Notify Call [notify_call] table with the held call you want to resume.
+         * @example
+         * var notifyCallGr = new GlideRecord('notify_call');
+         * notifyCallGr.get('active participant sys id');
+         *  
+         * if (notifyCallGr.isValid) {
+         *     sn_notify.NotifyScoped.dequeueCall(notifyCallGr);
+         * }
          */
         dequeueCall(callRecord: GlideRecord);
 
@@ -6064,6 +9356,17 @@ declare namespace sn_notify {
          * @call Notify call record or the telephony provider call ID, of the call to be forwarded.
          * @destination Notify phone number record or an E.164-compliant phone number, of the caller to which to forward the call.
          * @dtmf Dual Tone - Multi Frequency (DTMF) code to send upon call connection.
+         * @example
+         * var callID = 'CA92374b5aa561dab476a7001db6026edc'; // Twilio Call ID
+         * var phoneNumber = '+91406xxxxxxx';
+         * var dtmfTones = null;
+         *  
+         * var notifyCallGr = new GlideRecord('notify_call');
+         * notifyCallGr.get('active participant sys id');
+         *  
+         * if (notifyCallGr.isValid) {
+         *     sn_notify.NotifyScoped.forwardCall(notifyCallGr(or) callID, phoneNumber, dtmfTones)
+         * }
          */
         forwardCall(call: GlideRecordorString, destination: GlideRecordorString, dtmf: String);
 
@@ -6071,6 +9374,16 @@ declare namespace sn_notify {
          * Returns a list of client sessions that are available to receive calls.
          * 
          * @notifyNumber Valid Notify phone number.
+         * @example
+         * var clientSessionGr = sn_notify.NotifyScoped.getAvailableClients('+185xxxxxxxx'); 
+         * // Here clientSessionGr is of type GlideRecord on 'notify_client_session' table.
+         *  
+         * var isLoggedInUserAvailable = false;
+         * while (clientSessionGr.next()) {
+         *   if (clientSessionGr.user == gs.getUserID())
+         *     isLoggedInUserAvailable = clientSessionGr.available;
+         * }
+         * gs.info('isLoggedInUserAvailable - ' + isLoggedInUserAvailable);
          * @returns GlideRecord from the notify_client_session table for the specified phone number. Returns "0" if there are no available client sessions.
          */
         getAvailableClients(notifyNumber: String): Array<any>;
@@ -6078,6 +9391,21 @@ declare namespace sn_notify {
         /**
          * Returns all phone numbers and short codes available to Notify.
          * 
+         * @example
+         * // instantiate notify
+         * var notify = new sn_notify.NotifyScoped();
+         * 
+         * // get all available phone numbers
+         * var phoneNumbers = notify.getPhoneNumbers();
+         * 
+         * // iterate over phone numbers
+         * for (var i = 0; i &lt; phoneNumbers.size(); i++) {
+         * 
+         *   var number = phoneNumbers.get(i);
+         * 
+         * //perform any actions using each phone number
+         * 
+         * }
          * @returns List of NotifyPhoneNumber objects, each object representing one phone number available to Notify.
          */
         getPhoneNumbers(): List;
@@ -6085,6 +9413,22 @@ declare namespace sn_notify {
         /**
          * Returns all short codes available to Notify.
          * 
+         * @example
+         * // instantiate notify
+         * var notify = new sn_notify.NotifyScoped();
+         * 
+         * // get all available shortcodes
+         * var shortCodes = notify.getShortCodes();
+         * 
+         * // iterate over phone numbers
+         * for (var i = 0; i &lt; shortCodes.size(); i++) {
+         * 
+         * var shortCode = shortCodes.get(i);
+         * 
+         * gs.log(shortCode.getNumber());
+         * 
+         * //perform any actions using each shortcode
+         * }
          */
         getShortCodes();
 
@@ -6092,6 +9436,44 @@ declare namespace sn_notify {
          * Returns client tokens for any active telephony drivers for use in WebRTC or mobile clients.This method uses the currently logged-in user record as the client.
          * 
          * @record GlideRecord to use to identify the Notify client, such as a group record or a user record.
+         * @example
+         * // get Notify client Tokens per active Notify driver for the currently logged in user
+         * var json = new sn_notify.NotifyScoped().getTokens();
+         *  
+         * // Parse the JSON that was return into a tokens object
+         * var tokens = JSON.parse(json);
+         * 
+         * // Log line
+         * gs.log('Notify client tokens for the currently logged in user');
+         * 
+         *  // iterate over the driver tokens
+         * for (var driver in tokens) {
+         *  	gs.log(driver + ' Driver token: ' + tokens[driver]);
+         * }
+         * @example
+         * // instantiate Notify
+         * var notify = new sn_notify.NotifyScoped.Notify();
+         *  
+         * // get all Notify Groups
+         * var notifyGroup = new GlideRecord("notify_group");
+         * notifyGroup.query();
+         *  
+         * // iterate over all notify groups
+         * while (notifyGroup.next()) {
+         *   // generate Notify Client tokens per active Notify Driver for this group
+         *   var json = notify.getTokens(notifyGroup);
+         *   var tokens = JSON.parse(json);
+         *  
+         *   for (var driver in tokens) {
+         *     gs.log(gs.getMessage("Notify Client token for {0} driver and Notify Group '{1}': {2}", [driver, notifyGroup.getValue('name'), tokens[driver]]));
+         *   }
+         * }
+         * @example
+         * var notify = new sn_notify.NotifyScoped();
+         * var gr = new GlideRecord('sys_user');
+         * if (gr.get(gs.getUserID())) {
+         *   gs.info(notify.getTokens(gr));
+         * }
          * @returns Web RTC tokens for the supported drivers, as a JSON string with the following format: {driverName1: “token1”, driverName2: “token2”}, such as "TwilioDirect":"eyJhxxxx.eyJleHAiOiIxxxx.7fejxxx_mbLxxx"
          */
         getTokens(record: GlideRecord): String;
@@ -6100,6 +9482,16 @@ declare namespace sn_notify {
          * Returns the maximum amount of time that a client session stays active for a specified telephony driver before automatically timing out.
          * 
          * @owner Name of the telephony driver for which to retrieve the session length. Valid values: Twilio: for the old driver TwilioDirect: for the new driver 
+         * @example
+         * var owner = "TwilioDirect";  // Valid driver
+         * var ttl = SNC.Notify.getTokenTTL(owner);
+         * gs.info("Token TTL for " + owner + " --&gt; " + ttl);
+         *  
+         * owner = "Abcxyz";  // Invalid driver
+         * ttl = SNC.Notify.getTokenTTL(owner);
+         * // For an invalid driver, we throw NoSuchNotifyDriverException saying that Abcxyzdriver is not available
+         * // and return the default value of TTL
+         * gs.info("Token TTL for " + owner + " --&gt; " + ttl); 
          * @returns Maximum length of the session (in seconds). Default: 1800 seconds
          */
         getTokenTTL(owner: String): Integer;
@@ -6109,6 +9501,14 @@ declare namespace sn_notify {
          * 
          * @notifyPhoneNumber Phone number for which to check for the specified capability.
          * @capability Capability to detect. The string text must be an exact match to what is in the phone.
+         * @example
+         * // Each driver has a defined set of capabilities.
+         * 
+         * var capability = 'show_speakers';
+         * gs.info(sn_notify.NotifyScoped.hasCapability('+185xxxxxxxx', capability)); // true
+         *  
+         * capability = 'send_sms';
+         * gs.info(sn_notify.NotifyScoped.hasCapability('+185xxxxxxxx', capability)); // false
          * @returns Flag that indicates whether the specified phone has the specified capability. true: phone has the capability false: phone does not have the capability 
          */
         hasCapability(notifyPhoneNumber: String, capability: String): Boolean;
@@ -6117,6 +9517,12 @@ declare namespace sn_notify {
          * Removes the specified caller from the current Notify conference call.
          * 
          * @participant GlideRecord object containing the Notify Participant [notify_participant] record of the caller to remove from the conference call.
+         * @example
+         * var participant = new GlideRecord('notify_participant');
+         * participant.get('&lt;sys_id&gt;');
+         * if (participant.isValid()) {
+         *     new sn_notify.NotifyScoped().kick(participant);
+         * }
          */
         kick(participant: GlideRecord);
 
@@ -6132,6 +9538,13 @@ declare namespace sn_notify {
          * Mutes the specified conference call participant.
          * 
          * @participantRecord GlideRecord from the notify_participant table for the participant to mute.
+         * @example
+         * var notifyParticipantGr = new GlideRecord('notify_participant');
+         * notifyParticipantGr.get('active participant sys id');
+         *  
+         * if (notifyParticipantGr.isValid) {
+         *     sn_notify.NotifyScoped.mute(notifyParticipantGr);
+         * }
          */
         mute(participantRecord: GlideRecord);
 
@@ -6139,6 +9552,12 @@ declare namespace sn_notify {
          * Puts the specified call into a queue (on hold).Resume a queued call using the dequeueCall() method.
          * 
          * @callRecord GlideRecord object of the Notify Call record (notify_call table) to put on hold.
+         * @example
+         * var call = new GlideRecord('notify_call');
+         * call.get('&lt;call record sys_id&gt;');
+         * if (call.isValid()) {
+         *     new sn_notify.NotifyScoped().queueCall(call);
+         * }
          */
         queueCall(callRecord: GlideRecord);
 
@@ -6149,6 +9568,12 @@ declare namespace sn_notify {
          * @toPhoneNumbers Comma separated list of E.164-compliant phone numbers to which to send the SMS message.
          * @messageBody SMS text to send.
          * @source Source record that prompted this SMS message, such as an incident.
+         * @example
+         * var incidentGr = new GlideRecord('incident');
+         * incidentGr.get(active incident sys_id');
+         * if (incidentGr.isValid()) {
+         *     sn_notify.NotifyScoped.sendBulkSMS('+15413970605', ['+919885XXXXXX', '+919775XXXXXX'], 'Test automation message', incidentGr);
+         * }
          * @returns Unique sys_id of the Notify Message [notify_message] record created by this function.
          */
         sendBulkSMS(notifyPhoneNumber: sn_notify.NotifyPhoneNumber, toPhoneNumbers: String, messageBody: String, source: GlideRecord): String;
@@ -6160,6 +9585,12 @@ declare namespace sn_notify {
          * @toPhoneNumber E.164-compliant phone number to which to send the SMS message.
          * @messageBody SMS text message.
          * @source Source record that prompted this SMS message, such as an incident.
+         * @example
+         * var incidentGr = new GlideRecord('incident');
+         * incidentGr.get(active incident sys_id');
+         * if (incidentGr.isValid()) {
+         *     sn_notify.NotifyScoped.sendSMS('+15413970605', '+919885XXXXXX', 'Test automation message', incidentGr);
+         * }
          * @returns Unique message SID; stored in the Notify Message [notify_message] record as message_id.
          */
         sendSMS(notifyPhoneNumber: sn_notify.NotifyPhoneNumber, toPhoneNumber: String, messageBody: String, source: GlideRecord): String;
@@ -6168,6 +9599,13 @@ declare namespace sn_notify {
          * Unmutes the specified conference call participant.
          * 
          * @participantRecord GlideRecord from the notify_participant table for the participant to unmute.
+         * @example
+         * var notifyParticipantGr = new GlideRecord('notify_participant');
+         * notifyParticipantGr.get('active participant sys id');
+         *  
+         * if (notifyParticipantGr.isValid) {
+         *     sn_notify.NotifyScoped.unmute(notifyParticipantGr);
+         * }
          */
         unmute(participantRecord: GlideRecord);
 
@@ -6188,6 +9626,16 @@ declare namespace sn_notify {
         /**
          * Returns the international dialing code for a Notify phone number.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.getDialCode());
+         * }
          * @returns International phone code for a country.
          */
         getDialCode(): String;
@@ -6195,6 +9643,16 @@ declare namespace sn_notify {
         /**
          * Returns the ID of this phone number as defined by the telephony provider.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.getID());
+         * }
          * @returns Identifier of the number within the telephony provider.
          */
         getID(): String;
@@ -6202,6 +9660,16 @@ declare namespace sn_notify {
         /**
          * Returns the numerical phone number for the current Notify caller.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.getNumber());
+         * }
          * @returns E.164-compliant phone number.
          */
         getNumber(): String;
@@ -6209,6 +9677,16 @@ declare namespace sn_notify {
         /**
          * Returns the telephony provider associated with this phone number.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.getOwner());
+         * }
          * @returns Telephony provider associated with the number: Twilio.
          */
         getOwner(): String;
@@ -6216,6 +9694,16 @@ declare namespace sn_notify {
         /**
          * Returns the country associated with the phone number.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.getTerritory());
+         * }
          * @returns Name of the country to which the phone number belongs.
          */
         getTerritory(): String;
@@ -6223,6 +9711,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports conference calls.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsConferenceCall());
+         * }
          * @returns Value that indicates whether the Notify phone number supports conference calling. true: phone number does support conference calling false: phone number does not support conference calling 
          */
         supportsConferenceCall(): Boolean;
@@ -6230,6 +9728,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports receiving phone calls.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsIncomingPhoneCall());
+         * }
          * @returns Value that indicates whether the Notify phone number supports incoming phone calls. true: phone number does support incoming phone calls false: phone number does not support incoming phone calls 
          */
         supportsIncomingPhoneCall(): Boolean;
@@ -6237,6 +9745,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports receiving SMS messages.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsIncomingSMS());
+         * }
          * @returns Value that indicates whether the Notify phone number supports incoming SMS messages. true: phone number does support incoming SMS messages false: phone number does not support incoming SMS messages 
          */
         supportsIncomingSMS(): Boolean;
@@ -6244,6 +9762,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports initiating phone calls.
          * 
+         * @example
+         * var numbers = sn_notfy.Notify.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsOutgoingPhoneCall());
+         * }
          * @returns Value that indicates whether the Notify phone number supports initiating outgoing phone calls. true: phone number does support initiating outgoing phone calls false: phone number does not support initiating outgoing phone calls 
          */
         supportsOutgoingPhoneCall(): Boolean;
@@ -6251,6 +9779,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports sending SMS messages.
          * 
+         * @example
+         * var numbers = sn_notify.NotifyScoped.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsOutgoingSMS());
+         * }
          * @returns Value that indicates whether the Notify phone number supports sending SMS messages. true: phone number does support sending SMS messages false: phone number does not support sending SMS messages 
          */
         supportsOutgoingSMS(): Boolean;
@@ -6258,6 +9796,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports recording phone calls.
          * 
+         * @example
+         * var numbers = sn_notify.Notify.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsRecording());
+         * }
          * @returns Value that indicates whether the Notify phone number supports recording phone calls. true: phone number does support recording phone calls false: phone number does not support recording phone calls 
          */
         supportsRecording(): Boolean;
@@ -6265,6 +9813,16 @@ declare namespace sn_notify {
         /**
          * Determines if the Notify phone number supports calls to a browser, such as in a WebRTC implementation.
          * 
+         * @example
+         * var numbers = sn_notify.Notify.getPhoneNumbers();
+         *  
+         * // Here numbers is of type List
+         * if (numbers.size() &gt; 0) {
+         *    var number = numbers.get(0);
+         *  
+         *    // Here number is of type NotifyPhoneNumber
+         *   gs.info(number.supportsWebRTC());
+         * }
          * @returns Value that indicates whether the Notify phone number supports browser-to-browser (WebRTC) calls. true: phone number does support browser-to-browser (WebRTC) calls false: phone number does not support browser-to-browser (WebRTC) calls 
          */
         supportsWebRTC(): Boolean;
@@ -6287,11 +9845,17 @@ declare namespace sn_sc {
          * Creates an instance of the OrderGuide class with the specified sys_id.
          * 
          * @sys_id sys_id of the OrderGuide.
+         * @example
+         * var cart=new sn_sc.OrderGuide("6690750f4f7b4200086eeed18110c761");
          */
         constructor(sys_id: String);
 
         /**
          * Returns the sys_id of the order guide.
+         * 
+         * @example
+         * var cart=new sn_sc.OrderGuide("6690750f4f7b4200086eeed18110c761");	
+         * 	console.log(cart.getID());
          * 
          * @returns sys_id of the order guide.
          */
@@ -6301,6 +9865,14 @@ declare namespace sn_sc {
          * Initialises the order guide with the specified catalog items and the variables, and returns the order guide.
          * 
          * @request A JSON object with the Catalog item and variable details.
+         * @example
+         * var guide = new sn_sc.OrderGuide('6690750f4f7b4200086eeed18110c761');
+         *  
+         * var map = {};
+         * map.variables = {};
+         * //map.sysparm_id = '6690750f4f7b4200086eeed18110c761';
+         * map.variables['IOce433d0f4f7b4200086eeed18110c74d'] = '221f3db5c6112284009f4becd3039cc9'; //Here ce433d0f4f7b4200086eeed18110c74d is the sys_id of the variable and 221f3db5c6112284009f4becd3039cc9 is its value
+         * var includedItems = guide.init(map)
          * @returns A JSON object with the initialised order guide details.
          */
         init(request: Object): Object;
@@ -6308,6 +9880,9 @@ declare namespace sn_sc {
         /**
          * Specifies if the Include items check box is selected for the specified order guide.
          * 
+         * @example
+         * var orderGuide=new sn_sc.OrderGuide("6690750f4f7b4200086eeed18110c761");	
+         * 	console.log(orderGuide.isIncludeItems());
          * @returns Returns true if the Include items check box is selected for the specified order guide. Else, returns false.
          */
         isIncludeItems(): Boolean;
@@ -6315,6 +9890,9 @@ declare namespace sn_sc {
         /**
          * Specifies if the two-step checkout is enabled.
          * 
+         * @example
+         * var orderGuide=new sn_sc.OrderGuide("6690750f4f7b4200086eeed18110c761");	
+         * 	console.log(orderGuide.isTwoStep());
          * @returns Returns true if the two-step checkout is enabled. Else returns false.
          */
         isTwoStep(): Boolean;
@@ -6322,6 +9900,9 @@ declare namespace sn_sc {
         /**
          * Specifies if a separate cart (different from that for catalog items) usage is enabled for a two-step order guide.
          * 
+         * @example
+         * var orderGuide=new sn_sc.OrderGuide("6690750f4f7b4200086eeed18110c761");	
+         * 	console.log (orderGuide.isUseCustomCart());
          * @returns Returns true if a separate cart usage is enabled for a two-step order guide. Else, returns false.
          */
         isUseCustomCart(): Boolean;
@@ -6330,6 +9911,8 @@ declare namespace sn_sc {
          * Navigates to the catalog items of an order guide.
          * 
          * @itemDetails A JSON object with details of catalog items in the order guide.
+         * @example
+         * var orderGuide=new sn_sc.OrderGuide.navigateFromMap(itemdetails);
          */
         navigateFromMap(itemDetails: Object);
 
@@ -6377,6 +9960,14 @@ declare class PAScorecard {
      * @include_target_color_scheme Set this parameter to true to return the target_color_scheme element that contains the minimum and maximum values, and the color of each section of the target color scheme for the Analytics Hub.
      * @include_forecast_scores Set this parameter to true to return the forecast_scores element that contains an array of date-value pairs that define the forecast data for the Analytics Hub.This paramater requires that the include_scores parameter is also set to true.
      * @include_trendline_scores Set this parameter to true to return the trendline_scores element that contains an array of date-value pairs that define the Analytics Hub trendline.This paramater requires that the include_scores parameter is also set to true.
+     * @example
+     * var sc = new SNC.PAScorecard(); //in a scoped app, do not use the SNC namespace
+     * sc.addParam('uuid', 'fb007202d7130100b96d45a3ce6103b4');       // Number of open incidents
+     * sc.addParam('breakdown', '0df47e02d7130100b96d45a3ce610399');  // by Priority
+     * var result = sc.query();  // Query results, which are returned as an object
+     * for (var i = 0; i &lt; result.length; i++)
+     * gs.info(result[i].name + ': ' + result[i].value + ' ' + result[i].unit.display_value);
+     * 
      */
     addParam(uuid: String, breakdown: String, breakdown_relation: String, elements_filter: String, display: String, favorites: String, key: String, target: String, contains: String, tags: String, per_page: String, page: String, sortby: String, sortdir: String, display_value: String, exclude_reference_link: String, include_scores: String, from: String, to: String, step: String, limit: String, include_available_breakdowns: String, include_available_aggregates: String, include_realtime: String, include_target_color_scheme: String, include_forecast_scores: String, include_trendline_scores: String);
 
@@ -6412,6 +10003,9 @@ declare class PASnapshot {
      * @date1 The date of the first snapshot, in the format yyyymmdd.
      * @date2 The date of the second snapshot, in the format yyyymmdd.
      * @type Specifies what data to retrieve. Valid values are: all1: all records in the first snapshot all2: all records in the second snapshot shared: records that are in both snapshots movedin: records that are in the second snapshot, but not the first movedout: records that are in the first snapshot, but not the second 
+     * @example
+     * var snapshot2 = PASnapshot.getCompareIDs('fb007202d7130100b96d45a3ce6103b4', 20160430, 20160531, 'shared');
+     * gs.info(snapshot2);
      * @returns A comma-separated list of sys_id values.
      */
     getCompareIDs(sys_id: String, date1: Number, date2: Number, type: String): String;
@@ -6423,6 +10017,10 @@ declare class PASnapshot {
      * @date1 The date of the first snapshot, in the format yyyymmdd.
      * @date2 The date of the second snapshot, in the format yyyymmdd.
      * @type Specifies what data to retrieve. Valid values are: all1: all records in the first snapshot all2: all records in the second snapshot shared: records that are in both snapshots movedin: records that are in the second snapshot, but not the first movedout: records that are in the first snapshot, but not the second 
+     * @example
+     * var snapshot4 = PASnapshot.getCompareQuery('fb007202d7130100b96d45a3ce6103b4', 20160530, 20160531, 'all1');
+     * gs.info(snapshot4);
+     * 
      * @returns The table, view, and encoded query as a JSON string.
      */
     getCompareQuery(sys_id: String, date1: Number, date2: Number, type: String): String;
@@ -6432,6 +10030,9 @@ declare class PASnapshot {
      * 
      * @sys_id The indicator sys_id.
      * @date The date when the snapshot was taken, in the format yyyymmdd.
+     * @example
+     * var snapshot1 = PASnapshot.getIDs('fb007202d7130100b96d45a3ce6103b4', 20160530);
+     * gs.info(snapshot1);
      * @returns A comma-separated list of sys_id values.
      */
     getIDs(sys_id: String, date: Number): String;
@@ -6441,6 +10042,9 @@ declare class PASnapshot {
      * 
      * @sys_id The indicator sys_id.
      * @date The date when the snapshot was taken, in the format yyyymmdd.
+     * @example
+     * var snapshot3 = PASnapshot.getQuery('fb007202d7130100b96d45a3ce6103b4', 20160530);
+     * gs.info(snapshot3);
      * @returns The table, view, and encoded query as a JSON string.
      */
     getQuery(sys_id: String, date: Number): String;
@@ -6463,6 +10067,8 @@ declare namespace sn_connect {
          * Get an existing chat queue by sys_ID.
          * 
          * @SysID The sysID of a queue from the chat_queue table.
+         * @example
+         * var queue = sn_connect.Queue.get("ab73be7dc09a4300964f336ee6b74361");
          * @returns Returns a conversation queue object.
          */
         get(SysID: String): Object;
@@ -6471,6 +10077,9 @@ declare namespace sn_connect {
          * Add the current user to an existing Connect Support chat queue. Use a sysID from the chat_queue table.
          * 
          * @Question Type a question to add to the queue.
+         * @example
+         * var queue = sn_connect.Queue.get("ab73be7dc09a4300964f336ee6b74361");
+         * queue.join("How do I access my email?");
          */
         join(Question: String);
 
@@ -6573,12 +10182,20 @@ declare namespace sn_discovery {
         /**
          * Used to return the state of the scanned CI.This is a calculated field based on the last_state field in discovery_device_history table and the state field in the discovery_status table.
          * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(CiOperationStatus): " + ipResultObj.getCiOperationStatus());
+         * 
          * @returns The three possible states returned by this method are: Processing: Discovery is still processing the request. Successful: A CI was created or updated. NotSuccessful: A CI was not created or updated, and the Discovery status was Completed or Cancelled. 
          */
         getCiOperationStatus(): string;
 
         /**
          * Used to return the value in the cmdb_ci field from the discovery_device_history table for the CI being scanned.
+         * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(cmdb): " + ipResultObj.getCmdbCI());
          * 
          * @returns Sys_id of the CI created or updated. This value can be null in the case of intermediate results before a CI is created.
          */
@@ -6587,6 +10204,10 @@ declare namespace sn_discovery {
         /**
          * Used to return the value from the State field in the Discovery Status [discovery_status] table.The values returned by this method are used to calculate the value returned by the getCiOperationStatus() method
          * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(discoveryState): " + ipResultObj.getDiscoveryState());
+         * 
          * @returns The possible states returned by this method are: Starting Active Complete Cancelled 
          */
         getDiscoveryState(): string;
@@ -6594,6 +10215,9 @@ declare namespace sn_discovery {
         /**
          * Used to return the value from the source field in the discovery_device_history table for the CI being scanned.
          * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(IpAddress): " + ipResultObj.getIpAddress());
          * @returns The IP address of the CI being scanned.
          */
         getIpAddress(): string;
@@ -6601,6 +10225,9 @@ declare namespace sn_discovery {
         /**
          * Used to return the value from the issues field in the discovery_device_history table for the CI being scanned.
          * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(issues): " + ipResultObj.getIssues());
          * @returns Number of issues in this Discovery for this CI.
          */
         getIssues(): integer;
@@ -6608,6 +10235,9 @@ declare namespace sn_discovery {
         /**
          * Used to return the value from the issues_link field in the discovery_device_history table for the CI being scanned.
          * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(issues_link): " + ipResultObj.getIssuesLink());
          * @returns The issues_link field from the discovery_device_history table.This value may be null or an anchor tag defining a hyperlink to a page that provides the list of issues associated with the Discovery Status and CI (IP address).
          */
         getIssuesLink(): string;
@@ -6615,6 +10245,9 @@ declare namespace sn_discovery {
         /**
          * Used to serialized the ReportCiStatusOutputJS object.This method throws the IllegalArgumentException exception, Cannot serialize object, e when the method is unable to serialize the object. The e is the exception object, which provides the exception message and trace.
          * 
+         * @example
+         * var ipResultObj = sn_discovery.DiscoveryAPI.reportCiIpAddressStatus(ipAddress, discoveryStatus);
+         * gs.info("ipResultObj(json): " + ipResultObj.toJson());
          * @returns Serialized instance of the ReportCiStatusOutputJS object into a JSON string.
          */
         toJson(): string;
@@ -6648,6 +10281,8 @@ declare class RESTAPIRequest {
      * Returns the value of a specific header from the web service request.
      * 
      * @header The name of the header, such as accept or content-type.
+     * @example
+     * var acceptHeader = request.getHeader('accept');
      * @returns The value of the specified header.
      */
     getHeader(header: String): String;
@@ -6679,6 +10314,12 @@ declare class RESTAPIRequestBody {
     /**
      * Determine if there are additional entries in the request body.Use this method with the nextEntry() method to iterate over multiple request body entries.
      * 
+     * @example
+     * var requestBody = request.body;
+     * requestBody.hasNext(); // returns true if the request contains a single entry or multiple entries
+     * 
+     * //calling second time
+     * requestBody.hasNext(); // returns false if the request contains a single entry, or true if the request contains multiple entries
      * @returns True if there are additional entries available. This method returns true only once if the request contains a single entry.
      */
     hasNext(): boolean;
@@ -6686,6 +10327,18 @@ declare class RESTAPIRequestBody {
     /**
      * Retrieve one entry from the request body as a script object.Use this method with the hasNext() method to iterate over multiple request body entries.
      * 
+     * @example
+     * var requestBody = request.body;
+     * var requestEntry = requestBody.nextEntry(); // returns available entry if there is only one entry, or the first entry if there are multiple.
+     * var name = requestEntry.name; // ‘user1’
+     * 
+     * // Calling second time
+     * requestEntry = requestBody.nextEntry(); // returns undefined if there is only one entry, or the second entry if there are multiple.
+     * @example
+     * var requestBody = request.body;
+     * while(requestBody.hasNext()){
+     * var entry = requestBody.nextEntry();
+     * }
      * @returns A single entry from the request body.
      */
     nextEntry(): Object;
@@ -6704,6 +10357,10 @@ declare class RESTAPIResponse {
     /**
      * Get the ResponseStreamWriter for this response, allowing you to write directly to the response stream.
      * 
+     * @example
+     * response.setContentType('application/json');
+     * response.setStatus(200);
+     * var writer = response.getStreamWriter();
      * @returns The ResponseStreamWriter for this response. You can use this object to write directly to the response stream.
      */
     getStreamWriter(): RESTAPIResponseStream;
@@ -6712,6 +10369,21 @@ declare class RESTAPIResponse {
      * Sets the body content to send in the web service response.
      * 
      * @body The response body, as a JavaScript object. The body content is automatically serialized to JSON or XML depending on the value of the Accept header passed in the request.
+     * @example
+     * var body = {};
+     * body.name = "incident";
+     * body.number = "1234";
+     * body.caller = {"id": "user1"};
+     * response.setBody(body);
+     * 
+     * @example
+     * var bodyArray = [];
+     * var body = {};
+     * body.name = "incident";
+     * body.number = "1234";
+     * body.caller = {"id":"user1"};
+     * bodyArray.push(body);
+     * response.setBody(bodyArray);
      */
     setBody(body: Object);
 
@@ -6719,6 +10391,8 @@ declare class RESTAPIResponse {
      * Assigns a value to the Content-Type header in the web service response.You must set a response content type before writing the response. The content type is set automatically for string responses, based on the request Accept header value.Setting an invalid content type causes the response to default to JSON. Failing to set a content type results in a status code 500 error when sending a binary response.See the W3 Content-Type header documentation for more information about this header.
      * 
      * @contentType The content type of the response body, such as application/json.
+     * @example
+     * responseBuilder.setContentType('application/json');
      */
     setContentType(contentType: String);
 
@@ -6734,6 +10408,8 @@ declare class RESTAPIResponse {
      * 
      * @header The header you want to set.
      * @value The value to assign the specified header.
+     * @example
+     * responseBuilder.setHeader("Location","&lt;URI&gt;");
      */
     setHeader(header: String, value: String);
 
@@ -6741,6 +10417,11 @@ declare class RESTAPIResponse {
      * Sets the headers for the web service response.
      * 
      * @headers A JavaScript object listing each header and the value to assign that header.
+     * @example
+     * var headers = {};
+     * headers.X-Total-Count=100;
+     * headers.Location=‘https://instance.service-now.com/&lt;endpoint_to_resource&gt;';
+     * response.setHeaders(headers);
      */
     setHeaders(headers: Object);
 
@@ -6754,6 +10435,8 @@ declare class RESTAPIResponse {
      * Sets the status code number for the web service response.
      * 
      * @status The status code to send in the response, such as 200 to indicate success. Passing a non-numerical value, such as a string, causes the status code to default to 0.
+     * @example
+     * response.setStatus(200);
      */
     setStatus(status: Number);
 
@@ -6772,6 +10455,11 @@ declare class RESTAPIResponseStream {
      * Write an input stream to the response stream.You must set the content type and status code before calling the writeStream() method or the response will fail. You cannot modify these values after calling the writeStream() method.
      * 
      * @stream An attachment or a response stream from a third-party service.
+     * @example
+     * response.setContentType('application/json');
+     * response.setStatus(200);
+     * var writer = response.getStreamWriter();
+     * writer.writeStream(attachmentStream);
      */
     writeStream(stream: Object);
 
@@ -6779,6 +10467,24 @@ declare class RESTAPIResponseStream {
      * Write string data to the response stream.You must set the content type and status code before calling the writeString() method or the response will fail. You cannot modify these values after calling the writeString() method.
      * 
      * @data The string to add to the response data.
+     * @example
+     * response.setContentType('application/json');
+     * response.setStatus(200);
+     * var writer = response.getStreamWriter();
+     * var body ={
+     *   name:user1,
+     *   id: 1234,
+     *   roles: [
+     *     {
+     *       name: admin
+     *     },
+     *     {
+     *       name: itil
+     *     }
+     *   ]
+     * }
+     * writer.writeString("{'name':'user','id':'1234'}");
+     * writer.writeString(JSON.stringify(body));
      */
     writeString(data: String);
 
@@ -6801,24 +10507,35 @@ declare namespace sn_ws {
          * 
          * @name The name of the REST message record.
          * @methodName The name of the HTTP method to use, such as GET or PUT.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
          */
         constructor(name: String, methodName: String);
 
         /**
          * Instantiates an empty RESTMessageV2 object.When using an object instantiated this way, you must manually specify an HTTP method and endpoint.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2();
          */
         constructor();
 
         /**
          * Send the REST message to the endpoint.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute(); //Might throw exception if http connection timed out or some issue with sending request itself because of encryption/decryption of password.
          * @returns The response returned by the REST provider.
          */
         execute(): RESTResponse;
 
         /**
          * Send the REST message to the endpoint asynchronously. The instance does not wait for a response from the web service provider when making asynchronous calls.In the following example, replace REST_message_record with the name of the REST message record from your instance. When using executeAsync, consider processing the response body in a separate business rule to take advantage of the asynchronous call.
+         * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.executeAsync(); //Might throw exception if http connection timed out or some issue with sending request itself because of encryption/decryption of password.
          * 
          * @returns The response returned by the REST provider.
          */
@@ -6827,6 +10544,9 @@ declare namespace sn_ws {
         /**
          * Get the URL of the endpoint for the REST message.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var endpoint = sm.getEndpoint();
          * @returns The URL of the REST web service provider.
          */
         getEndpoint(): String;
@@ -6834,6 +10554,9 @@ declare namespace sn_ws {
         /**
          * Get the content of the REST message body.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var body = sm.getRequestBody();
          * @returns the REST message body.
          */
         getRequestBody(): String;
@@ -6842,6 +10565,9 @@ declare namespace sn_ws {
          * Get the value for an HTTP header specified in the REST message.By default, this method cannot return the value for a header set automatically by the system. To grant this method access to all headers, set the property glide.http.log_debug to true.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
          * @headerName The request header you want to get the value for.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var header = sm.getRequestHeader("Accept");
          * @returns The value of the specified header.
          */
         getRequestHeader(headerName: String): String;
@@ -6849,6 +10575,9 @@ declare namespace sn_ws {
         /**
          * Get HTTP headers that were set by the REST client and the associated values.This method does not return headers set automatically by the system. To configure this method to return all headers, set the property glide.http.log_debug to true.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var headers = sm.getRequestHeaders();
          * @returns An Object that maps the name of each header to the associated value.
          */
         getRequestHeaders(): Object;
@@ -6859,6 +10588,36 @@ declare namespace sn_ws {
          * @tableName Specify the table that contains the record you want to attach the saved file to.
          * @recordSysId Specify the sys_id of the record you want to attach the saved file to.
          * @fileName Specify the file name to give to the saved file.
+         * @example
+         * (function sampleRESTMessageV2() {
+         *   try{
+         *     var request  = new sn_ws.RESTMessageV2();        
+         *     request.setHttpMethod('get');
+         * 
+         *     var attachment_sys_id  = '&lt;attachment_record_sys_id&gt;', 
+         *       tablename = 'incident',
+         *       recordSysId = '&lt;incident_sys_id&gt;',            
+         *       response,            
+         *       httpResponseStatus,             
+         *       filename ='&lt;filename&gt;';
+         * 
+         *     //endpoint - ServiceNow REST Attachment API        
+         *     request.setEndpoint('https://&lt;instance_name&gt;.service-now.com/api/now/attachment/' + attachment_sys_id  +'/file');        
+         *     request.setBasicAuth('&lt;username&gt;', '&lt;password&gt;');
+         * 
+         *     //RESTMessageV2 - saveResponseBodyAsAttachment(String tableName, String recordSysId, String fileName)        
+         *     request.saveResponseBodyAsAttachment(tablename, recordSysId, filename);        
+         * 
+         *     response = request.execute();        
+         *     httpResponseStatus = response.getStatusCode();  
+         *       
+         *     gs.print(" http response status_code:  " + httpResponseStatus);    
+         *   }
+         *   catch(ex){
+         *     var message  = ex.getMessage();        
+         *     gs.print(message);    
+         *   }
+         * })();
          */
         saveResponseBodyAsAttachment(tableName: String, recordSysId: String, fileName: String);
 
@@ -6877,6 +10636,34 @@ declare namespace sn_ws {
          * 
          * @type The type of authentication profile to use. Valid values are 'basic' to use basic authentication, or 'oauth2' to use OAuth 2.0.
          * @profileId The sys_id of an authentication profile record. When using basic auth, specify the sys_id of a Basic Auth Configuration [sys_auth_profile_basic] record. When using OAuth 2.0, specify the sys_id of a OAuth Entity Profile [oauth_entity_profile] record.
+         * @example
+         * var requestBody;
+         * var responseBody;
+         * var status;
+         * var sm;
+         * try{
+         *        // Might throw exception if message doesn't exist or not visible due to scope.
+         * 	sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;", "get");  
+         * 
+         *        //set auth profile to an OAuth 2.0 profile record.
+         * 	sm.setAuthenticationProfile('oauth2', '1234adsf123212131123qasdsf'); 
+         * 
+         * 	sm.setStringParameter("symbol", "NOW");
+         * 	sm.setStringParameterNoEscape("xml_data","&lt;data&gt;test&lt;/data&gt;");
+         * 
+         *        //In milliseconds. Wait at most 10 seconds for response from http request.
+         * 	sm.setHttpTimeout(10000); 
+         *        //Might throw exception if http connection timed out or some issue 
+         *        //with sending request itself because of encryption/decryption of password.
+         * 	response = sm.execute();	
+         *        responseBody = response.haveError() ? response.getErrorMessage() : response.getBody();
+         * 	status = response.getStatusCode();
+         * } catch(ex) {
+         * 	responseBody = ex.getMessage();
+         * 	status = '500';
+         * } finally {
+         * 	requestBody = sm ? sm.getRequestBody():null;
+         * }
          */
         setAuthenticationProfile(type: String, profileId: String);
 
@@ -6885,6 +10672,9 @@ declare namespace sn_ws {
          * 
          * @userName The username you want to use to authenticate the REST message.
          * @userPass The password for the specified user.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setBasicAuth("username","password");
          */
         setBasicAuth(userName: String, userPass: String);
 
@@ -6892,6 +10682,9 @@ declare namespace sn_ws {
          * Associate outbound requests and the resulting response record in the ECC queue. This method only applies to REST messages sent through a MID Server.The correlator provided populates the Agent correlator field on the ECC queue record for the response. Provide a unique correlator for each outbound request to associate the correct results in the ECC queue with the request when designing asynchronous automation through a MID Server.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
          * @correlator A unique identifier
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setEccCorrelator("unique_identifier");
          */
         setEccCorrelator(correlator: String);
 
@@ -6900,6 +10693,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the parameter, such as source.
          * @value The value to assign to the specified parameter.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setEccParameter("source","http://very.long.endpoint.url");
          */
         setEccParameter(name: String, value: String);
 
@@ -6907,6 +10703,9 @@ declare namespace sn_ws {
          * Set the endpoint for the REST message.By default, the REST message uses the endpoint specified in the REST message record. Use this method to override this default. You must call this method when using the RESTMessageV2 - RESTMessageV2() constructor with no parameters.
          * 
          * @endpoint The URL of the REST provider you want to interface with.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2();
+         * sm.setEndpoint("http://web.service.endpoint");
          */
         setEndpoint(endpoint: String);
 
@@ -6914,6 +10713,9 @@ declare namespace sn_ws {
          * The HTTP method this REST message performs, such as GET or PUT.You must set an HTTP method when using the RESTMessageV2 - RESTMessageV2() constructor with no parameters.
          * 
          * @method The HTTP method to perform.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2();
+         * sm.setHttpMethod("post");
          */
         setHttpMethod(method: String);
 
@@ -6921,6 +10723,9 @@ declare namespace sn_ws {
          * Set the amount of time the REST message waits for a response from the web service provider before the request times out.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
          * @timeoutMs The amount of time, in milliseconds, before the call to the REST provider times out.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setHttpTimeout(6000);
          */
         setHttpTimeout(timeoutMs: Number);
 
@@ -6928,6 +10733,9 @@ declare namespace sn_ws {
          * Set the log level for this message and the corresponding response.Setting a log level using the RESTMessageV2 API overrides the log level configured on the REST message record. This log level may not apply if the endpoint domain is blacklisted, or if the property glide.outbound_http_log.override is true. To view outbound web service logs, navigate to System Logs &gt; Outbound HTTP Requests.
          * 
          * @level The log level. Valid values are basic, elevated, and all.
+         * @example
+         * var rm = new sn_ws.RESTMessageV2();
+         * rm.setLogLevel(‘all’);
          */
         setLogLevel(level: String);
 
@@ -6935,6 +10743,9 @@ declare namespace sn_ws {
          * Configure the REST message to communicate through a MID Server.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
          * @midServer The name of the MID Server to use. Your instance must have an active MID Server with the specified name.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setMIDServer("mid_server_name");
          */
         setMIDServer(midServer: String);
 
@@ -6942,6 +10753,9 @@ declare namespace sn_ws {
          * Set the mutual authentication protocol profile for the REST message.Setting a protocol profile using this method overrides the protocol profile selected for the REST message record.In the following example, replace REST_message_record with the name of the REST message record from your instance.
          * 
          * @profileName The Name of the protocol profile to use for mutual authentication.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setMutualAuth("mutual_auth_profile_name");
          */
         setMutualAuth(profileName: String);
 
@@ -6950,6 +10764,10 @@ declare namespace sn_ws {
          * 
          * @name The name of the URL parameter to pass.
          * @value The value to assign the URL parameter.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2();
+         * //Set up message, including endpoint and authentication
+         * sm.setQueryParameter("sysparm_query","active=true^ORDERBYnumber^ORDERBYDESCcategory");
          */
         setQueryParameter(name: String, value: String);
 
@@ -6957,6 +10775,10 @@ declare namespace sn_ws {
          * Set the body content to send to the web service provider when using PUT or POST HTTP methods.When you set the body content using this method, variables in the body are not substituted for parameters from the REST message function record. You must explicitly define all values within the REST message body.
          * 
          * @body The request body to send.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Update user","post"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var body = "&lt;Message body content&gt;";
+         * sm.setRequestBody(body);
          */
         setRequestBody(body: String);
 
@@ -6964,6 +10786,24 @@ declare namespace sn_ws {
          * Sets the request body using an existing attachment record.When you use this function with a REST message that is sent through a MID server, the MID server user must have any roles required to read attachment records.
          * 
          * @attachmentSysId The sys_id of the Attachment [sys_attachment] record you want to send in this REST message.
+         * @example
+         * (function sampleRESTMessageV2() {
+         *     try {
+         *         var request = new sn_ws.RESTMessageV2();
+         *         request.setHttpMethod('post');
+         *         request.setEndpoint('&lt;web service endpoint URL&gt;');
+         *         request.setRequestBodyFromAttachment('&lt;attachment sys_id&gt;');
+         *         
+         *         var response = request.execute();
+         *         var httpResponseStatus = response.getStatusCode();
+         *       
+         *         gs.print("http response status_code: " + httpResponseStatus);        
+         *     }
+         *     catch (ex) {
+         *         var message = ex.getMessage();
+         *         gs.print(message);
+         *     }
+         * })();
          */
         setRequestBodyFromAttachment(attachmentSysId: String);
 
@@ -6979,6 +10819,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the header.
          * @value The value to assign to the specified header.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setRequestHeader("Accept","Application/json");
          */
         setRequestHeader(name: String, value: String);
 
@@ -6995,6 +10838,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the REST message variable. This parameter must be defined in the REST message record before you can assign a value to it.
          * @value The value to assign the variable.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setStringParameter("s","NOW");
          */
         setStringParameter(name: String, value: String);
 
@@ -7003,6 +10849,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the REST message variable. This parameter must be defined in the REST message record before you can assign a value to it.
          * @value The value to assign the variable.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("&lt;REST_message_record&gt;","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setStringParameterNoEscape("s","NOW");
          */
         setStringParameterNoEscape(name: String, value: String);
 
@@ -7023,6 +10872,13 @@ declare namespace sn_ws {
         /**
          * Return all headers contained in the response, including any duplicate headers.
          * 
+         * @example
+         * var r = new sn_ws.RESTMessageV2('&lt;A REST message&gt;', 'get');
+         * var response = r.execute();
+         * var headers = response.getAllHeaders();
+         * for(var i in headers){
+         *   gs.print(headers[i].name + ': ' + headers[i].value);
+         * }
          * @returns The list of headers contained in the response. Each header is represented as a GlideHTTPHeader object which contains the header name and value.
          */
         getAllHeaders(): List<GlideHTTPHeader>;
@@ -7030,12 +10886,23 @@ declare namespace sn_ws {
         /**
          * Get the content of the REST response body.Use this function when you want to get the request body as text content. Do not use this method when saving the response as a binary attachment. If a RESTMessageV2 object called the saveResponseBodyAsAttachment(...) function, using getBody() on the associated RESTResponseV2 object will cause an error. When saving the response as an attachment, if the outbound REST message fails, call getErrorMessage() on the response to retrieve the body content.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var responseBody = response.getBody();
          * @returns The REST response body.
          */
         getBody(): String;
 
         /**
          * Returns all cookies included in the response.
+         * 
+         * @example
+         * var cookies = response.getCookies();
+         * var i;
+         * for(i=0;i&lt;cookies.size();i++) {
+         *    gs.print(‘cookie: ‘ + cookies.get(i));
+         * }
          * 
          * @returns The list of cookies. Iterate through the list to perform operations on each cookie.
          */
@@ -7044,6 +10911,10 @@ declare namespace sn_ws {
         /**
          * Get the numeric error code if there was an error during the REST transaction.This error code is specific to the Now Platform, it is not an HTTP error code. Provide this error code if you require assistance from ServiceNow Customer Support
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var errorCode = response.getErrorCode();
          * @returns The numeric error code, such as 1 for socket timeout.
          */
         getErrorCode(): Number;
@@ -7051,6 +10922,10 @@ declare namespace sn_ws {
         /**
          * Get the error message if there was an error during the REST transaction.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var errorMsg = response.getErrorMessage();
          * @returns The error message.
          */
         getErrorMessage(): String;
@@ -7059,6 +10934,10 @@ declare namespace sn_ws {
          * Get the value for a specified header.
          * 
          * @name The name of the header that you want the value for, such as Set-Cookie.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var headerVal = response.getHeader("Content-Type");
          * @returns The value of the specified header.
          */
         getHeader(name: String): String;
@@ -7066,6 +10945,10 @@ declare namespace sn_ws {
         /**
          * Get all headers returned in the REST response and the associated values.Note: If a header is present more than once in the response, such as a Set-Cookie header, this function returns only the last of the duplicate headers. To return all headers including duplicates, use the getAllHeaders() function.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var headers = response.getHeaders();
          * @returns An Object that maps the name of each header to the associated value.
          */
         getHeaders(): Object;
@@ -7073,6 +10956,10 @@ declare namespace sn_ws {
         /**
          * Get the fully-resolved query sent to the REST endpoint..This query contains the endpoint URL as well as any values assigned to variables in the REST message. Use this method only with responses to direct requests. This method is not supported for requests sent asynchronously, or requests sent using a MID server.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var queryString = response.getQueryString();
          * @returns The fully-resolved query.
          */
         getQueryString(): String;
@@ -7087,6 +10974,10 @@ declare namespace sn_ws {
         /**
          * Get the numeric HTTP status code returned by the REST provider.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var statusCode = response.getStatusCode();
          * @returns The numeric status code returned by the REST provider, such as 200 for a successful response.
          */
         getStatusCode(): Number;
@@ -7094,6 +10985,10 @@ declare namespace sn_ws {
         /**
          * Indicate if there was an error during the REST transaction.
          * 
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute();
+         * var error = response.haveError();
          * @returns Returns true if there was an error, false if there was no error.
          */
         haveError(): boolean;
@@ -7102,6 +10997,10 @@ declare namespace sn_ws {
          * Set the amount of time the instance waits for a response from the web service provider.This method overrides the property glide.rest.outbound.ecc_response.timeout for this REST response.
          * 
          * @timeoutSecs The amount of time, in seconds, to wait for this response.
+         * @example
+         * var sm = new sn_ws.RESTMessageV2("Yahoo Finance","get"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.executeAsync();
+         * response.waitForResponse(60);
          */
         waitForResponse(timeoutSecs: Number);
 
@@ -7123,12 +11022,16 @@ declare namespace sn_nlp_sentiment {
          * Creates an instance of the SentimentAnalyser class with the specified connector configuration that is used for sentiment analysis.
          * 
          * @configGR GlideRecord object of a connector configuration
+         * @example
+         * var sa = new sn_nlp_sentiment.SentimentAnalyser(configGR);
          */
         constructor(configGR: GlideRecord);
 
         /**
          * Creates an instance of the SentimentAnalyser class with the default connector configuration that is used for sentiment analysis.
          * 
+         * @example
+         * var sa = new sn_nlp_sentiment.SentimentAnalyser();
          */
         constructor();
 
@@ -7136,6 +11039,10 @@ declare namespace sn_nlp_sentiment {
          * Performs sentiment analysis on the specified text.
          * 
          * @inputText Text on which sentiment analysis should be performed.
+         * @example
+         * 
+         *         var sa = new sn_nlp_sentiment.SentimentAnalyser();
+         *         var result = sa.analyze ("Example string");
          * @returns Result of the sentiment analysis specifying the status, score, normalised score, sys_id of the relevant connector configuration, and error message.
          */
         analyze(inputText: String): JSONobject;
@@ -7144,6 +11051,10 @@ declare namespace sn_nlp_sentiment {
          * Performs sentiment analysis on an array of strings.
          * 
          * @inputTextArray Array of text (string) on which sentiment analysis should be performed.
+         * @example
+         * 
+         *         var sa = new sn_nlp_sentiment.SentimentAnalyser();
+         *         var result = sa.analyzeMultiple (["Example string1","Example string2"]);
          * @returns An array that gives the result of the sentiment analysis performed on multiple texts specifying the status, score, normalized score, sys_id of the relevant connector configuration, and error message.
          */
         analyzeMultiple(inputTextArray: Array<any>): JSONArray;
@@ -7153,6 +11064,10 @@ declare namespace sn_nlp_sentiment {
          * 
          * @inputTextArray Array of text (string) on which sentiment analysis should be performed.
          * @language Language for the input text. This can very for different sentiment services.
+         * @example
+         * 
+         *         var sa = new sn_nlp_sentiment.SentimentAnalyser();
+         *         var result = sa.analyzeMultipleWithLanguage (["Example string1","Example string2"], "en");
          * @returns An array with the result of the sentiment analysis performed on multiple texts of the mentioned language, specifying the status, score, normalized score, sys_id of the relevant connector configuration, and error message.
          */
         analyzeMultipleWithLanguage(inputTextArray: Array<any>, language: String): JSONArray;
@@ -7162,6 +11077,10 @@ declare namespace sn_nlp_sentiment {
          * 
          * @inputText Text on which sentiment analysis should be performed.
          * @language Language for the input text. This can very for different sentiment services.
+         * @example
+         * 
+         *         var sa = new sn_nlp_sentiment.SentimentAnalyser();
+         *         var result = sa.analyze ("Example string", "en");
          * @returns Result of the sentiment analysis specifying the status, score, normalized score, sys_id of the relevant connector configuration, and error message.
          */
         analyzeWithLanguage(inputText: String, language: String): JSONobject;
@@ -7170,6 +11089,10 @@ declare namespace sn_nlp_sentiment {
          * Returns the GlideRecord of the specified connector configuration.
          * 
          * @connectorName Name of the connector configuration.
+         * @example
+         * 
+         *       var sa = new sn_nlp_sentiment.SentimentAnalyser();
+         *       var connector = sa.getConnectorByName("xxx");
          * @returns GlideRecord of the specified connector configuration.
          */
         getConnectorByName(connectorName: String): GlideRecordobject;
@@ -7177,6 +11100,10 @@ declare namespace sn_nlp_sentiment {
         /**
          * Returns the GlideRecord of the default connector configuration.
          * 
+         * @example
+         * 
+         *         var sa = new sn_nlp_sentiment.SentimentAnalyser();
+         *         var defaultConnector = sa.getDefaultConnector();
          * @returns GlideRecord of the default connector configuration.
          */
         getDefaultConnector(): GlideRecordobject;
@@ -7200,18 +11127,25 @@ declare namespace sn_ws {
          * 
          * @soapMessage The SOAP message record you want to use as the base for this object.
          * @soapFunction The SOAP function you want to execute. Available SOAP functions depend on the WSDL supplied by the web service provider.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
          */
         constructor(soapMessage: String, soapFunction: String);
 
         /**
          * Instantiates an empty SOAPMessageV2 object.When using an object instantiated this way, you must manually specify a SOAP action and endpoint.
          * 
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2();
          */
         constructor();
 
         /**
          * Send the SOAP message to the endpoint.
          * 
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.execute(); //Might throw exception if http connection timed out or some issue with sending request itself because of encryption/decryption of password.
          * @returns The response returned by the SOAP provider.
          */
         execute(): sn_ws.SOAPResponseV2;
@@ -7219,6 +11153,9 @@ declare namespace sn_ws {
         /**
          * Send the SOAP message to the ECC queue.SOAP messages in the ECC queue are processed by the SOAPClient business rule.By default, this business rule does not run asynchronously. To configure this business rule to run asynchronously, set the When value to Async and add current.update() to the end of the Script. The instance does not wait for a response from the web service provider when sending a message through the ECC queue.
          * 
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var response = sm.executeAsync();
          * @returns The response returned by the SOAP provider.Note: Attempting to use the SOAP response object before the response has been processed may result in a timeout error.
          */
         executeAsync(): sn_ws.SOAPResponseV2;
@@ -7226,6 +11163,9 @@ declare namespace sn_ws {
         /**
          * Get the endpoint for the SOAP message.
          * 
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var endpoint = sm.getEndpoint();
          * @returns The URL of the SOAP web service provider.
          */
         getEndpoint(): String;
@@ -7233,6 +11173,10 @@ declare namespace sn_ws {
         /**
          * Get the content of the SOAP message body.
          * 
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.execute();
+         * var requestBody = sm.getRequestBody();
          * @returns The SOAP message body.
          */
         getRequestBody(): String;
@@ -7241,6 +11185,9 @@ declare namespace sn_ws {
          * Get the value for an HTTP header specified by the SOAP client.By default, this method cannot return the value for a header set automatically by the system. To grant this method access to all headers, set the property glide.http.log_debug to true.
          * 
          * @headerName The request header you want to get the value for.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var header = sm.getRequestHeader("Accept");
          * @returns The value of the specified header.
          */
         getRequestHeader(headerName: String): String;
@@ -7248,6 +11195,9 @@ declare namespace sn_ws {
         /**
          * Get HTTP headers that were set by the SOAP client and the associated values.This method does not return headers set automatically by the system. To configure this method to return all headers, set the property glide.http.log_debug to true.
          * 
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var requestHeaders = sm.getRequestHeaders();
          * @returns An Object that maps the name of each header to the associated value.
          */
         getRequestHeaders(): Object;
@@ -7257,6 +11207,9 @@ declare namespace sn_ws {
          * 
          * @userName The username to use when authenticating the SOAP message.
          * @userPass The password for the specified user.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setBasicAuth("username","password");
          */
         setBasicAuth(userName: String, userPass: String);
 
@@ -7264,6 +11217,9 @@ declare namespace sn_ws {
          * Associate outbound requests and the resulting response record in the ECC queue.This method only applies to SOAP messages sent through a MID Server. The correlator provided populates the Agent correlator field on the ECC queue record for the response. Provide a unique correlator for each outbound request to associate the correct results in the ECC queue with the request when designing asynchronous automation through a MID Server.
          * 
          * @correlator A unique identifier.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setEccCorrelator("unique_id");
          */
         setEccCorrelator(correlator: String);
 
@@ -7272,6 +11228,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the ECC parameter.
          * @value The value to assign to the specified ECC parameter.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setEccParameter("source","http://very.long.endpoint");
          */
         setEccParameter(name: String, value: String);
 
@@ -7279,6 +11238,9 @@ declare namespace sn_ws {
          * Set the endpoint for the SOAP message.By default, the SOAP message uses the endpoint specified in the SOAP message record. Use this method to override the default. You must call this method when using the SOAPMessageV2() constructor with no parameters.
          * 
          * @endpoint The URL of the SOAP web service provider you want to interface with.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2();
+         * sm.setEndpoint("http://web.service.endpoint");
          */
         setEndpoint(endpoint: String);
 
@@ -7286,6 +11248,9 @@ declare namespace sn_ws {
          * Set the amount of time the SOAP message waits for a response from the web service provider before the request times out.
          * 
          * @timeoutMs The amount of time to wait for a response from the web service provider, in milliseconds.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setHttpTimeout(6000);
          */
         setHttpTimeout(timeoutMs: Number);
 
@@ -7307,6 +11272,9 @@ declare namespace sn_ws {
          * Set the mutual authentication protocol profile for the SOAP message.Setting a protocol profile using this method overrides the protocol profile selected for the SOAP message record.
          * 
          * @profileName The name of the protocol profile to use for mutual authentication.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setMutualAuth("auth_profile_name");
          */
         setMutualAuth(profileName: String);
 
@@ -7314,6 +11282,10 @@ declare namespace sn_ws {
          * Set the body content to send to the web service provider.When you set the body content using this method, variables in the body are not substituted for parameters from the SOAP message function record. You must explicitly define all values within the SOAP message body.
          * 
          * @requestBody The body of the SOAP message.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * var body = "&lt;SOAP message body&gt;";
+         * sm.setRequestBody(body);
          */
         setRequestBody(requestBody: String);
 
@@ -7322,6 +11294,9 @@ declare namespace sn_ws {
          * 
          * @headerName The name of the header.
          * @headerValue The value to assign to the specified header.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setRequestHeader("Accept","Application/json");
          */
         setRequestHeader(headerName: String, headerValue: String);
 
@@ -7329,6 +11304,11 @@ declare namespace sn_ws {
          * Define the SOAP action this SOAP message performs.The WSDL for your web service provider lists SOAP actions you can perform. You must call this method when using the SOAPMessageV2() constructor with no parameters.
          * 
          * @soapAction The SOAP action this SOAP message performs.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2();
+         * sm.setSOAPAction("GetQuote");
+         * //construct SOAP message by specifying endpoint and auth
+         * sm.execute();
          */
         setSOAPAction(soapAction: String);
 
@@ -7337,6 +11317,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the SOAP message variable.
          * @value The value to assign to the specified variable.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setStringParameter("symbol","NOW");
          */
         setStringParameter(name: String, value: String);
 
@@ -7345,6 +11328,9 @@ declare namespace sn_ws {
          * 
          * @name The name of the SOAP message variable.
          * @value The value to assign to the specified variable.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setStringParameterNoEscape("symbol","NOW");
          */
         setStringParameterNoEscape(name: String, value: String);
 
@@ -7355,6 +11341,9 @@ declare namespace sn_ws {
          * @keystoreAlias The alias that identifies the public and private keys.
          * @keystorePassword The password assigned to the key store record.
          * @certificateId The sys_id of the trusted server certificate.
+         * @example
+         * var sm = new sn_ws.SOAPMessageV2("StockQuote","GetQuote"); //Might throw exception if message doesn't exist or not visible due to scope.
+         * sm.setWSSecurity("70d65e074f3812001f6eac118110c71a","Quote keys","UXr82cqX75Z7MaSa+EyjGA==","ba969a074f3812001f6eac118110c76d");
          */
         setWSSecurity(keystoreId: String, keystoreAlias: String, keystorePassword: String, certificateId: String);
 
@@ -7375,6 +11364,13 @@ declare namespace sn_ws {
         /**
          * Return all headers contained in the response, including any duplicate headers.
          * 
+         * @example
+         * var r = new sn_ws.SOAPMessageV2('&lt;A SOAP message&gt;', 'get');
+         * var response = r.execute();
+         * var headers = response.getAllHeaders();
+         * for(var i in headers){
+         *   gs.print(headers[i].name + ': ' + headers[i].value);
+         * }
          * @returns The list of headers contained in the response. Each header is represented as a GlideHTTPHeader object which contains the header name and value.
          */
         getAllHeaders(): List<GlideHTTPHeader>;
@@ -7382,6 +11378,8 @@ declare namespace sn_ws {
         /**
          * Get the content of the SOAP response body.
          * 
+         * @example
+         * var body = response.getBody();
          * @returns The SOAP response body.
          */
         getBody(): String;
@@ -7389,6 +11387,12 @@ declare namespace sn_ws {
         /**
          * Returns all cookies included in the response.
          * 
+         * @example
+         * var cookies = response.getCookies();
+         * var i;
+         * for(i=0;i&lt;cookies.size();i++) {
+         *    gs.print(‘cookie: ‘ + cookies.get(i));
+         * }
          * @returns The list of cookies. Iterate through the list to perform operations on each cookie.
          */
         getCookies(): Object;
@@ -7396,6 +11400,8 @@ declare namespace sn_ws {
         /**
          * Get the numeric error code if there was an error during the SOAP transaction.This error code is specific to the Now Platform, it is not an HTTP error code. Provide this error code if you require assistance from ServiceNow Customer Support.
          * 
+         * @example
+         * var errorCode = response.getErrorCode();
          * @returns The numeric error code, such as 1 for a socket timeout.
          */
         getErrorCode(): Number;
@@ -7403,6 +11409,8 @@ declare namespace sn_ws {
         /**
          * Get the error message if there was an error during the SOAP transaction.
          * 
+         * @example
+         * var errorMsg = response.getErrorMessage();
          * @returns The error message.
          */
         getErrorMessage(): String;
@@ -7411,6 +11419,8 @@ declare namespace sn_ws {
          * Get the value for a specified HTTP header.
          * 
          * @name The name of the header that you want the value for, such as Set-Cookie.
+         * @example
+         * var headerVal = response.getHeader("Accept");
          * @returns The value of the specified header.
          */
         getHeader(name: String): String;
@@ -7418,6 +11428,8 @@ declare namespace sn_ws {
         /**
          * Get all HTTP headers returned in the SOAP response and the associated values.Note: If a header is present more than once in the response, such as a Set-Cookie header, this function returns only the last of the duplicate headers. To return all headers including duplicates, use the getAllHeaders() function.
          * 
+         * @example
+         * var headers = response.getHeaders();
          * @returns An Object that maps the name of each header to the associated value.
          */
         getHeaders(): Object;
@@ -7425,6 +11437,8 @@ declare namespace sn_ws {
         /**
          * Get the numeric HTTP status code returned by the SOAP provider.
          * 
+         * @example
+         * var statusCode = response.getStatusCode();
          * @returns The numeric status code returned by the SOAP provider, such as 200 for a successful response.
          */
         getStatusCode(): Number;
@@ -7432,6 +11446,8 @@ declare namespace sn_ws {
         /**
          * Indicate if there was an error during the SOAP transaction.
          * 
+         * @example
+         * var error = response.haveError();
          * @returns Returns true if there was an error, false if there was no error.
          */
         haveError(): boolean;
@@ -7440,6 +11456,8 @@ declare namespace sn_ws {
          * Set the amount of time the instance waits for a response from the web service provider.This method overrides the property glide.soap.outbound.ecc_response.timeout for this SOAP response.
          * 
          * @timeoutSecs The amount of time, in seconds, to wait for this response.
+         * @example
+         * response.waitForResponse(60);
          */
         waitForResponse(timeoutSecs: Number);
 
@@ -7459,6 +11477,46 @@ declare class SPScriptedFacet {
      * 
      * @label The display label for the facet item or mapped query.
      * @valueObj The facet item or mapped query for the facet. Can only contain types String, Number, Boolean, and Double.
+     * @example
+     * (function(query, facetService, searchResults, facets) {
+     * 	// Calculate your facets here using facetService 
+     * 	// var stateFacet = facetService.createFacet('State', 'state'); 
+     * 	// stateFacet.addFacetItem('Facet Item Label', '123'); 
+     * 
+     * 	createCreatedFacet();
+     * 	
+     * 	function createCreatedFacet() {
+     * 		if (!facets.created &amp;&amp; searchResults.length == 0)
+     * 			return;
+     * 		
+     * 		var gr = new GlideAggregate("incident");
+     * 		gr.addQuery("123TEXTQUERY321", query);
+     * 		if (facets.created) {
+     * 			if (facets.created == "today") {	
+     * gr.addEncodedQuery("sys_created_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()");
+     * 			}
+     * 			if (facets.created == "before") {
+     * 				gr.addEncodedQuery("sys_created_on&lt;javascript:gs.beginningOfToday()");
+     * 			}
+     * 		}
+     * 		gr.query();
+     * 		
+     * 		var queryMap = {
+     * 			today: "Today",
+     * 			before: "Before Today"
+     * 		};
+     * 
+     * 		var createdFacet = facetService.createFacet("Created", "created");
+     * 		if (facets.created) {
+     * 			createdFacet.addFacetItem(queryMap[facets.created], facets.created);
+     * 		} else {
+     * 			createdFacet.addFacetItem(queryMap.today, "today");
+     * 			createdFacet.addFacetItem(queryMap.before, "before");
+     * 		}
+     * 	}
+     * 	
+     * })(query, facetService, searchResults, facets);
+     * 
      */
     addFacetItem(label: String, valueObj: Object);
 
@@ -7478,6 +11536,8 @@ declare class SPScriptedFacetService {
      * 
      * @label Label for the facet.
      * @id ID for the facet.
+     * @example
+     * var stateFacet = facetService.createFacet("State", "state");
      * @returns Single choice facets object. Returns an error when: A duplicate label or ID is found. A label or ID is not defined. 
      */
     createFacet(label: String, id: String): Object;
@@ -7487,6 +11547,8 @@ declare class SPScriptedFacetService {
      * 
      * @label Label for the facet.
      * @id ID for the facet.
+     * @example
+     * var stateFacet = facetService.createMultiChoiceFacet("State", "state");
      * @returns Multi choice facets object. Returns an error when: A duplicate label or ID is found. A label or ID is not defined. 
      */
     createMultiChoiceFacet(label: String, id: String): Object;
@@ -7515,6 +11577,14 @@ declare namespace sn_cc {
          * This function retrieves a credential object identified by the given sys ID.
          * 
          * @sysID A string representing the sys ID of the credential record.
+         * @example
+         * var provider = new sn_cc.StandardCredentialsProvider();
+         *          var credentials = provider.getCredentials(["ssh"]);
+         *          for (var i = 0; i &lt; credentials.length; i++) {
+         *       	var credential = credentials[i];
+         *              gs.info(credential.getAttribute("name"));
+         *       }
+         * 
          * @returns A credential.
          */
         getCredentialByID(sysID: String): StandardCredential;
@@ -7524,6 +11594,14 @@ declare namespace sn_cc {
          * 
          * @types Types is an array of credential type names. For example, ["ssh", "windows"]Note: If types are null or empty, any match returns a credential. If types are specified, the credentials whose type matches one of the types returns.
          * @handles Handles is a comma-separated list of handle names. For example, "ssh,jdbc"
+         * @example
+         * var provider = new sn_cc.StandardCredentialsProvider();
+         *          var credentials = provider.getCredentials(["ssh"]);
+         *          for (var i = 0; i &lt; credentials.length; i++) {
+         *       	var credential = credentials[i];
+         *              gs.info(credential.getAttribute("name"));
+         *       }
+         * 
          * @returns Information about the ConnInfo...
          */
         getCredentials(types: String, handles: String): StandardCredential;
@@ -7547,6 +11625,29 @@ declare namespace sn_fd {
          * 
          * @scopeNamesubflowName The application scope for the subflow and the internal name of the subflow to run. If scopeName is not included, the scope of the user currently logged in is used. Retrieve the internal name of the subflow using the Internal name column on the Flow Designer landing page.
          * @inputs Name-value pairs that define subflow inputs. If a subflow includes mandatory inputs, they must be included. For inputs of Reference or Document ID field types, use a GlideRecord object as the value.
+         * @example
+         * //Run a subflow that takes two inputs: user, a sys_user record, and laptop_welcome_message, a string.
+         * (function startSubflowAsync() {
+         * 
+         * 	try {
+         * 		var userToProvisionFor = new GlideRecord('sys_user');
+         * 		userToProvisionFor.get('62826bf03710200044e0bfc8bcbe5df1');
+         * 
+         * 		var inputs = {};
+         * 		inputs['user'] = userToProvisionFor;
+         * 		inputs['laptop_welcome_message'] = 'Welcome Onboard!!';
+         * 
+         * 		var result = sn_fd.Subflow.startAsync('sn_devstudio.provisionlaptop', inputs);
+         * 
+         * 		//The Sys ID of a flow execution (contextId)
+         * 		var contextId = result.contextId;
+         * 
+         * 	} catch (ex) {
+         * 		var message = ex.getMessage();
+         * 		gs.error(message);
+         * 	}
+         * 
+         * })();
          * @returns PlanResponse object containing the following properties: contextId: sys_id of the execution details record for the executed subflow. Access the execution details by navigating to the Flow Executions tab in Flow Designer and filtering by sys_id. An exception occurs when the subflow: Does not exist within the specified application scope, or the subflow or scope name has been misspelled. Is not published. Is passed an input object that does not match the subflow inputs. Exceeds the recursion limit set by the com.glide.hub.flow_engine.indirect_recursion_limit system property. The default value is three. 
          */
         startAsync(scopeNamesubflowName: String, inputs: Object): Object;
@@ -7566,6 +11667,8 @@ declare class TemplatePrinter {
      * Prints the string to the email body.
      * 
      * @string The string to print
+     * @example
+     * template.print("Incident number - " + current.number + "\n");
      */
     print(string: String);
 
@@ -7573,6 +11676,8 @@ declare class TemplatePrinter {
      * Adds non-breaking spaces to the email body.
      * 
      * @spaces The number of non-breaking spaces to output to the email body.
+     * @example
+     * template.space(4);
      */
     space(spaces: Number);
 
@@ -7594,6 +11699,10 @@ declare namespace sn_clotho {
          * Create a Transformer object.
          * 
          * @sourceRecords Contains the records for which metrics are to be evaluated. Can be one record or many.
+         * @example
+         * //where drones is a GlideRecord created from a table with a metric field
+         * 	var builder = new sn_clotho.Transformer(drones);
+         * 
          */
         constructor(sourceRecords: GlideRecord);
 
@@ -7602,6 +11711,22 @@ declare namespace sn_clotho {
          * 
          * @start The beginning of the period to be evaluated.
          * @end The end of the period to be evaluated.
+         * @example
+         * var minutesAgoStart = 60;
+         * 	var end = new GlideDateTime();
+         * 	var start = new GlideDateTime(end);
+         * 	start.addSeconds(-1 * 60 * minutesAgoStart);
+         * 	
+         * 	// query subject records
+         * 	var grDrone = new GlideRecord('mb_demo_drone');
+         * 	grDrone.query();
+         * 	
+         * 	// building transform; get the average transforms of a metric, grouping by model
+         * 	var transformer = new sn_clotho.Transformer(grDrone);
+         * 	transformer.groupBy("fleet").metric("mb_demo_mt_altitude").avg().label('avg - %g:fleet:');
+         * 
+         * 	// execute and return result for visualization
+         * 	var tfrmResult = transformer.execute(start, end);
          * @returns The transformed data.
          */
         execute(start: GlideDateTime, end: GlideDateTime): sn_clotho.TransformResult;
@@ -7610,6 +11735,9 @@ declare namespace sn_clotho {
          * Specify a field to be used to group the data.If you are going to use the groupBy() method, it must be called before the execute() method.
          * 
          * @field A field in the table to be used to group the transform results.
+         * @example
+         * var transformer = new sn_clotho.Transformer(grDrone);
+         * 	var trnsfrm = transformer.groupBy("fleet");
          * @returns A TransformPart object that can be used to specify the transform characteristics.
          */
         groupBy(field: String): sn_clotho.TransformPart;
@@ -7618,6 +11746,9 @@ declare namespace sn_clotho {
          * Specify the metric field to be used in the transform.You can specify multiple metrics to be used in the transform. The metric() method cannot be called after the execute() method is called.
          * 
          * @metricName Name of the metric field.
+         * @example
+         * var transformer = new sn_clotho.Transformer(grDrone);
+         * var trnsfrm = transformer.metric("mb_demo_mt_altitude");
          * @returns A TransformPart object that can be used to specify the transform characteristics.
          */
         metric(metricName: String): sn_clotho.TransformPart;
@@ -7710,6 +11841,14 @@ declare namespace sn_clotho {
          * Create series made up of the value that the specified percentage of values is below. Returns a series for each fraction in the specified array.The value in a time stamp in a returned series is the value at which the specified fraction of the samples for that time stamp is below. For example, if the fraction is 0.5, then the value in the time stamp is the value where half the values in the input series are below (median).
          * 
          * @fractions The fractions to use on the input series.
+         * @example
+         * // returns a single series containing the median for each time stamp, which
+         * // means that half a time stamp's values are below the returned value 
+         * fractiles([.5]) 
+         * // returns four series, one series for each of the 25%, 50%, 75%, and 100% quartiles 
+         * fractiles([.25, .5, .75, 1])
+         * // returns the median, 95% percentile, the max value
+         * fractiles([.50, .95, 1]) 
          * @returns A TransformPart object that can be used to specify transform characteristics. Contains one series for each fraction specified.
          */
         fractiles(fractions: Arrayofnumbers): sn_clotho.TransformPart;
@@ -7717,6 +11856,12 @@ declare namespace sn_clotho {
         /**
          * Return the part of the result relevant to this transform.The collect() method must be called before the execute() method, and the execute() method must be called before calling the getResult() method.
          * 
+         * @example
+         * var t = new sn_clotho.Transformer(drones);
+         * t.metric("mb_demo_mt_altitude");
+         * var avgTform = t.avg();
+         * t.execute();
+         * var avgTformResult = avgTform.getResult();
          * @returns Contains the transform results associated with this part of the transform.
          */
         getResult(): sn_clotho.TransformResult;
@@ -7949,12 +12094,16 @@ declare namespace sn_uc {
          * Creates an instance of the UserCriteria class with the specified sys_id.
          * 
          * @sys_id sys_id of the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria("31bea3d53790200044e0bfc8bcbe5dec");
          */
         constructor(sys_id: String);
 
         /**
          * Creates an instance of the UserCriteria class.
          * 
+         * @example
+         * var uc = new sn_uc.UserCriteria();
          */
         constructor();
 
@@ -7963,6 +12112,15 @@ declare namespace sn_uc {
          * 
          * @columnValues Key and value pairs for a column and its value.
          * @standardUpdate Set to true to enable the running of engines and workflow.
+         * @example
+         * 
+         * var uc = new sn_uc.UserCriteria(); 
+         * uc.setCompanies("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89”);
+         * uc.setActive(true); 
+         * uc.setUsers("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89");
+         * var UserCriteriaId = UserCriteria.create();
+         * gs.info(UserCriteriaId);
+         * 
          * @returns sys_id of the created user criteria.
          */
         create(columnValues: Object, standardUpdate: Boolean): String;
@@ -7970,6 +12128,9 @@ declare namespace sn_uc {
         /**
          * Deletes the current user criteria.
          * 
+         * @example
+         * var uc = new sn_uc.UserCriteria("31bea3d53790200044e0bfc8bcbe5dec");
+         * uc.deleteRecord();
          * @returns If true, the user criteria is deleted.If false, no user criteria is found to delete.
          */
         deleteRecord(): Boolean;
@@ -7978,6 +12139,9 @@ declare namespace sn_uc {
          * Displays the mapping for the attribute and value pairs of the catalog item.
          * 
          * @columns Array of catalog item attributes.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.read({"name", "applies_to"});
          * @returns Mapping for the attribute and value pairs of the catalog item.
          */
         read(columns: String): Object;
@@ -7986,6 +12150,10 @@ declare namespace sn_uc {
          * Specifies if the user criteria is active.
          * 
          * @active If true, the user criteria is active. If false, the user criteria is inactive.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setActive(true); 
+         * 
          */
         setActive(active: Boolean);
 
@@ -7993,6 +12161,10 @@ declare namespace sn_uc {
          * Specifies if the user criteria has an advanced script.
          * 
          * @advanced If true, the user criteria has an advanced script.If false, the user criteria does not have an advanced script.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setAdvanced(true); 
+         * 
          */
         setAdvanced(advanced: Boolean);
 
@@ -8000,6 +12172,10 @@ declare namespace sn_uc {
          * Sets the company property for the user criteria.
          * 
          * @companies Comma-separated list of the company sys_ids to be set for the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setCompanies("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89"); 
+         * 
          */
         setCompanies(companies: String);
 
@@ -8007,6 +12183,10 @@ declare namespace sn_uc {
          * Sets the department property for the user criteria.
          * 
          * @departments Comma-separated list of the department sys_ids to be set for the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setDepartments("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89"); 
+         * 
          */
         setDepartments(departments: String);
 
@@ -8014,6 +12194,10 @@ declare namespace sn_uc {
          * Sets the group property for the user criteria.
          * 
          * @groups Comma-separated list of the group sys_ids to be set for the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setGroups("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89"); 
+         * 
          */
         setGroups(groups: String);
 
@@ -8021,11 +12205,19 @@ declare namespace sn_uc {
          * Sets the location property for the user criteria.
          * 
          * @locations Comma-separated list of the location sys_ids to be set for the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setLocations("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89"); 
+         * 
          */
         setLocations(locations: String);
 
         /**
          * Sets the match_all property for the user criteria.
+         * 
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setMatchAll(true); 
          * 
          */
         setMatchAll();
@@ -8034,6 +12226,10 @@ declare namespace sn_uc {
          * Sets the name property for the user criteria.
          * 
          * @name Name of the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setName("Property1"); 
+         * 
          */
         setName(name: String);
 
@@ -8041,6 +12237,10 @@ declare namespace sn_uc {
          * Sets the role property for the user criteria.
          * 
          * @roles Comma-separated list of the role sys_ids to be set for the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setRoles("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89"); 
+         * 
          */
         setRoles(roles: String);
 
@@ -8048,6 +12248,18 @@ declare namespace sn_uc {
          * Sets the script for the user criteria.
          * 
          * @script Script to be set for the advanced user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setScript("function scriptTest() {
+         *   var retVal;
+         *   if (gs.getUser().getRecord().getDisplayValue('department') == 'Product Management') {
+         *       retVal = true;
+         *   } else {
+         *       retVal = false;
+         *   }
+         *   return retVal;
+         * }"); 
+         * 
          */
         setScript(script: String);
 
@@ -8055,6 +12267,10 @@ declare namespace sn_uc {
          * Sets the user property for the user criteria.
          * 
          * @users Comma-separated list of the user sys_ids to be set for the user criteria.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.setUsers("31bea3d53790200044e0bfc8bcbe5dec,0c441abbc6112275000025157c651c89"); 
+         * 
          */
         setUsers(users: String);
 
@@ -8063,6 +12279,10 @@ declare namespace sn_uc {
          * 
          * @columnValues Mapping for the column name and the value pairs.
          * @reason Reason for updating the catalog item.
+         * @example
+         * var uc = new sn_uc.UserCriteria();
+         * uc.update("name": "Updated name", "The existing name is not relevant. Setting a relevant name"); 
+         * 
          * @returns Returns the sys_id of the created user criteria.
          */
         update(columnValues: Object, reason: String): String;
@@ -8084,6 +12304,9 @@ declare namespace sn_uc {
         /**
          * Returns all user criteria associated with the logged in user.
          * 
+         * @example
+         * var result = new sn_uc.UserCriteriaLoader.getAllUserCriteria();
+         * gs.info(result);
          * @returns An array list containing the sys_ids of the user criteria associated with the user.
          */
         getAllUserCriteria(): ArrayList<String>;
@@ -8092,6 +12315,9 @@ declare namespace sn_uc {
          * Returns all user criteria associated with the specified user.
          * 
          * @userId sys_id of the user.
+         * @example
+         * var result = new sn_uc.UserCriteriaLoader.getAllUserCriteria('62826bf03710200044e0bfc8bcbe5df1');
+         * gs.log(result);
          * @returns An array list containing the sys_ids of the user criteria associated with the specified user.
          */
         getAllUserCriteria(userId: String): ArrayList<String>;
@@ -8100,6 +12326,9 @@ declare namespace sn_uc {
          * Returns the user criteria associated with the specified linkTable for the logged in user.
          * 
          * @linkTable Mtom link table between the record and the Available For or Not Available For User Criteria.
+         * @example
+         * var result = new sn_uc.UserCriteriaLoader.getUserCriteria('sc_cat_item_user_criteria_mtom');
+         * gs.log(result);
          * @returns An array list containing the sys_id of the user criteria associated with the logged in user for the specified link table.
          */
         getUserCriteria(linkTable: String): ArrayList<String>;
@@ -8109,6 +12338,10 @@ declare namespace sn_uc {
          * 
          * @userId sys_id of the user.
          * @linkTable Mtom link table between the record and the Available For or Not Available For User Criteria.
+         * @example
+         * var result = new sn_uc.UserCriteriaLoader.getUserCriteria('62826bf03710200044e0bfc8bcbe5df1',             
+         * 'sc_cat_item_user_criteria_mtom');
+         * gs.log(result);
          * @returns An array list containing the sys_id of the user criteria associated with the specified user and link table.
          */
         getUserCriteria(userId: String, linkTable: String): ArrayList<String>;
@@ -8130,12 +12363,19 @@ declare namespace sn_sc {
         /**
          * Creates an instance of the VariablePoolQuestionSet class.
          * 
+         * @example
+         * var variablePool=new sn_sc.VariablePoolQuestionSetJS();
          */
         constructor();
 
         /**
          * Returns the array of questions associated with the cart item ids specified.
          * 
+         * @example
+         * var cart=new sn_sc.VariablePoolQuestionSetJS();	
+         * 	cart.setCartID("9bf16afb87110300318d05a888cb0b49");
+         * 	cart.load();
+         * 	console.log(cart.getFlatQuestions());
          * @returns Object pointing to the current cart details.
          */
         getFlatQuestions(): Object;
@@ -8143,6 +12383,9 @@ declare namespace sn_sc {
         /**
          * Loads the question set.
          * 
+         * @example
+         * var cart=new sn_sc.VariablePoolQuestionSetJS();	
+         * 	cart.load();
          */
         load();
 
@@ -8150,6 +12393,9 @@ declare namespace sn_sc {
          * Sets the cart item ids of the variable pool.
          * 
          * @id  
+         * @example
+         * var cart=new sn_sc.VariablePoolQuestionSetJS();	
+         * 	cart.setCartID("9bf16afb87110300318d05a888cb0b49");
          */
         setCartID(id: String);
 
@@ -8173,6 +12419,8 @@ declare class Workflow {
      * 
      * @message The message to add to the log.
      * @args Arguments to add to the message.
+     * @example
+     * var loggedMessage = workflow.debug("All is well");
      * @returns The message added to the log.
      */
     debug(message: String, args: Object): String;
@@ -8182,6 +12430,8 @@ declare class Workflow {
      * 
      * @message The message to add to the log.
      * @args Arguments to add to the message.
+     * @example
+     * var loggedMessage = workflow.error("An error has occurred. ");
      * @returns The logged message
      */
     error(message: String, args: Object): String;
@@ -8190,6 +12440,8 @@ declare class Workflow {
      * Returns the specified variable's value.
      * 
      * @name The variable name
+     * @example
+     * var value = workflow.getVariable("task");
      * @returns The variable's value
      */
     getVariable(name: String): Object;
@@ -8199,6 +12451,8 @@ declare class Workflow {
      * 
      * @message The message to add to the log.
      * @args Arguments to add to the message.
+     * @example
+     * var loggedMessage = workflow.info("All is well");
      * @returns The message that is logged.
      */
     info(message: String, args: Object): String;
@@ -8206,6 +12460,8 @@ declare class Workflow {
     /**
      * Returns the workflow name.
      * 
+     * @example
+     * var name = workflow.name();
      * @returns The workflow name
      */
     name(): String;
@@ -8214,12 +12470,16 @@ declare class Workflow {
      * Removes the specified variable from the workflow.
      * 
      * @name The variable name
+     * @example
+     * var value = workflow.removeVariable("task");
      */
     removeVariable(name: String);
 
     /**
      * Returns the workflow's scratchpad object.
      * 
+     * @example
+     * var scratchpad = workflow.scratchpad();
      * @returns The scratchpad object.
      */
     scratchpad(): Object;
@@ -8228,6 +12488,8 @@ declare class Workflow {
      * Sets the workflow's result.
      * 
      * @result The workflow's result
+     * @example
+     * workflow.setResult("Success");
      */
     setResult(result: String);
 
@@ -8236,6 +12498,8 @@ declare class Workflow {
      * 
      * @name The variable name
      * @value The value to be assigned to the variable.
+     * @example
+     * workflow.setVariable("task", "terrible");
      */
     setVariable(name: String, value: Object);
 
@@ -8244,6 +12508,8 @@ declare class Workflow {
      * 
      * @message The message to add to the log.
      * @args Arguments to add to the message.
+     * @example
+     * var loggedMessage = workflow.warn("Check your permissions.");
      * @returns The logged message
      */
     warn(message: String, args: Object): String;
@@ -8276,6 +12542,20 @@ declare class XMLDocument2 {
      * Creates and adds an element node to the current node. The element name is the string passed in as a parameter. The new element has no text child nodes.
      * 
      * @name The new element's name.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString); 
+     * xmlDoc.createElement("new2"); 
+     *  
+     * gs.info(xmlDoc);
      */
     createElement(name: String);
 
@@ -8284,6 +12564,19 @@ declare class XMLDocument2 {
      * 
      * @name Name of the element to be added.
      * @value The added element's text value.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *     "  &lt;one&gt;" +
+     *     "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *     "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *     "    &lt;two&gt;another&lt;/two&gt;" +
+     *     "  &lt;/one&gt;" +
+     *     "  &lt;number&gt;1234&lt;/number&gt;" +
+     *     "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString); 
+     * xmlDoc.createElementWithTextValue("new", "test");
+     * gs.info(xmlDoc);
      * @returns The current node.
      */
     createElementWithTextValue(name: String, value: String): XMLNode;
@@ -8291,6 +12584,20 @@ declare class XMLDocument2 {
     /**
      * Gets the document element node of the XMLdocument2 object. The document element node is the root node.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * //returns the root node of the document tree.
+     * var rootNode = xmlDoc.getDocumentElement();
+     * gs.info(rootNode.getTextContent());
      * @returns The document element.
      */
     getDocumentElement(): XMLNode;
@@ -8299,6 +12606,19 @@ declare class XMLDocument2 {
      * Gets the first node in the specified XPATH.
      * 
      * @xPath The XPATH.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var foo = xmlDoc.getFirstNode('/test/one/two');
+     * gs.info(foo.getTextContent());
      * @returns The first node.
      */
     getFirstNode(xPath: String): XMLNode;
@@ -8307,6 +12627,21 @@ declare class XMLDocument2 {
      * Gets the node after the specified node.
      * 
      * @current The current node.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var foo = xmlDoc. getFirstNode('/test/one/two');
+     * var foo2 = xmlDoc.getNextNode(foo);
+     * gs.info(foo.getTextContent());
+     * gs.info(foo2.getTextContent());
      * @returns The next node.
      */
     getNextNode(current: Object): XMLNode;
@@ -8315,6 +12650,19 @@ declare class XMLDocument2 {
      * Gets the node specified in the xpath.
      * 
      * @xPath The xpath
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode("/test/one/two");
+     * gs.info(node);
      * @returns The current node.
      */
     getNode(xPath: String): XMLNode;
@@ -8323,6 +12671,18 @@ declare class XMLDocument2 {
      * Gets all the text child nodes from the node referenced in the xpath.
      * 
      * @xPath the xpath.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString); 
+     * gs.info(xmlDoc.getNodeText("//two"));
      * @returns The text children in the xpath.
      */
     getNodeText(xPath: String): XMLNode;
@@ -8331,6 +12691,18 @@ declare class XMLDocument2 {
      * Parses the XML string and loads it into the XMLDocument2 object.
      * 
      * @xmlDoc The document to parse.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString); 
+     * var rootNode = xmlDoc.getDocumentElement();
      */
     parseXML(xmlDoc: String);
 
@@ -8338,6 +12710,21 @@ declare class XMLDocument2 {
      * Makes the node passed in as a parameter the current node.
      * 
      * @element The element node to set as the current node.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * //returns the root node of the document tree.
+     * var rootNode = xmlDoc.getDocumentElement(); //returns org.w3c.dom.Element
+     * // sets the root node as the current element
+     * xmlDoc.setCurrentElement(rootNode);
      */
     setCurrentElement(element: XMLNode);
 
@@ -8351,6 +12738,18 @@ declare class XMLDocument2 {
     /**
      * Returns a string containing the XML.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * gs.info(xmlDoc.toString());
      * @returns A string containing the XML.
      */
     toString(): String;
@@ -8370,6 +12769,19 @@ declare class XMLNode {
      * Gets the value of the attribute.
      * 
      * @attribute Name of the attribute.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//two');
+     * gs.info(node.getAttribute('att'));
      * @returns The attribute's value.
      */
     getAttribute(attribute: String): String;
@@ -8384,6 +12796,20 @@ declare class XMLNode {
     /**
      * Gets a XMLNodeIterator object that can be used to walk through the list of child nodes.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//one');
+     * var iter= node.getChildNodeIterator();
+     * gs.info(iter.hasNext());
      * @returns The node iterator object.
      */
     getChildNodeIterator(): XMLNodeIterator;
@@ -8391,6 +12817,19 @@ declare class XMLNode {
     /**
      * Gets the node's first child node.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "&lt;one&gt;" +
+     *                 "&lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "&lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "&lt;two&gt;another&lt;/two&gt;" +
+     *                 "&lt;/one&gt;" +
+     *                 "&lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//one');
+     * gs.info(node.getFirstChild());
      * @returns The node's first child node.
      */
     getFirstChild(): XMLNode;
@@ -8398,6 +12837,20 @@ declare class XMLNode {
     /**
      * Gets the node's last child node.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "&lt;one&gt;" +
+     *                 "&lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "&lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "&lt;two&gt;another&lt;/two&gt;" +
+     *                 "&lt;/one&gt;" +
+     *                 "&lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//one');
+     *  
+     * gs.info(node.getLastChild());
      * @returns The node's last child.
      */
     getLastChild(): XMLNode;
@@ -8405,6 +12858,19 @@ declare class XMLNode {
     /**
      * Gets the node's name. A node's name is determined by the node type. A document-element node's name is #document. A text node's name is #text. An element node's name is the element's name.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//two');
+     * gs.info(node.getNodeName());
      * @returns The node's name.
      */
     getNodeName(): String;
@@ -8412,6 +12878,19 @@ declare class XMLNode {
     /**
      * Gets the node's value. A node's value is determined by the node type. Element and document-element nodes return null.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//two');
+     * gs.info(node.getNodeValue());
      * @returns The node's value.
      */
     getNodeValue(): String;
@@ -8419,6 +12898,19 @@ declare class XMLNode {
     /**
      * Gets the text content of the current node. The text content of a node consists of all the node's child text nodes
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmldoc = new XMLDocument2();
+     * xmldoc.parseXML(xmlString);
+     * var node = xmldoc.getNode('//one/two');
+     * gs.info(node.getTextContent());
      * @returns The text content of the current node.
      */
     getTextContent(): String;
@@ -8427,6 +12919,19 @@ declare class XMLNode {
      * Determines if the node has the specified attribute.
      * 
      * @attribute The name of the attribute to check.
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//two');
+     * gs.info(node.hasAttribute('att'));
      * @returns True if the node has the attribute.
      */
     hasAttribute(attribute: String): Boolean;
@@ -8434,6 +12939,19 @@ declare class XMLNode {
     /**
      * Returns the string value of the current node.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//one');
+     * gs.info(node.toString());
      * @returns The string value of the current node.
      */
     toString(): String;
@@ -8452,6 +12970,20 @@ declare class XMLNodeIterator {
     /**
      * Returns true if the iteration has more elements.
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//one');
+     * var iter= node.getChildNodeIterator();
+     * gs.info(iter.hasNext());
      * @returns True if the iteration has more elements.
      */
     hasNext(): Boolean;
@@ -8459,6 +12991,24 @@ declare class XMLNodeIterator {
     /**
      * Gets the next element in the iteration. The returned element may be a #text node for the spaces/tabs if XML is "pretty formatted".
      * 
+     * @example
+     * var xmlString = "&lt;test&gt;" +
+     *                 "  &lt;one&gt;" +
+     *                 "    &lt;two att=\"xxx\"&gt;abcd1234&lt;/two&gt;" +
+     *                 "    &lt;three boo=\"yah\" att=\"yyy\"&gt;1234abcd&lt;/three&gt;" +
+     *                 "    &lt;two&gt;another&lt;/two&gt;" +
+     *                 "  &lt;/one&gt;" +
+     *                 "  &lt;number&gt;1234&lt;/number&gt;" +
+     *                 "&lt;/test&gt;";
+     * var xmlDoc = new XMLDocument2();
+     * xmlDoc.parseXML(xmlString);
+     * var node = xmlDoc.getNode('//one');
+     * var iter= node.getChildNodeIterator();
+     * while(iter.hasNext()) {
+     *    var n = iter.next();
+     *    gs.info('Node name: ' +  n.getNodeName());
+     *    gs.info('Node value: ' +  n.getNodeValue());
+     * }
      * @returns The next element in the iteration.
      */
     next(): XMLNode;
@@ -8474,3 +13024,5 @@ declare interface JSONString {}
 declare class RESTResponse extends sn_ws.RESTResponseV2{}
 declare class gs extends GlideSystem{}
 declare class SOAPResponse extends sn_ws.SOAPResponseV2{}
+declare class $sp extends GlideSPScriptable{}
+declare class GlideRecordSecure extends GlideRecord{}
