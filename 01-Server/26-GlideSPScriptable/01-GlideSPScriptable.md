@@ -1,29 +1,10 @@
-##### MM/DD/YYYY
-# ``
+##### 7/28/2020
+# `GlideSPScriptable`
 ## Overview:
+Interact with data and perform record operations in Service Portal widgets.
 
-
-## Parameter(s):
-| Name | Type | Description |
-|---|---|---|
-|  | `` |  |
-
-## Return value:
-| Type | Description |
-|---|---|
-| `` |  |
+You access `GlideSPScriptable` methods by using the global `$sp` `object`.
 
 ---
 
-## Description:
-
-
----
-
-```js
-
-```
-
----
-
-[ServiceNow Docs]()
+[ServiceNow Docs](https://developer.servicenow.com/dev.do#!/reference/api/newyork/server/no-namespace/c_GlideSPScriptableScopedAPI)
